@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gestión de Contexto en Claude Code - Optimización, límites de tokens y mejores prácticas">
     <title>4. Gestión de Contexto | Claude Code para macOS</title>
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
 </head>
 <body>
     <header>
@@ -17,10 +19,11 @@
             </a>
             <div class="nav-controls">
                 <select id="page-selector" class="page-selector"></select>
-                <button id="theme-toggle" class="theme-toggle">🌙</button>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌙</button>
             </div>
         </div>
     </header>
+
     <main>
         <div class="container">
             <div class="progress-indicator">
@@ -29,5 +32,611 @@
                     <div id="progress-fill" class="progress-fill" style="width: 55.55%"></div>
                 </div>
             </div>
+
             <div class="content-wrapper">
-                <h1>Gestión de Contexto</h1>
+                <h1>Gestión de Contexto en Claude Code</h1>
+
+                <p>
+                    Una de las características más poderosas de Claude Code es su capacidad para gestionar contexto de forma inteligente.
+                    Entender cómo funciona el contexto y cómo optimizarlo te permitirá trabajar de forma más eficiente y reducir costos.
+                    En esta sección aprenderás todo sobre la gestión de contexto, memoria, límites de tokens y optimización.
+                </p>
+
+                <h2>¿Qué es el Contexto en Claude Code?</h2>
+
+                <p>
+                    El <strong>contexto</strong> es toda la información que Claude mantiene en memoria durante una conversación:
+                </p>
+
+                <ul>
+                    <li><strong>Historial de la conversación:</strong> Todos los mensajes intercambiados</li>
+                    <li><strong>Archivos leídos:</strong> Contenido de archivos que has compartido</li>
+                    <li><strong>Código generado:</strong> Todo el código creado durante la sesión</li>
+                    <li><strong>Instrucciones del sistema:</strong> Configuración y prompts del sistema</li>
+                </ul>
+
+                <div class="alert info">
+                    <div class="alert-icon">ℹ️</div>
+                    <div class="alert-content">
+                        <h4>¿Por qué es importante el contexto?</h4>
+                        <p>Un buen manejo del contexto permite a Claude Code mantener coherencia en conversaciones largas,
+                        recordar decisiones anteriores y generar código más preciso. Sin embargo, el contexto tiene límites
+                        y costos asociados que debes conocer.</p>
+                    </div>
+                </div>
+
+                <h2>Límites de Tokens por Modelo</h2>
+
+                <p>
+                    Cada modelo de Claude tiene diferentes límites de contexto (ventana de contexto). Entender estos límites
+                    es crucial para optimizar tu uso de Claude Code.
+                </p>
+
+                <h3>Ventanas de Contexto de Claude 3</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Modelo</th>
+                            <th>Ventana de Contexto</th>
+                            <th>Tokens de Entrada</th>
+                            <th>Tokens de Salida</th>
+                            <th>Uso Recomendado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Claude 3 Opus</strong></td>
+                            <td>200,000 tokens</td>
+                            <td>~150,000 palabras</td>
+                            <td>4,096 tokens</td>
+                            <td>Proyectos complejos, análisis profundo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Claude 3 Sonnet</strong></td>
+                            <td>200,000 tokens</td>
+                            <td>~150,000 palabras</td>
+                            <td>4,096 tokens</td>
+                            <td>Uso diario balanceado</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Claude 3 Haiku</strong></td>
+                            <td>200,000 tokens</td>
+                            <td>~150,000 palabras</td>
+                            <td>4,096 tokens</td>
+                            <td>Tareas rápidas y simples</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                        <h4>Costo por Token</h4>
+                        <p>Aunque todos los modelos tienen la misma ventana de contexto, el <strong>costo por token varía</strong>.
+                        Opus es más costoso pero más preciso, mientras que Haiku es económico pero más simple. Sonnet ofrece el
+                        mejor balance precio/rendimiento para la mayoría de los casos.</p>
+                    </div>
+                </div>
+
+                <h3>Cálculo de Tokens</h3>
+
+                <p>
+                    Entender cómo se calculan los tokens te ayudará a estimar el costo de tus conversaciones:
+                </p>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Ver estadísticas de la conversación actual
+claude-code --stats
+
+# Ver detalles de tokens
+claude-code --token-count "Analiza este archivo" archivo.js
+
+# Estimar tokens antes de enviar
+claude-code --dry-run "Tu prompt aquí" archivos.js</code></pre>
+                </div>
+
+                <h3>Reglas Aproximadas de Tokens</h3>
+
+                <ul>
+                    <li>1 token ≈ 4 caracteres en inglés</li>
+                    <li>1 token ≈ 3/4 de una palabra en inglés</li>
+                    <li>100 tokens ≈ 75 palabras</li>
+                    <li>1,000 tokens ≈ 750 palabras</li>
+                    <li>Código: varía según lenguaje, ~1.5 tokens por palabra</li>
+                </ul>
+
+                <h2>Uso de .claudeignore</h2>
+
+                <p>
+                    El archivo <code>.claudeignore</code> es fundamental para optimizar el contexto. Funciona como
+                    <code>.gitignore</code>, indicando qué archivos y directorios Claude Code debe ignorar.
+                </p>
+
+                <h3>Creación de .claudeignore</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Crear .claudeignore en la raíz del proyecto
+cd /ruta/a/tu/proyecto
+touch .claudeignore
+
+# Editar con tu editor favorito
+nano .claudeignore</code></pre>
+                </div>
+
+                <h3>Ejemplo de .claudeignore</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-plaintext"># Dependencias y módulos
+node_modules/
+vendor/
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Archivos de compilación
+dist/
+build/
+*.min.js
+*.min.css
+*.bundle.js
+
+# Archivos grandes
+*.log
+*.pdf
+*.zip
+*.tar.gz
+*.jpg
+*.png
+*.gif
+*.mp4
+
+# Archivos de configuración sensibles
+.env
+.env.local
+secrets.json
+credentials.json
+*.pem
+*.key
+
+# Cache y temporales
+.cache/
+.tmp/
+tmp/
+.DS_Store
+thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Documentación generada
+docs/api/
+coverage/
+.nyc_output/
+
+# Base de datos
+*.sqlite
+*.db
+migrations/</code></pre>
+                </div>
+
+                <div class="alert tip">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Mejores Prácticas para .claudeignore</h4>
+                        <p>Ignora todo lo que no sea código fuente o documentación esencial. Esto incluye dependencias,
+                        archivos compilados, assets grandes y archivos sensibles. Un buen .claudeignore puede reducir
+                        el uso de tokens en un 70-90%.</p>
+                    </div>
+                </div>
+
+                <h3>Patrones Comunes por Tecnología</h3>
+
+                <h4>Node.js / JavaScript</h4>
+                <div class="code-block">
+                    <pre><code class="language-plaintext">node_modules/
+package-lock.json
+yarn.lock
+dist/
+build/
+.next/
+.nuxt/
+coverage/</code></pre>
+                </div>
+
+                <h4>Python</h4>
+                <div class="code-block">
+                    <pre><code class="language-plaintext">__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+.pytest_cache/
+*.egg-info/
+dist/
+build/</code></pre>
+                </div>
+
+                <h4>Ruby / Rails</h4>
+                <div class="code-block">
+                    <pre><code class="language-plaintext">vendor/bundle/
+.bundle/
+tmp/
+log/
+public/assets/
+.byebug_history</code></pre>
+                </div>
+
+                <h2>Gestión de Sesiones</h2>
+
+                <p>
+                    Claude Code mantiene sesiones de conversación que puedes guardar, cargar y gestionar para mantener
+                    continuidad en tu trabajo.
+                </p>
+
+                <h3>Comandos de Sesión</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Ver sesiones guardadas
+claude-code sessions list
+
+# Guardar sesión actual
+claude-code sessions save "nombre-de-sesion"
+
+# Cargar sesión anterior
+claude-code sessions load "nombre-de-sesion"
+
+# Continuar última sesión
+claude-code sessions resume
+
+# Eliminar sesión
+claude-code sessions delete "nombre-de-sesion"
+
+# Limpiar todas las sesiones
+claude-code sessions clear</code></pre>
+                </div>
+
+                <h3>Estructura de Sesiones</h3>
+
+                <p>Las sesiones se guardan en <code>~/.config/claude-code/sessions/</code>:</p>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Ver sesiones guardadas
+ls -lh ~/.config/claude-code/sessions/
+
+# Ver contenido de una sesión
+cat ~/.config/claude-code/sessions/mi-sesion.json</code></pre>
+                </div>
+
+                <h3>Ejemplo de Workflow con Sesiones</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Iniciar trabajo en una feature
+cd ~/proyecto/feature-auth
+claude-code
+
+# Durante la conversación...
+# Guardar progreso antes de cerrar
+> /save auth-implementation
+
+# Más tarde, continuar donde lo dejaste
+claude-code sessions load "auth-implementation"</code></pre>
+                </div>
+
+                <h2>Cache de Contexto</h2>
+
+                <p>
+                    Claude Code implementa un sistema de cache inteligente que reduce costos al reutilizar contexto
+                    que ya ha sido procesado.
+                </p>
+
+                <h3>¿Cómo Funciona el Cache?</h3>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">💾</div>
+                        <h3>Cache de Archivos</h3>
+                        <p>Archivos frecuentemente accedidos se cachean localmente para evitar lecturas repetidas.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <h3>Cache de Prompts</h3>
+                        <p>Prompts del sistema y configuración se reutilizan entre sesiones para reducir tokens.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Cache de Respuestas</h3>
+                        <p>Respuestas comunes se cachean temporalmente para consultas repetidas.</p>
+                    </div>
+                </div>
+
+                <h3>Configuración de Cache</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Ver configuración de cache
+claude-code config show cache
+
+# Habilitar cache (habilitado por defecto)
+claude-code config set cache.enabled true
+
+# Configurar TTL (tiempo de vida en segundos)
+claude-code config set cache.ttl 3600
+
+# Configurar tamaño máximo
+claude-code config set cache.maxSize "500MB"
+
+# Limpiar cache
+claude-code cache clear</code></pre>
+                </div>
+
+                <h3>Configuración en config.json</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-json">{
+  "cache": {
+    "enabled": true,
+    "ttl": 3600,
+    "maxSize": "500MB",
+    "strategy": "lru",
+    "compression": true,
+    "paths": {
+      "files": "~/.config/claude-code/cache/files",
+      "responses": "~/.config/claude-code/cache/responses"
+    }
+  }
+}</code></pre>
+                </div>
+
+                <h2>Optimización de Contexto</h2>
+
+                <p>
+                    Optimizar el uso de contexto es crucial para reducir costos y mejorar el rendimiento.
+                    Aquí te mostramos las mejores estrategias.
+                </p>
+
+                <h3>Estrategia 1: Contexto Incremental</h3>
+
+                <p>
+                    En lugar de enviar todo el proyecto cada vez, envía solo lo necesario:
+                </p>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># ❌ MAL - Envía todo el proyecto
+claude-code "Explica la arquitectura" .
+
+# ✅ BIEN - Envía solo archivos relevantes
+claude-code "Explica la arquitectura" src/core/*.ts README.md</code></pre>
+                </div>
+
+                <h3>Estrategia 2: Resumen de Contexto</h3>
+
+                <p>
+                    Para conversaciones largas, usa resúmenes periódicos:
+                </p>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Generar resumen de la conversación
+claude-code --summarize
+
+# Iniciar nueva sesión con el resumen
+claude-code sessions save-summary "proyecto-auth"</code></pre>
+                </div>
+
+                <h3>Estrategia 3: Dividir Tareas Grandes</h3>
+
+                <p>
+                    Divide proyectos grandes en sesiones enfocadas:
+                </p>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Sesión 1: Arquitectura
+claude-code "Diseña la arquitectura del módulo de auth"
+claude-code sessions save "auth-architecture"
+
+# Sesión 2: Implementación
+claude-code sessions new
+claude-code "Implementa el login basándote en docs/auth-design.md"
+claude-code sessions save "auth-implementation"
+
+# Sesión 3: Tests
+claude-code sessions new
+claude-code "Genera tests para src/auth/*.ts"
+claude-code sessions save "auth-tests"</code></pre>
+                </div>
+
+                <h3>Estrategia 4: Usar Archivos de Contexto</h3>
+
+                <p>
+                    Crea archivos de contexto reutilizables:
+                </p>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Crear archivo de contexto
+cat > .claude/context.md << 'EOF'
+# Contexto del Proyecto
+
+## Stack
+- Node.js 20
+- TypeScript 5
+- Express
+- PostgreSQL
+
+## Convenciones
+- Usar async/await, no callbacks
+- Tests con Jest
+- ESLint + Prettier
+
+## Estructura
+src/
+  controllers/
+  services/
+  models/
+EOF
+
+# Usar en prompts
+claude-code "Basándote en .claude/context.md, crea un nuevo controller"</code></pre>
+                </div>
+
+                <h2>Monitoreo de Uso de Contexto</h2>
+
+                <p>
+                    Claude Code ofrece herramientas para monitorear tu uso de contexto y costos:
+                </p>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Ver estadísticas de la sesión actual
+claude-code --stats
+
+# Ver historial de uso
+claude-code usage stats
+
+# Ver uso por día
+claude-code usage daily
+
+# Ver uso por proyecto
+claude-code usage by-project
+
+# Ver estimación de costos
+claude-code usage costs --month 2025-10</code></pre>
+                </div>
+
+                <h3>Interpretación de Estadísticas</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-plaintext">Session Statistics:
+------------------
+Total tokens used: 15,420
+  - Input tokens:  12,300 (79.8%)
+  - Output tokens:  3,120 (20.2%)
+
+Files read: 8
+Cache hits: 5 (62.5%)
+Estimated cost: $0.18
+
+Context utilization: 15,420 / 200,000 (7.7%)</code></pre>
+                </div>
+
+                <h2>Mejores Prácticas de Gestión de Contexto</h2>
+
+                <div class="alert success">
+                    <div class="alert-icon">✅</div>
+                    <div class="alert-content">
+                        <h4>Checklist de Optimización</h4>
+                        <ul>
+                            <li>✓ Mantener un <code>.claudeignore</code> actualizado</li>
+                            <li>✓ Dividir conversaciones largas en sesiones temáticas</li>
+                            <li>✓ Usar cache cuando sea posible</li>
+                            <li>✓ Enviar solo archivos relevantes, no todo el proyecto</li>
+                            <li>✓ Generar resúmenes de conversaciones largas</li>
+                            <li>✓ Monitorear uso y costos regularmente</li>
+                            <li>✓ Limpiar sesiones antiguas periódicamente</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Ejemplo de Workflow Optimizado</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># 1. Configurar .claudeignore
+cat > .claudeignore << 'EOF'
+node_modules/
+dist/
+*.log
+.env
+EOF
+
+# 2. Iniciar sesión específica
+claude-code sessions new
+
+# 3. Enviar solo contexto necesario
+claude-code "Refactoriza el módulo de autenticación" \
+  src/auth/*.ts \
+  docs/auth-design.md
+
+# 4. Guardar progreso
+claude-code sessions save "auth-refactor-$(date +%Y%m%d)"
+
+# 5. Verificar uso
+claude-code --stats</code></pre>
+                </div>
+
+                <h2>Troubleshooting de Contexto</h2>
+
+                <h3>Problema: "Context window exceeded"</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar tamaño del contexto
+claude-code --stats
+
+# Soluciones:
+# 1. Dividir en sesiones más pequeñas
+claude-code sessions save "parte-1"
+claude-code sessions new
+
+# 2. Mejorar .claudeignore
+echo "carpeta-grande/" >> .claudeignore
+
+# 3. Usar modelo con mayor ventana
+claude-code --model opus "Tu tarea aquí"</code></pre>
+                </div>
+
+                <h3>Problema: Costos Altos</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Analizar uso
+claude-code usage costs --detailed
+
+# Optimizar:
+# 1. Usar Haiku para tareas simples
+claude-code --model haiku "Formatea este código"
+
+# 2. Habilitar cache agresivo
+claude-code config set cache.ttl 7200
+
+# 3. Limpiar contexto innecesario
+claude-code sessions clear-old --days 30</code></pre>
+                </div>
+
+                <div class="alert tip">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Consejo Pro</h4>
+                        <p>Para proyectos grandes, crea un script de inicialización que configure automáticamente
+                        .claudeignore, archivos de contexto y sesiones. Esto asegura consistencia y optimización
+                        desde el inicio.</p>
+                    </div>
+                </div>
+
+                <nav class="navigation">
+                    <a href="03-comandos.html" class="nav-btn">
+                        ← Anterior: Comandos Básicos
+                    </a>
+                    <a href="05-mcp.html" class="nav-btn">
+                        Siguiente: Model Context Protocol →
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 Claude Code Documentation. Creado con Claude Code.</p>
+            <div class="footer-links">
+                <a href="https://www.anthropic.com" target="_blank">Anthropic</a>
+                <a href="https://docs.anthropic.com" target="_blank">Documentación Oficial</a>
+                <a href="https://github.com/anthropics/claude-code" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/code-copy.js"></script>
+</body>
+</html>
