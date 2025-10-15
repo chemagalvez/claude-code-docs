@@ -7,19 +7,12 @@
     <meta name="keywords" content="Claude Code, macOS, AI, documentación, desarrollo, Anthropic">
     <meta name="author" content="Claude Code Docs">
     <title>Claude Code para macOS - Documentación Completa</title>
-
-    <!-- Estilos -->
     <link rel="stylesheet" href="assets/css/styles.css">
-
-    <!-- Highlight.js para resaltado de sintaxis -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-
-    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container header-content">
             <a href="index.html" class="logo">
@@ -27,19 +20,14 @@
                 <span>Claude Code Docs</span>
             </a>
             <div class="nav-controls">
-                <select id="page-selector" class="page-selector">
-                    <!-- Opciones se llenarán con JavaScript -->
-                </select>
-                <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌙
-                </button>
+                <select id="page-selector" class="page-selector"></select>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌙</button>
             </div>
         </div>
     </header>
 
-    <!-- Contenido Principal -->
     <main>
         <div class="container">
-            <!-- Indicador de progreso -->
             <div class="progress-indicator">
                 <span id="progress-indicator">Página 1 de 9</span>
                 <div class="progress-bar">
@@ -47,7 +35,6 @@
                 </div>
             </div>
 
-            <!-- Contenido -->
             <div class="content-wrapper">
                 <h1>Bienvenido a Claude Code para macOS</h1>
 
@@ -56,7 +43,7 @@
                 </p>
 
                 <div class="alert info">
-                    <div class="alert-icon"><N</div>
+                    <div class="alert-icon">ℹ️</div>
                     <div class="alert-content">
                         <h4>Específico para macOS</h4>
                         <p>Esta documentación está diseñada exclusivamente para usuarios de macOS, con comandos, rutas y configuraciones adaptadas al sistema operativo de Apple.</p>
@@ -100,13 +87,13 @@
                     </div>
 
                     <div class="feature-card">
-                        <div class="feature-icon">🎯</div>
+                        <div class="feature-icon">🔄</div>
                         <h3>Interactiva</h3>
                         <p>Navegación fluida, código copiable con un clic, y búsqueda integrada.</p>
                     </div>
 
                     <div class="feature-card">
-                        <div class="feature-icon"><</div>
+                        <div class="feature-icon">🌙</div>
                         <h3>Modo Oscuro</h3>
                         <p>Tema claro y oscuro para una lectura cómoda en cualquier momento.</p>
                     </div>
@@ -123,7 +110,7 @@
                 <div class="alert tip">
                     <div class="alert-icon">💡</div>
                     <div class="alert-content">
-                        <p>Puedes navegar usando los botones al final de cada página, el menú desplegable en el header, o los atajos de teclado (  para navegar, H para volver al inicio).</p>
+                        <p>Puedes navegar usando los botones al final de cada página, el menú desplegable en el header, o los atajos de teclado (flechas para navegar, H para volver al inicio).</p>
                     </div>
                 </div>
 
@@ -145,16 +132,16 @@
                 <ul>
                     <li>macOS 12.0 (Monterey) o superior</li>
                     <li>Cuenta de Anthropic con acceso a la API de Claude</li>
-                    <li>Conocimientos básicos de terminal/línea de comandos</li>
+                    <li>Conocimientos básicos de terminal y línea de comandos</li>
                     <li>Homebrew instalado (recomendado)</li>
                     <li>Editor de código (VS Code, Cursor, etc.)</li>
                 </ul>
 
                 <div class="alert warning">
-                    <div class="alert-icon"> </div>
+                    <div class="alert-icon">⚠️</div>
                     <div class="alert-content">
                         <h4>Nota Importante</h4>
-                        <p>El uso de Claude Code requiere una API key de Anthropic. Algunas funcionalidades pueden tener costos asociados según tu plan. Revisa los precios en <a href="https://www.anthropic.com/pricing" target="_blank">anthropic.com/pricing</a>.</p>
+                        <p>El uso de Claude Code requiere una API key de Anthropic. Algunas funcionalidades pueden tener costos asociados según tu plan. Revisa los precios en anthropic.com/pricing.</p>
                     </div>
                 </div>
 
@@ -170,12 +157,12 @@
 
                     <div class="feature-card">
                         <h4>🔧 Usuarios Intermedios</h4>
-                        <p>Dirígete a "Comandos Básicos" y "Gestión de Contexto" para optimizar tu flujo de trabajo.</p>
+                        <p>Dirígete a Comandos Básicos y Gestión de Contexto para optimizar tu flujo de trabajo.</p>
                     </div>
 
                     <div class="feature-card">
                         <h4>⚡ Expertos</h4>
-                        <p>Explora "MCP", "Mejores Prácticas" y "Casos Avanzados" para llevar tu productividad al siguiente nivel.</p>
+                        <p>Explora MCP, Mejores Prácticas y Casos Avanzados para llevar tu productividad al siguiente nivel.</p>
                     </div>
                 </div>
 
@@ -209,14 +196,13 @@
                 </table>
 
                 <div class="alert success" style="margin-top: 2rem;">
-                    <div class="alert-icon"><</div>
+                    <div class="alert-icon">🎉</div>
                     <div class="alert-content">
                         <h4>¡Empecemos!</h4>
-                        <p>Haz clic en "Siguiente" para comenzar tu viaje con Claude Code en macOS. Cada sección incluye ejemplos prácticos, código copiable, y consejos específicos para aprovechar al máximo esta poderosa herramienta.</p>
+                        <p>Haz clic en Siguiente para comenzar tu viaje con Claude Code en macOS. Cada sección incluye ejemplos prácticos, código copiable, y consejos específicos para aprovechar al máximo esta poderosa herramienta.</p>
                     </div>
                 </div>
 
-                <!-- Navegación -->
                 <nav class="navigation">
                     <div class="progress-indicator">
                         <span>Comienza tu aprendizaje →</span>
@@ -229,7 +215,6 @@
         </div>
     </main>
 
-    <!-- Footer -->
     <footer>
         <div class="container footer-content">
             <p>&copy; 2025 Claude Code Documentation. Creado con Claude Code.</p>
@@ -241,7 +226,6 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="assets/js/navigation.js"></script>
     <script src="assets/js/code-copy.js"></script>
 </body>
