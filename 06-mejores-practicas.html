@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6. Mejores Prácticas | Claude Code para macOS</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🤖</div>
+                <span>Claude Code Docs</span>
+            </a>
+            <div class="nav-controls">
+                <select id="page-selector" class="page-selector"></select>
+                <button id="theme-toggle" class="theme-toggle">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="progress-indicator">
+                <span id="progress-indicator">Página 7 de 9</span>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill" style="width: 77.77%"></div>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <h1>6. Mejores Prácticas y Workflows</h1>
+
+                <p>Esta guía te ayudará a maximizar tu productividad con Claude Code en macOS, siguiendo las mejores prácticas establecidas por la comunidad de desarrolladores.</p>
+
+                <h2>✍️ Escribir Prompts Efectivos</h2>
+
+                <p>La calidad de tus resultados depende directamente de cómo formules tus solicitudes a Claude.</p>
+
+                <h3>Estructura de un Prompt Efectivo</h3>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Sé Específico</h3>
+                        <p>Proporciona contexto claro sobre qué quieres lograr, el lenguaje/framework a usar, y cualquier restricción importante.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📋</div>
+                        <h3>Divide Tareas</h3>
+                        <p>Descompón tareas complejas en pasos más pequeños y manejables. Claude funciona mejor con objetivos claros.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Proporciona Ejemplos</h3>
+                        <p>Muestra ejemplos del resultado esperado. Si tienes código similar, compártelo como referencia.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Define el Estilo</h3>
+                        <p>Especifica convenciones de código, patrones de diseño, y estándares que debe seguir.</p>
+                    </div>
+                </div>
+
+                <h3>Ejemplos: Prompts Buenos vs. Prompts Malos</h3>
+
+                <div class="alert warning">
+                    <div class="alert-icon">❌</div>
+                    <div class="alert-content">
+                        <h4>Prompt Malo</h4>
+                        <p><code>"Crea una API"</code></p>
+                        <p><strong>Problema:</strong> Demasiado vago, falta contexto sobre tecnología, endpoints, base de datos, etc.</p>
+                    </div>
+                </div>
+
+                <div class="alert success">
+                    <div class="alert-icon">✅</div>
+                    <div class="alert-content">
+                        <h4>Prompt Bueno</h4>
+                        <p><code>"Crea una API REST en TypeScript con Express.js para gestionar usuarios. Necesito endpoints CRUD (GET, POST, PUT, DELETE) con validación de datos usando Zod. Usa PostgreSQL con Prisma ORM. Incluye manejo de errores y autenticación JWT."</code></p>
+                        <p><strong>Por qué funciona:</strong> Especifica tecnologías, funcionalidad exacta, y requisitos técnicos.</p>
+                    </div>
+                </div>
+
+                <h3>Plantilla de Prompt para Nuevas Funcionalidades</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Prompt estructurado
+claude "Necesito crear [FUNCIONALIDAD] en [LENGUAJE/FRAMEWORK].
+
+Contexto:
+- El proyecto usa [STACK TECNOLÓGICO]
+- Los archivos relevantes están en [RUTAS]
+- Ya tenemos [FUNCIONALIDAD EXISTENTE]
+
+Requisitos:
+1. [REQUISITO ESPECÍFICO 1]
+2. [REQUISITO ESPECÍFICO 2]
+3. [REQUISITO ESPECÍFICO 3]
+
+Restricciones:
+- Debe seguir el patrón [PATRÓN DE DISEÑO]
+- Compatible con [VERSIÓN/DEPENDENCIA]
+- Mantener [ESTÁNDAR DE CÓDIGO]
+
+Resultado esperado:
+[DESCRIPCIÓN DEL OUTPUT DESEADO]"</code></pre>
+                </div>
+
+                <h2>📁 Estructuración de Proyectos</h2>
+
+                <p>Organizar tu proyecto correctamente ayuda a Claude a entender mejor tu código y proporcionar mejores sugerencias.</p>
+
+                <h3>Estructura Recomendada para Proyectos TypeScript/Node.js</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash">my-project/
+├── .claudeignore              # Archivos que Claude debe ignorar
+├── .claude/                   # Configuración de Claude Code
+│   └── config.json
+├── src/                       # Código fuente
+│   ├── controllers/           # Controladores/Handlers
+│   ├── models/                # Modelos de datos
+│   ├── services/              # Lógica de negocio
+│   ├── utils/                 # Utilidades
+│   ├── types/                 # Definiciones TypeScript
+│   └── index.ts               # Punto de entrada
+├── tests/                     # Tests
+│   ├── unit/
+│   └── integration/
+├── docs/                      # Documentación
+├── scripts/                   # Scripts de automatización
+├── package.json
+├── tsconfig.json
+└── README.md</code></pre>
+                </div>
+
+                <div class="alert tip">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Convención de Nombres</h4>
+                        <p>Usa nombres descriptivos y consistentes. Claude aprende mejor de estructuras predecibles:</p>
+                        <ul>
+                            <li><code>user.controller.ts</code>, <code>user.service.ts</code>, <code>user.model.ts</code></li>
+                            <li><code>UserController.ts</code>, <code>UserService.ts</code>, <code>UserModel.ts</code></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Uso Efectivo de .claudeignore</h3>
+
+                <p>Optimiza el contexto excluyendo archivos irrelevantes:</p>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># .claudeignore para proyectos Node.js
+node_modules/
+dist/
+build/
+.next/
+coverage/
+*.log
+.env
+.env.local
+*.lock
+package-lock.json
+yarn.lock
+.DS_Store
+
+# Excluir archivos grandes de datos
+*.csv
+*.json.gz
+*.sql
+*.db
+
+# Archivos de configuración de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Assets que no requieren análisis
+public/images/
+static/fonts/
+*.png
+*.jpg
+*.svg</code></pre>
+                </div>
+
+                <h2>🔄 Workflows Recomendados</h2>
+
+                <h3>Workflow 1: Test-Driven Development (TDD)</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Paso 1: Escribir el test primero
+claude "Crea tests unitarios para una función calculateDiscount que aplica descuentos por volumen: 10% para pedidos >100€, 15% para >500€, 20% para >1000€"
+
+# Paso 2: Implementar la función
+claude "Implementa la función calculateDiscount que pase todos los tests"
+
+# Paso 3: Refactorizar
+claude "Refactoriza calculateDiscount para mejor legibilidad manteniendo los tests pasando"</code></pre>
+                </div>
+
+                <h3>Workflow 2: Desarrollo Iterativo</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Iteración 1: MVP básico
+claude "Crea un componente de login básico con email y password"
+
+# Iteración 2: Validación
+claude "Agrega validación de email y manejo de errores al componente de login"
+
+# Iteración 3: Features avanzadas
+claude "Agrega 'Recordarme' y 'Olvidé mi contraseña' al login"
+
+# Iteración 4: Pulir
+claude "Mejora la accesibilidad y añade animaciones sutiles al login"</code></pre>
+                </div>
+
+                <h3>Workflow 3: Code Review y Refactoring</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Revisión de código
+claude "Revisa el archivo src/services/payment.ts y sugiere mejoras en seguridad, rendimiento y mantenibilidad"
+
+# Refactorización específica
+claude "Refactoriza payment.ts para usar async/await en lugar de callbacks y agregar mejor manejo de errores"
+
+# Optimización
+claude "Identifica y optimiza los cuellos de botella de rendimiento en payment.ts"</code></pre>
+                </div>
+
+                <h3>Workflow 4: Debugging Sistemático</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Paso 1: Describir el problema
+claude "La función getUserOrders está devolviendo undefined en producción pero funciona en desarrollo. Aquí está el código: [CÓDIGO]"
+
+# Paso 2: Análisis de logs
+claude "Analiza estos logs de error y encuentra la causa raíz: [LOGS]"
+
+# Paso 3: Solución y prevención
+claude "Implementa una solución para el error de getUserOrders y agrega tests para prevenir regresiones"</code></pre>
+                </div>
+
+                <h2>🔐 Seguridad y Credenciales en macOS</h2>
+
+                <p>Manejo seguro de credenciales y secretos en tu entorno de desarrollo macOS.</p>
+
+                <h3>Almacenamiento Seguro de API Keys</h3>
+
+                <div class="alert warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                        <h4>Nunca Hardcodees Credenciales</h4>
+                        <p>No incluyas API keys, tokens o contraseñas directamente en tu código fuente. Usa variables de entorno.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Configurar variables de entorno en ~/.zshrc
+echo 'export ANTHROPIC_API_KEY="sk-ant-api03-..."' >> ~/.zshrc
+echo 'export DATABASE_URL="postgresql://..."' >> ~/.zshrc
+echo 'export JWT_SECRET="tu-secreto-seguro"' >> ~/.zshrc
+
+# Recargar configuración
+source ~/.zshrc
+
+# Verificar
+echo $ANTHROPIC_API_KEY</code></pre>
+                </div>
+
+                <h3>Uso de macOS Keychain para Secretos</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Almacenar secreto en Keychain
+security add-generic-password \
+  -a "$USER" \
+  -s "claude_api_key" \
+  -w "sk-ant-api03-your-key-here"
+
+# Recuperar desde Keychain
+ANTHROPIC_API_KEY=$(security find-generic-password \
+  -a "$USER" \
+  -s "claude_api_key" \
+  -w)
+
+# Usar en scripts
+claude --api-key "$ANTHROPIC_API_KEY" "Tu prompt"</code></pre>
+                </div>
+
+                <h3>Archivo .env con dotenv</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Instalar dotenv
+npm install dotenv
+
+# Crear .env (NO COMMITEAR)
+cat > .env << 'EOF'
+ANTHROPIC_API_KEY=sk-ant-api03-...
+DATABASE_URL=postgresql://localhost:5432/mydb
+NODE_ENV=development
+PORT=3000
+EOF
+
+# Agregar a .gitignore
+echo ".env" >> .gitignore
+echo ".env.local" >> .gitignore
+echo ".env.*.local" >> .gitignore</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-javascript">// Usar en Node.js
+require('dotenv').config();
+
+const apiKey = process.env.ANTHROPIC_API_KEY;
+const dbUrl = process.env.DATABASE_URL;</code></pre>
+                </div>
+
+                <h3>Permisos de Archivos Sensibles</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Restringir permisos de archivos sensibles
+chmod 600 .env
+chmod 600 ~/.zshrc
+chmod 700 ~/.ssh
+
+# Verificar permisos
+ls -la .env
+# Debe mostrar: -rw------- (solo lectura/escritura para el propietario)</code></pre>
+                </div>
+
+                <h2>💰 Optimización de Costos</h2>
+
+                <p>Estrategias para usar Claude Code de manera eficiente y económica.</p>
+
+                <h3>Tabla de Costos por Modelo (2025)</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Modelo</th>
+                            <th>Input (por 1M tokens)</th>
+                            <th>Output (por 1M tokens)</th>
+                            <th>Mejor Para</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Sonnet 4.5</strong></td>
+                            <td>$3.00</td>
+                            <td>$15.00</td>
+                            <td>Desarrollo general, ideal balance costo/calidad</td>
+                        </tr>
+                        <tr>
+                            <td>Claude 3.5 Sonnet</td>
+                            <td>$3.00</td>
+                            <td>$15.00</td>
+                            <td>Tareas de desarrollo estándar</td>
+                        </tr>
+                        <tr>
+                            <td>Claude 3 Opus</td>
+                            <td>$15.00</td>
+                            <td>$75.00</td>
+                            <td>Solo tareas muy complejas</td>
+                        </tr>
+                        <tr>
+                            <td>Claude 3.5 Haiku</td>
+                            <td>$0.80</td>
+                            <td>$4.00</td>
+                            <td>Tareas rápidas y simples</td>
+                        </tr>
+                        <tr>
+                            <td>Claude 3 Haiku</td>
+                            <td>$0.25</td>
+                            <td>$1.25</td>
+                            <td>Tasks muy básicas, alto volumen</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Estrategias de Optimización</h3>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Usa el Modelo Apropiado</h3>
+                        <p>Sonnet 4.5 para desarrollo. Haiku 3.5 para scripts simples. Opus solo cuando realmente lo necesites.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📝</div>
+                        <h3>Prompts Concisos</h3>
+                        <p>Sé específico pero conciso. Evita repetir código o contexto innecesariamente.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🗂️</div>
+                        <h3>Optimiza Contexto</h3>
+                        <p>Usa .claudeignore para excluir archivos irrelevantes. Menos contexto = menor costo.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💾</div>
+                        <h3>Reutiliza Sesiones</h3>
+                        <p>Mantén conversaciones activas en lugar de iniciar nuevas sesiones repetidamente.</p>
+                    </div>
+                </div>
+
+                <h3>Configurar Límites de Presupuesto</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Configurar modelo por defecto (más económico)
+claude config set default-model sonnet-4.5
+
+# Alias para tareas simples con Haiku
+echo 'alias claude-simple="claude --model claude-3-5-haiku"' >> ~/.zshrc
+
+# Alias para tareas complejas con Opus
+echo 'alias claude-complex="claude --model claude-3-opus"' >> ~/.zshrc
+
+source ~/.zshrc</code></pre>
+                </div>
+
+                <div class="alert info">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Monitoreo de Uso</h4>
+                        <p>Revisa regularmente tu consumo en <a href="https://console.anthropic.com" target="_blank">Anthropic Console</a> para identificar patrones de uso y optimizar.</p>
+                    </div>
+                </div>
+
+                <h2>🔀 Control de Versiones con Git</h2>
+
+                <p>Integración efectiva de Claude Code en tu workflow de Git.</p>
+
+                <h3>Flujo de Trabajo Git + Claude</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># 1. Crear nueva rama para feature
+git checkout -b feature/nueva-funcionalidad
+
+# 2. Desarrollar con Claude
+claude "Implementa autenticación de dos factores"
+
+# 3. Revisar cambios antes de commit
+git diff
+
+# 4. Staging selectivo
+git add src/auth/
+git add tests/auth/
+
+# 5. Commit con mensaje descriptivo
+git commit -m "feat: Implementa autenticación de dos factores
+
+- Agrega generación de códigos TOTP
+- Implementa verificación de códigos
+- Incluye tests unitarios
+- Actualiza documentación de API"
+
+# 6. Push y crear PR
+git push -u origin feature/nueva-funcionalidad</code></pre>
+                </div>
+
+                <h3>Usar Claude para Mensajes de Commit</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Generar mensaje de commit basado en cambios
+git diff | claude "Basándote en estos cambios, genera un mensaje de commit siguiendo Conventional Commits (feat/fix/docs/refactor/test)"
+
+# Generar descripción de PR
+git diff main...feature/mi-feature | claude "Genera una descripción de Pull Request profesional explicando estos cambios, incluyendo sección de Testing y Breaking Changes si aplica"</code></pre>
+                </div>
+
+                <h3>.gitignore para Proyectos con Claude Code</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># .gitignore recomendado
+# Claude Code
+.claude/cache/
+.claude/sessions/
+
+# Dependencias
+node_modules/
+vendor/
+venv/
+
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+
+# Archivos de build
+dist/
+build/
+out/
+.next/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Tests
+coverage/
+.nyc_output/</code></pre>
+                </div>
+
+                <h3>Pre-commit Hooks con Claude</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Instalar husky
+npm install --save-dev husky
+
+# Inicializar husky
+npx husky init
+
+# Crear pre-commit hook
+cat > .husky/pre-commit << 'EOF'
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Lint
+npm run lint
+
+# Tests
+npm test
+
+# Revisar con Claude (opcional - comenta si es muy lento)
+# claude "Revisa rápidamente los archivos staged y reporta problemas críticos: $(git diff --cached)"
+
+EOF
+
+chmod +x .husky/pre-commit</code></pre>
+                </div>
+
+                <h2>📊 Métricas y Monitoreo de Productividad</h2>
+
+                <h3>Medir el Impacto de Claude Code</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Métrica</th>
+                            <th>Antes de Claude</th>
+                            <th>Con Claude</th>
+                            <th>Mejora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tiempo para implementar feature</td>
+                            <td>4-6 horas</td>
+                            <td>1-2 horas</td>
+                            <td>~70%</td>
+                        </tr>
+                        <tr>
+                            <td>Tiempo para debugging</td>
+                            <td>2-3 horas</td>
+                            <td>30-45 min</td>
+                            <td>~75%</td>
+                        </tr>
+                        <tr>
+                            <td>Cobertura de tests</td>
+                            <td>40-50%</td>
+                            <td>80-90%</td>
+                            <td>+40pp</td>
+                        </tr>
+                        <tr>
+                            <td>Documentación actualizada</td>
+                            <td>60%</td>
+                            <td>95%</td>
+                            <td>+35pp</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert success">
+                    <div class="alert-icon">🎯</div>
+                    <div class="alert-content">
+                        <h4>Productividad Real</h4>
+                        <p>Desarrolladores reportan aumento de productividad del 40-70% en tareas de desarrollo cuando usan Claude Code efectivamente.</p>
+                    </div>
+                </div>
+
+                <h2>🎓 Recursos Adicionales</h2>
+
+                <ul>
+                    <li><a href="https://docs.anthropic.com/claude/docs/prompt-engineering" target="_blank">Guía Oficial de Prompt Engineering</a></li>
+                    <li><a href="https://console.anthropic.com" target="_blank">Anthropic Console - Monitoreo de Uso</a></li>
+                    <li><a href="https://github.com/anthropics/claude-code" target="_blank">Claude Code GitHub Repository</a></li>
+                    <li><a href="https://www.conventionalcommits.org" target="_blank">Conventional Commits Specification</a></li>
+                </ul>
+
+                <nav class="navigation">
+                    <a href="05-mcp.html" class="nav-btn">← Anterior</a>
+                    <a href="07-casos-avanzados.html" class="nav-btn">Siguiente →</a>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 Claude Code Documentation. Creado con Claude Code.</p>
+            <div class="footer-links">
+                <a href="https://www.anthropic.com" target="_blank">Anthropic</a>
+                <a href="https://docs.anthropic.com" target="_blank">Documentación Oficial</a>
+                <a href="https://github.com/anthropics/claude-code" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/code-copy.js"></script>
+</body>
+</html>
