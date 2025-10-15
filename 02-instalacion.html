@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Instalación y Configuración de Claude Code en macOS">
+    <title>2. Instalación y Configuración | Claude Code para macOS</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🤖</div>
+                <span>Claude Code Docs</span>
+            </a>
+            <div class="nav-controls">
+                <select id="page-selector" class="page-selector"></select>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="progress-indicator">
+                <span id="progress-indicator">Página 3 de 9</span>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill" style="width: 33.33%"></div>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <h1>Instalación y Configuración en macOS</h1>
+
+                <p>En esta sección aprenderás a instalar y configurar Claude Code en tu Mac paso a paso. Cubriremos tres métodos de instalación y la configuración completa.</p>
+
+                <h2>Método 1: Instalación con Homebrew (Recomendado)</h2>
+
+                <p>Homebrew es el gestor de paquetes más popular para macOS. Este es el método más simple y recomendado.</p>
+
+                <h3>Paso 1: Instalar Homebrew (si no lo tienes)</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar si Homebrew está instalado
+which brew
+
+# Si no está instalado, ejecutar:
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
+                </div>
+
+                <div class="alert info">
+                    <div class="alert-icon">🍺</div>
+                    <div class="alert-content">
+                        <h4>Configuración Post-Instalación de Homebrew</h4>
+                        <p>Después de instalar Homebrew, es posible que necesites agregarlo a tu PATH. En macOS con Apple Silicon (M1/M2/M3), ejecuta:</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-zsh"># Para Apple Silicon (M1/M2/M3)
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc
+source ~/.zshrc
+
+# Para Intel Macs
+echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zshrc
+source ~/.zshrc</code></pre>
+                </div>
+
+                <h3>Paso 2: Instalar Claude Code</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Actualizar Homebrew
+brew update
+
+# Instalar Claude Code
+brew install anthropic/tap/claude-code
+
+# Verificar la instalación
+claude-code --version</code></pre>
+                </div>
+
+                <h2>Método 2: Instalación con npm</h2>
+
+                <p>Si prefieres usar npm (Node Package Manager), puedes instalar Claude Code como paquete global.</p>
+
+                <h3>Prerrequisitos</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar Node.js (versión 18 o superior)
+node --version
+
+# Si no tienes Node.js, instálalo con Homebrew
+brew install node</code></pre>
+                </div>
+
+                <h3>Instalación</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Instalar Claude Code globalmente
+npm install -g @anthropic-ai/claude-code
+
+# Verificar instalación
+claude-code --version</code></pre>
+                </div>
+
+                <h2>Método 3: Instalación desde Binarios</h2>
+
+                <p>Para instalación manual o si los métodos anteriores no funcionan:</p>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Descargar el binario para macOS
+curl -L https://github.com/anthropics/claude-code/releases/latest/download/claude-code-macos-arm64.tar.gz -o claude-code.tar.gz
+
+# Para Intel Macs, usar:
+# curl -L https://github.com/anthropics/claude-code/releases/latest/download/claude-code-macos-x64.tar.gz -o claude-code.tar.gz
+
+# Extraer
+tar -xzf claude-code.tar.gz
+
+# Mover a directorio en el PATH
+sudo mv claude-code /usr/local/bin/
+
+# Hacer ejecutable
+sudo chmod +x /usr/local/bin/claude-code
+
+# Verificar instalación
+claude-code --version</code></pre>
+                </div>
+
+                <h2>Configuración Inicial</h2>
+
+                <h3>1. Obtener API Key de Anthropic</h3>
+
+                <p>Antes de usar Claude Code, necesitas una API key:</p>
+
+                <ol>
+                    <li>Visita <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></li>
+                    <li>Crea una cuenta o inicia sesión</li>
+                    <li>Ve a "API Keys" en el menú lateral</li>
+                    <li>Haz clic en "Create Key"</li>
+                    <li>Copia la key (empieza con <code>sk-ant-...</code>)</li>
+                </ol>
+
+                <div class="alert warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                        <h4>Seguridad de la API Key</h4>
+                        <p>Nunca compartas tu API key ni la subas a repositorios públicos. Guárdala de forma segura y rótala regularmente.</p>
+                    </div>
+                </div>
+
+                <h3>2. Configurar Variables de Entorno</h3>
+
+                <p>Configura tu API key en el archivo de configuración de tu shell:</p>
+
+                <div class="code-block">
+                    <pre><code class="language-zsh"># Abrir el archivo de configuración de zsh
+nano ~/.zshrc
+
+# O si usas bash:
+# nano ~/.bash_profile
+
+# Agregar estas líneas al final:
+export ANTHROPIC_API_KEY="sk-ant-tu-api-key-aqui"
+export CLAUDE_CODE_MODEL="claude-3-sonnet-20240229"  # Opcional
+
+# Guardar (Ctrl+O, Enter, Ctrl+X) y recargar:
+source ~/.zshrc</code></pre>
+                </div>
+
+                <h3>3. Inicialización de Claude Code</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Primera ejecución - configuración interactiva
+claude-code init
+
+# Esto creará el directorio de configuración en:
+# ~/.config/claude-code/</code></pre>
+                </div>
+
+                <h3>4. Archivo de Configuración</h3>
+
+                <p>Claude Code usa un archivo de configuración en <code>~/.config/claude-code/config.json</code>:</p>
+
+                <div class="code-block">
+                    <pre><code class="language-json">{
+  "apiKey": "${ANTHROPIC_API_KEY}",
+  "model": "claude-3-sonnet-20240229",
+  "maxTokens": 4096,
+  "temperature": 0.7,
+  "contextWindowSize": 100000,
+  "editor": "code",
+  "theme": "dark",
+  "autoSave": true,
+  "historyLimit": 50,
+  "cache": {
+    "enabled": true,
+    "ttl": 3600,
+    "maxSize": "500MB"
+  }
+}</code></pre>
+                </div>
+
+                <h2>Verificación de la Instalación</h2>
+
+                <p>Ejecuta estos comandos para verificar que todo está funcionando:</p>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Ver versión
+claude-code --version
+
+# Ver configuración actual
+claude-code config --show
+
+# Prueba simple
+claude-code "Hola, ¿estás funcionando correctamente?"
+
+# Ver ayuda
+claude-code --help</code></pre>
+                </div>
+
+                <h2>Integración con Editores</h2>
+
+                <h3>Visual Studio Code</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Configurar VS Code como editor predeterminado
+claude-code config set editor "code"
+
+# Abrir archivo con Claude Code desde VS Code
+# En VS Code, abre la paleta de comandos (Cmd+Shift+P) y busca
+# "Terminal: Create New Terminal"
+
+# Luego puedes usar:
+claude-code "Explica este archivo" archivo.js</code></pre>
+                </div>
+
+                <h3>Cursor Editor</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Configurar Cursor como editor
+claude-code config set editor "cursor"</code></pre>
+                </div>
+
+                <h2>Configuración Avanzada</h2>
+
+                <h3>Alias de Terminal</h3>
+
+                <p>Crea alias para comandos frecuentes:</p>
+
+                <div class="code-block">
+                    <pre><code class="language-zsh"># Agregar a ~/.zshrc
+alias cc="claude-code"
+alias ccr="claude-code review"
+alias cct="claude-code test"
+alias ccd="claude-code doc"
+
+# Recargar
+source ~/.zshrc
+
+# Ahora puedes usar:
+cc "Genera una función factorial"</code></pre>
+                </div>
+
+                <h3>Configurar Proxy (si es necesario)</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-zsh"># Agregar a ~/.zshrc
+export HTTPS_PROXY="http://proxy.company.com:8080"
+export HTTP_PROXY="http://proxy.company.com:8080"</code></pre>
+                </div>
+
+                <h2>Solución de Problemas de Instalación</h2>
+
+                <h3>Problema: "Command not found"</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar que el binario está en el PATH
+which claude-code
+
+# Agregar al PATH manualmente si es necesario
+echo 'export PATH="$PATH:/usr/local/bin"' >> ~/.zshrc
+source ~/.zshrc</code></pre>
+                </div>
+
+                <h3>Problema: "Permission denied"</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Dar permisos de ejecución
+chmod +x /usr/local/bin/claude-code
+
+# Si es un problema de permisos en macOS:
+xattr -d com.apple.quarantine /usr/local/bin/claude-code</code></pre>
+                </div>
+
+                <h3>Problema: "API key not configured"</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar que la variable está configurada
+echo $ANTHROPIC_API_KEY
+
+# Configurar directamente en el config
+claude-code config set apiKey "sk-ant-tu-key-aqui"</code></pre>
+                </div>
+
+                <div class="alert success">
+                    <div class="alert-icon">✅</div>
+                    <div class="alert-content">
+                        <h4>Instalación Completada</h4>
+                        <p>Si todos los comandos de verificación funcionaron, Claude Code está correctamente instalado y configurado. En la siguiente sección aprenderás los comandos básicos para empezar a trabajar.</p>
+                    </div>
+                </div>
+
+                <nav class="navigation">
+                    <a href="01-introduccion.html" class="nav-btn">
+                        ← Anterior: Introducción
+                    </a>
+                    <a href="03-comandos.html" class="nav-btn">
+                        Siguiente: Comandos Básicos →
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 Claude Code Documentation. Creado con Claude Code.</p>
+            <div class="footer-links">
+                <a href="https://www.anthropic.com" target="_blank">Anthropic</a>
+                <a href="https://docs.anthropic.com" target="_blank">Documentación Oficial</a>
+                <a href="https://github.com/anthropics/claude-code" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/code-copy.js"></script>
+</body>
+</html>

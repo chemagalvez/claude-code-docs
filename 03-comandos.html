@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3. Comandos Básicos | Claude Code para macOS</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🤖</div>
+                <span>Claude Code Docs</span>
+            </a>
+            <div class="nav-controls">
+                <select id="page-selector" class="page-selector"></select>
+                <button id="theme-toggle" class="theme-toggle">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="progress-indicator">
+                <span id="progress-indicator">Página 4 de 9</span>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill" style="width: 44.44%"></div>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <h1>Comandos Básicos y Flujo de Trabajo</h1>
+
+                <h2>Sintaxis General</h2>
+                <p>Claude Code sigue una sintaxis consistente para todos los comandos:</p>
+
+                <div class="code-block">
+                    <pre><code class="language-bash">claude-code [opciones] [comando] [argumentos]</code></pre>
+                </div>
+
+                <h2>Comandos Esenciales</h2>
+
+                <h3>1. Modo Interactivo</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Iniciar sesión interactiva
+claude-code
+
+# Iniciar con un archivo de contexto
+claude-code -f src/app.js
+
+# Iniciar con múltiples archivos
+claude-code -f src/*.js</code></pre>
+                </div>
+
+                <h3>2. Consultas Directas</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Pregunta simple
+claude-code "¿Cómo implemento un singleton en TypeScript?"
+
+# Analizar archivo
+claude-code "Explica este código" utils.ts
+
+# Generar código
+claude-code "Crea una función que valide emails" > validators.js</code></pre>
+                </div>
+
+                <h3>3. Generación de Código</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Generar con especificaciones
+claude-code generate "API REST con Express, incluye rutas CRUD para usuarios"
+
+# Generar y guardar
+claude-code generate "Componente React de formulario de login" > LoginForm.tsx
+
+# Generar tests
+claude-code test src/calculator.js</code></pre>
+                </div>
+
+                <h3>4. Revisión de Código</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Revisar archivo
+claude-code review src/index.js
+
+# Revisar con focus específico
+claude-code review --focus security auth.js
+
+# Revisar cambios de git
+git diff | claude-code review</code></pre>
+                </div>
+
+                <h3>5. Refactorización</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Refactorizar archivo
+claude-code refactor legacy-code.js
+
+# Refactorizar aplicando patrón
+claude-code refactor --pattern "factory" ProductManager.js
+
+# Refactorizar a TypeScript
+claude-code refactor --to typescript app.js</code></pre>
+                </div>
+
+                <h2>Opciones Globales</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Opción</th>
+                            <th>Descripción</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>--model</code></td>
+                            <td>Especificar modelo de Claude</td>
+                            <td><code>--model opus</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>--file, -f</code></td>
+                            <td>Archivo(s) de contexto</td>
+                            <td><code>-f src/app.js</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>--output, -o</code></td>
+                            <td>Archivo de salida</td>
+                            <td><code>-o result.js</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>--verbose, -v</code></td>
+                            <td>Modo detallado</td>
+                            <td><code>-v</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>--json</code></td>
+                            <td>Salida en JSON</td>
+                            <td><code>--json</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>--help, -h</code></td>
+                            <td>Mostrar ayuda</td>
+                            <td><code>-h</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Flujo de Trabajo Típico</h2>
+
+                <div class="alert tip">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Workflow Recomendado</h4>
+                        <p>Este es un flujo de trabajo típico para desarrollar una nueva feature:</p>
+                    </div>
+                </div>
+
+                <h3>Paso 1: Planificación</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Diseñar arquitectura
+claude-code "Diseña la arquitectura para un sistema de autenticación JWT \
+incluyendo registro, login, refresh tokens y middleware"</code></pre>
+                </div>
+
+                <h3>Paso 2: Implementación</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Generar estructura base
+claude-code generate "Implementa el sistema de autenticación diseñado"
+
+# Generar archivos específicos
+claude-code "Crea el modelo de Usuario con Mongoose" > models/User.js
+claude-code "Crea el controlador de autenticación" > controllers/auth.js
+claude-code "Crea middleware de verificación JWT" > middleware/auth.js</code></pre>
+                </div>
+
+                <h3>Paso 3: Testing</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Generar tests
+claude-code test controllers/auth.js > tests/auth.test.js
+
+# Revisar cobertura
+claude-code "Analiza la cobertura de tests y sugiere tests adicionales" \
+tests/auth.test.js</code></pre>
+                </div>
+
+                <h3>Paso 4: Documentación</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Generar documentación
+claude-code doc controllers/auth.js
+
+# Crear README
+claude-code "Genera un README para el módulo de autenticación" > auth/README.md</code></pre>
+                </div>
+
+                <h3>Paso 5: Revisión</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Revisar todo el código
+claude-code review src/auth/**/*.js
+
+# Verificar seguridad
+claude-code review --focus security src/auth/**/*.js</code></pre>
+                </div>
+
+                <h2>Atajos de Productividad en macOS</h2>
+
+                <h3>Aliases Útiles</h3>
+                <div class="code-block">
+                    <pre><code class="language-zsh"># Agregar a ~/.zshrc
+alias cc="claude-code"
+alias ccg="claude-code generate"
+alias ccr="claude-code review"
+alias cct="claude-code test"
+alias ccd="claude-code doc"
+alias ccf="claude-code refactor"
+
+# Función helper para revisar git diff
+function ccgd() {
+    git diff | claude-code review
+}
+
+# Función para generar y abrir en editor
+function ccge() {
+    claude-code generate "$@" | tee output.tmp && code output.tmp
+}</code></pre>
+                </div>
+
+                <h2>Integración con Git</h2>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Revisar cambios antes de commit
+git diff | claude-code "Resume estos cambios en un mensaje de commit"
+
+# Generar mensaje de commit
+git diff --cached | claude-code "Genera un mensaje de commit convencional"
+
+# Analizar conflictos de merge
+git diff --name-only --diff-filter=U | xargs claude-code \
+"Ayúdame a resolver estos conflictos de merge"</code></pre>
+                </div>
+
+                <h2>Ejemplos Prácticos</h2>
+
+                <h3>Debugging</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Analizar stack trace
+claude-code "Analiza este error y sugiere soluciones" error.log
+
+# Encontrar bug
+claude-code "Este código no funciona correctamente. ¿Cuál es el problema?" \
+buggy-code.js</code></pre>
+                </div>
+
+                <h3>Optimización</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Optimizar rendimiento
+claude-code "Optimiza este código para mejor rendimiento" slow-function.js
+
+# Reducir complejidad
+claude-code "Simplifica esta función manteniendo la funcionalidad" \
+complex-logic.js</code></pre>
+                </div>
+
+                <h3>Conversión entre Lenguajes</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># JavaScript a TypeScript
+claude-code "Convierte esto a TypeScript con tipos apropiados" app.js > app.ts
+
+# Python a JavaScript
+claude-code "Convierte este código Python a JavaScript moderno" script.py > script.js</code></pre>
+                </div>
+
+                <div class="alert success">
+                    <div class="alert-icon">🚀</div>
+                    <div class="alert-content">
+                        <h4>Próximo Nivel</h4>
+                        <p>Ahora que dominas los comandos básicos, aprenderás a gestionar el contexto de forma eficiente para maximizar la efectividad de Claude Code.</p>
+                    </div>
+                </div>
+
+                <nav class="navigation">
+                    <a href="02-instalacion.html" class="nav-btn">← Anterior</a>
+                    <a href="04-contexto.html" class="nav-btn">Siguiente →</a>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 Claude Code Documentation</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/code-copy.js"></script>
+</body>
+</html>

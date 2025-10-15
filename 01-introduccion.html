@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IntroducciÛn a Claude Code - Conceptos b·sicos, arquitectura y capacidades">
+    <title>1. IntroducciÛn a Claude Code | Claude Code para macOS</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>></text></svg>">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">></div>
+                <span>Claude Code Docs</span>
+            </a>
+            <div class="nav-controls">
+                <select id="page-selector" class="page-selector"></select>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema"><</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="progress-indicator">
+                <span id="progress-indicator">P·gina 2 de 9</span>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill" style="width: 22.22%"></div>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <h1>IntroducciÛn a Claude Code</h1>
+
+                <p>
+                    Claude Code es mucho m·s que una simple herramienta CLI de inteligencia artificial. Es un asistente
+                    de desarrollo completo que te ayuda a escribir, revisar, refactorizar y comprender cÛdigo de forma
+                    m·s eficiente. En esta secciÛn, exploraremos quÈ es Claude Code, cÛmo funciona, y por quÈ se ha
+                    convertido en una herramienta esencial para desarrolladores en macOS.
+                </p>
+
+                <h2>øQuÈ es Claude Code?</h2>
+
+                <p>
+                    Claude Code es la interfaz de lÌnea de comandos oficial de Anthropic que integra Claude AI en tu
+                    flujo de trabajo de desarrollo. A diferencia de otras herramientas de IA para cÛdigo, Claude Code
+                    est· diseÒado especÌficamente para:
+                </p>
+
+                <ul>
+                    <li>Integrarse perfectamente con tu terminal de macOS (zsh/bash)</li>
+                    <li>Mantener contexto de conversaciones largas sobre tu cÛdigo</li>
+                    <li>Trabajar con archivos locales de forma segura y eficiente</li>
+                    <li>Extenderse mediante el Model Context Protocol (MCP)</li>
+                    <li>Optimizar el uso de tokens y costos de API</li>
+                </ul>
+
+                <h2>Arquitectura de Claude Code</h2>
+
+                <p>
+                    Para entender cÛmo aprovechar al m·ximo Claude Code, es importante conocer su arquitectura:
+                </p>
+
+                <div class="alert info">
+                    <div class="alert-icon"><◊</div>
+                    <div class="alert-content">
+                        <h4>Componentes Principales</h4>
+                        <p>Claude Code est· compuesto por tres capas principales que trabajan juntas para proporcionar una experiencia fluida.</p>
+                    </div>
+                </div>
+
+                <h3>1. Capa de CLI (Command Line Interface)</h3>
+                <p>
+                    La interfaz de lÌnea de comandos es tu punto de entrada principal. Se ejecuta en tu terminal de
+                    macOS y procesa comandos como:
+                </p>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Iniciar una sesiÛn interactiva
+claude-code
+
+# Ejecutar una tarea especÌfica
+claude-code "Explica este archivo" index.js
+
+# Ver el historial de conversaciones
+claude-code --history</code></pre>
+                </div>
+
+                <h3>2. Capa de GestiÛn de Contexto</h3>
+                <p>
+                    Esta capa es crucial y es lo que diferencia a Claude Code de otras herramientas. Gestiona:
+                </p>
+
+                <ul>
+                    <li><strong>Memoria de conversaciÛn:</strong> Mantiene el contexto de tus interacciones</li>
+                    <li><strong>Cache de archivos:</strong> Optimiza lecturas repetidas de los mismos archivos</li>
+                    <li><strong>LÌmites de tokens:</strong> Gestiona el contexto para no exceder los lÌmites de la API</li>
+                    <li><strong>Historial de sesiones:</strong> Permite retomar conversaciones anteriores</li>
+                </ul>
+
+                <h3>3. Capa de IntegraciÛn con Claude API</h3>
+                <p>
+                    Se comunica con la API de Anthropic de forma eficiente:
+                </p>
+
+                <ul>
+                    <li>Maneja autenticaciÛn y tokens de API</li>
+                    <li>Optimiza el envÌo de prompts para reducir costos</li>
+                    <li>Implementa reintentos autom·ticos en caso de errores</li>
+                    <li>Soporta streaming de respuestas para feedback instant·neo</li>
+                </ul>
+
+                <h2>Capacidades Principales</h2>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"></div>
+                        <h3>GeneraciÛn de CÛdigo</h3>
+                        <p>Crea cÛdigo de alta calidad en m˙ltiples lenguajes bas·ndose en descripciones en lenguaje natural.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">=</div>
+                        <h3>RefactorizaciÛn</h3>
+                        <p>Mejora cÛdigo existente manteniendo la funcionalidad, aplicando patrones de diseÒo y optimizaciones.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">>Í</div>
+                        <h3>GeneraciÛn de Tests</h3>
+                        <p>Genera tests unitarios, de integraciÛn y e2e autom·ticamente bas·ndose en tu cÛdigo.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">=›</div>
+                        <h3>DocumentaciÛn</h3>
+                        <p>Crea documentaciÛn tÈcnica, comentarios de cÛdigo y archivos README de forma inteligente.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">=</div>
+                        <h3>Debugging</h3>
+                        <p>Identifica y corrige bugs, analiza stack traces y sugiere soluciones a problemas comunes.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon"><ì</div>
+                        <h3>Aprendizaje</h3>
+                        <p>Explica conceptos complejos, sugiere mejores pr·cticas y ayuda a entender cÛdigo desconocido.</p>
+                    </div>
+                </div>
+
+                <h2>Diferencias con Otras Herramientas de IA</h2>
+
+                <p>
+                    Claude Code se diferencia de otras herramientas como GitHub Copilot, ChatGPT, o Cursor en varios aspectos clave:
+                </p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CaracterÌstica</th>
+                            <th>Claude Code</th>
+                            <th>Otras Herramientas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>IntegraciÛn</td>
+                            <td>CLI nativo de macOS</td>
+                            <td>Plugins de editor o interfaces web</td>
+                        </tr>
+                        <tr>
+                            <td>Contexto</td>
+                            <td>GestiÛn avanzada de contexto largo</td>
+                            <td>Contexto limitado o sin memoria</td>
+                        </tr>
+                        <tr>
+                            <td>Privacidad</td>
+                            <td>Procesamiento local del contexto</td>
+                            <td>Depende del servicio</td>
+                        </tr>
+                        <tr>
+                            <td>Extensibilidad</td>
+                            <td>MCP para extensiones personalizadas</td>
+                            <td>Limitado o inexistente</td>
+                        </tr>
+                        <tr>
+                            <td>Modelo</td>
+                            <td>Claude 3 (Opus, Sonnet, Haiku)</td>
+                            <td>VarÌa seg˙n el servicio</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert tip">
+                    <div class="alert-icon">=°</div>
+                    <div class="alert-content">
+                        <h4>Consejo Pro</h4>
+                        <p>Claude Code complementa herramientas como VS Code o Cursor. Puedes usar Claude Code para tareas de alto nivel y arquitectura, mientras usas otras herramientas para completado de cÛdigo en tiempo real.</p>
+                    </div>
+                </div>
+
+                <h2>Modelos de Claude Disponibles</h2>
+
+                <p>
+                    Claude Code puede utilizar diferentes modelos seg˙n tus necesidades:
+                </p>
+
+                <h3>Claude 3 Opus</h3>
+                <ul>
+                    <li><strong>Uso:</strong> Tareas complejas que requieren razonamiento profundo</li>
+                    <li><strong>Ventajas:</strong> M·xima precisiÛn y capacidad de an·lisis</li>
+                    <li><strong>Costo:</strong> Mayor costo por token</li>
+                    <li><strong>Ideal para:</strong> Arquitectura de software, refactorizaciÛn compleja, debugging difÌcil</li>
+                </ul>
+
+                <h3>Claude 3 Sonnet</h3>
+                <ul>
+                    <li><strong>Uso:</strong> Balance entre velocidad y calidad (recomendado)</li>
+                    <li><strong>Ventajas:</strong> Excelente rendimiento a precio razonable</li>
+                    <li><strong>Costo:</strong> Moderado</li>
+                    <li><strong>Ideal para:</strong> Uso diario, generaciÛn de cÛdigo, tests, documentaciÛn</li>
+                </ul>
+
+                <h3>Claude 3 Haiku</h3>
+                <ul>
+                    <li><strong>Uso:</strong> Tareas r·pidas y simples</li>
+                    <li><strong>Ventajas:</strong> Respuestas ultrarr·pidas, bajo costo</li>
+                    <li><strong>Costo:</strong> Menor costo por token</li>
+                    <li><strong>Ideal para:</strong> Consultas simples, formateo de cÛdigo, tareas repetitivas</li>
+                </ul>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Especificar modelo en la configuraciÛn
+claude-code --model opus "DiseÒa la arquitectura de este sistema"
+
+# Usar Sonnet para uso general (por defecto)
+claude-code "Genera tests para este mÛdulo"
+
+# Usar Haiku para tareas simples
+claude-code --model haiku "Formatea este JSON"</code></pre>
+                </div>
+
+                <h2>Requisitos del Sistema para macOS</h2>
+
+                <p>
+                    Para ejecutar Claude Code en tu Mac necesitas:
+                </p>
+
+                <h3>Requisitos MÌnimos</h3>
+                <ul>
+                    <li>macOS 12.0 (Monterey) o superior</li>
+                    <li>4 GB de RAM disponible</li>
+                    <li>100 MB de espacio en disco</li>
+                    <li>ConexiÛn a Internet estable</li>
+                    <li>Terminal (zsh o bash)</li>
+                </ul>
+
+                <h3>Requisitos Recomendados</h3>
+                <ul>
+                    <li>macOS 14.0 (Sonoma) o superior</li>
+                    <li>8 GB de RAM o m·s</li>
+                    <li>500 MB de espacio en disco (para cache y logs)</li>
+                    <li>Homebrew instalado</li>
+                    <li>Git configurado</li>
+                </ul>
+
+                <div class="alert warning">
+                    <div class="alert-icon">†</div>
+                    <div class="alert-content">
+                        <h4>Compatibilidad con Apple Silicon</h4>
+                        <p>Claude Code est· completamente optimizado para chips M1, M2 y M3. Si tienes un Mac con procesador Intel, la herramienta tambiÈn funcionar· perfectamente mediante Rosetta 2.</p>
+                    </div>
+                </div>
+
+                <h2>Casos de Uso Comunes</h2>
+
+                <p>
+                    Estos son algunos ejemplos de cÛmo los desarrolladores utilizan Claude Code en su dÌa a dÌa:
+                </p>
+
+                <h3>1. Desarrollo de Nuevas Funcionalidades</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Ejemplo: Desarrollar un sistema de autenticaciÛn
+claude-code "Crea un sistema de autenticaciÛn con JWT para una API de Node.js. \
+Incluye registro, login, refresh tokens y middleware de protecciÛn de rutas."</code></pre>
+                </div>
+
+                <h3>2. RevisiÛn y RefactorizaciÛn de CÛdigo</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Ejemplo: Refactorizar cÛdigo legacy
+claude-code "Revisa este archivo y sugiere mejoras aplicando principios SOLID" \
+legacy-service.js</code></pre>
+                </div>
+
+                <h3>3. Debugging y ResoluciÛn de Problemas</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Ejemplo: Analizar un error
+claude-code "Analiza este stack trace y sugiere soluciones" error-log.txt</code></pre>
+                </div>
+
+                <h3>4. GeneraciÛn de DocumentaciÛn</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Ejemplo: Crear README
+claude-code "Genera un README completo para este proyecto incluyendo \
+instalaciÛn, uso, API y ejemplos"</code></pre>
+                </div>
+
+                <h2>VisiÛn General de la Arquitectura TÈcnica</h2>
+
+                <p>
+                    Claude Code utiliza una arquitectura modular que permite extensibilidad y mantenibilidad:
+                </p>
+
+                <div class="code-block">
+                    <pre><code class="language-plaintext">                                             
+           Terminal de macOS (zsh)           
+                  ,                          
+                   
+                   º
+                                             
+          Claude Code CLI                    
+                                      
+    Parser      Context      Config   
+                Manager               
+                                      
+                  ,                          
+                   
+                   º
+                                             
+        Model Context Protocol (MCP)         
+                                      
+   File        Database     Custom    
+   System      Server      Plugins    
+                                      
+                  ,                          
+                   
+                   º
+                                             
+         Anthropic Claude API                
+            (claude-3-opus/sonnet/haiku)     
+                                             </code></pre>
+                </div>
+
+                <div class="alert success">
+                    <div class="alert-icon"><Ø</div>
+                    <div class="alert-content">
+                        <h4>PrÛximos Pasos</h4>
+                        <p>Ahora que comprendes quÈ es Claude Code y cÛmo funciona, en la siguiente secciÛn aprender·s a instalarlo y configurarlo paso a paso en tu Mac.</p>
+                    </div>
+                </div>
+
+                <nav class="navigation">
+                    <a href="index.html" class="nav-btn">
+                        ê Anterior: Inicio
+                    </a>
+                    <a href="02-instalacion.html" class="nav-btn">
+                        Siguiente: InstalaciÛn í
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 Claude Code Documentation. Creado con Claude Code.</p>
+            <div class="footer-links">
+                <a href="https://www.anthropic.com" target="_blank">Anthropic</a>
+                <a href="https://docs.anthropic.com" target="_blank">DocumentaciÛn Oficial</a>
+                <a href="https://github.com/anthropics/claude-code" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/code-copy.js"></script>
+</body>
+</html>
