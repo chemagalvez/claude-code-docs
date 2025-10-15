@@ -8,18 +8,18 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>></text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
 </head>
 <body>
     <header>
         <div class="container header-content">
             <a href="index.html" class="logo">
-                <div class="logo-icon">></div>
+                <div class="logo-icon">🤖</div>
                 <span>Claude Code Docs</span>
             </a>
             <div class="nav-controls">
                 <select id="page-selector" class="page-selector"></select>
-                <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema"><</button>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌙</button>
             </div>
         </div>
     </header>
@@ -66,7 +66,7 @@
                 </p>
 
                 <div class="alert info">
-                    <div class="alert-icon"><×</div>
+                    <div class="alert-icon">ℹ️</div>
                     <div class="alert-content">
                         <h4>Componentes Principales</h4>
                         <p>Claude Code está compuesto por tres capas principales que trabajan juntas para proporcionar una experiencia fluida.</p>
@@ -81,13 +81,13 @@
 
                 <div class="code-block">
                     <pre><code class="language-bash"># Iniciar una sesión interactiva
-claude-code
+claude
 
 # Ejecutar una tarea específica
-claude-code "Explica este archivo" index.js
+claude "Explica este archivo" index.js
 
 # Ver el historial de conversaciones
-claude-code --history</code></pre>
+claude --history</code></pre>
                 </div>
 
                 <h3>2. Capa de Gestión de Contexto</h3>
@@ -118,14 +118,13 @@ claude-code --history</code></pre>
 
                 <div class="feature-grid">
                     <div class="feature-card">
-                        <div class="feature-icon">
-</div>
+                        <div class="feature-icon">💻</div>
                         <h3>Generación de Código</h3>
                         <p>Crea código de alta calidad en múltiples lenguajes basándose en descripciones en lenguaje natural.</p>
                     </div>
 
                     <div class="feature-card">
-                        <div class="feature-icon">=</div>
+                        <div class="feature-icon">🔧</div>
                         <h3>Refactorización</h3>
                         <p>Mejora código existente manteniendo la funcionalidad, aplicando patrones de diseño y optimizaciones.</p>
                     </div>
@@ -143,13 +142,13 @@ claude-code --history</code></pre>
                     </div>
 
                     <div class="feature-card">
-                        <div class="feature-icon">=</div>
+                        <div class="feature-icon">🐛</div>
                         <h3>Debugging</h3>
                         <p>Identifica y corrige bugs, analiza stack traces y sugiere soluciones a problemas comunes.</p>
                     </div>
 
                     <div class="feature-card">
-                        <div class="feature-icon"><</div>
+                        <div class="feature-icon">📚</div>
                         <h3>Aprendizaje</h3>
                         <p>Explica conceptos complejos, sugiere mejores prácticas y ayuda a entender código desconocido.</p>
                     </div>
@@ -238,13 +237,13 @@ claude-code --history</code></pre>
 
                 <div class="code-block">
                     <pre><code class="language-bash"># Especificar modelo en la configuración
-claude-code --model opus "Diseña la arquitectura de este sistema"
+claude --model opus "Diseña la arquitectura de este sistema"
 
 # Usar Sonnet para uso general (por defecto)
-claude-code "Genera tests para este módulo"
+claude "Genera tests para este módulo"
 
 # Usar Haiku para tareas simples
-claude-code --model haiku "Formatea este JSON"</code></pre>
+claude --model haiku "Formatea este JSON"</code></pre>
                 </div>
 
                 <h2>Requisitos del Sistema para macOS</h2>
@@ -272,7 +271,7 @@ claude-code --model haiku "Formatea este JSON"</code></pre>
                 </ul>
 
                 <div class="alert warning">
-                    <div class="alert-icon"> </div>
+                    <div class="alert-icon">⚠️</div>
                     <div class="alert-content">
                         <h4>Compatibilidad con Apple Silicon</h4>
                         <p>Claude Code está completamente optimizado para chips M1, M2 y M3. Si tienes un Mac con procesador Intel, la herramienta también funcionará perfectamente mediante Rosetta 2.</p>
@@ -288,27 +287,27 @@ claude-code --model haiku "Formatea este JSON"</code></pre>
                 <h3>1. Desarrollo de Nuevas Funcionalidades</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Ejemplo: Desarrollar un sistema de autenticación
-claude-code "Crea un sistema de autenticación con JWT para una API de Node.js. \
+claude "Crea un sistema de autenticación con JWT para una API de Node.js. \
 Incluye registro, login, refresh tokens y middleware de protección de rutas."</code></pre>
                 </div>
 
                 <h3>2. Revisión y Refactorización de Código</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Ejemplo: Refactorizar código legacy
-claude-code "Revisa este archivo y sugiere mejoras aplicando principios SOLID" \
+claude "Revisa este archivo y sugiere mejoras aplicando principios SOLID" \
 legacy-service.js</code></pre>
                 </div>
 
                 <h3>3. Debugging y Resolución de Problemas</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Ejemplo: Analizar un error
-claude-code "Analiza este stack trace y sugiere soluciones" error-log.txt</code></pre>
+claude "Analiza este stack trace y sugiere soluciones" error-log.txt</code></pre>
                 </div>
 
                 <h3>4. Generación de Documentación</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Ejemplo: Crear README
-claude-code "Genera un README completo para este proyecto incluyendo \
+claude "Genera un README completo para este proyecto incluyendo \
 instalación, uso, API y ejemplos"</code></pre>
                 </div>
 
@@ -319,33 +318,35 @@ instalación, uso, API y ejemplos"</code></pre>
                 </p>
 
                 <div class="code-block">
-                    <pre><code class="language-plaintext">                                             
-           Terminal de macOS (zsh)           
-                  ,                          
-                   
-                   ¼
-                                             
-          Claude Code CLI                    
-                                      
-    Parser      Context      Config   
-                Manager               
-                                      
-                  ,                          
-                   
-                   ¼
-                                             
-        Model Context Protocol (MCP)         
-                                      
-   File        Database     Custom    
-   System      Server      Plugins    
-                                      
-                  ,                          
-                   
-                   ¼
-                                             
-         Anthropic Claude API                
-            (claude-3-opus/sonnet/haiku)     
-                                             </code></pre>
+                    <pre><code class="language-plaintext">┌─────────────────────────────────────────┐
+│       Terminal de macOS (zsh)           │
+└─────────────────┬───────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────┐
+│         Claude Code CLI                 │
+│                                         │
+│  ┌──────────┐ ┌──────────┐ ┌────────┐ │
+│  │ Parser   │ │ Context  │ │ Config │ │
+│  │          │ │ Manager  │ │        │ │
+│  └──────────┘ └──────────┘ └────────┘ │
+└─────────────────┬───────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────┐
+│    Model Context Protocol (MCP)         │
+│                                         │
+│  ┌──────────┐ ┌──────────┐ ┌────────┐ │
+│  │   File   │ │ Database │ │ Custom │ │
+│  │  System  │ │  Server  │ │Plugins │ │
+│  └──────────┘ └──────────┘ └────────┘ │
+└─────────────────┬───────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────┐
+│        Anthropic Claude API             │
+│   (claude-3-opus/sonnet/haiku)          │
+└─────────────────────────────────────────┘</code></pre>
                 </div>
 
                 <div class="alert success">
@@ -358,10 +359,10 @@ instalación, uso, API y ejemplos"</code></pre>
 
                 <nav class="navigation">
                     <a href="index.html" class="nav-btn">
-                        ← Anterior: Inicio
+                        ← Anterior: Inicio
                     </a>
                     <a href="02-instalacion.html" class="nav-btn">
-                        Siguiente: Instalación →
+                        Siguiente: Instalación →
                     </a>
                 </nav>
             </div>
@@ -374,7 +375,7 @@ instalación, uso, API y ejemplos"</code></pre>
             <div class="footer-links">
                 <a href="https://www.anthropic.com" target="_blank">Anthropic</a>
                 <a href="https://docs.anthropic.com" target="_blank">Documentación Oficial</a>
-                <a href="https://github.com/anthropics/claude-code" target="_blank">GitHub</a>
+                <a href="https://github.com/anthropics/claude" target="_blank">GitHub</a>
             </div>
         </div>
     </footer>

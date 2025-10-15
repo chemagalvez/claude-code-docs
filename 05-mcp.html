@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Model Context Protocol (MCP) en Claude Code - Servidores, arquitectura y desarrollo personalizado">
+    <title>5. Model Context Protocol | Claude Code para macOS</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🤖</div>
+                <span>Claude Code Docs</span>
+            </a>
+            <div class="nav-controls">
+                <select id="page-selector" class="page-selector"></select>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="progress-indicator">
+                <span id="progress-indicator">Página 6 de 9</span>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill" style="width: 66.66%"></div>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <h1>Model Context Protocol (MCP)</h1>
+
+                <p>
+                    El <strong>Model Context Protocol (MCP)</strong> es un protocolo abierto desarrollado por Anthropic que permite
+                    extender las capacidades de Claude Code mediante servidores externos. MCP transforma Claude Code de una simple
+                    herramienta CLI en una plataforma extensible que puede integrarse con bases de datos, APIs, sistemas de archivos
+                    y prácticamente cualquier fuente de datos.
+                </p>
+
+                <div class="alert info">
+                    <div class="alert-icon">ℹ️</div>
+                    <div class="alert-content">
+                        <h4>¿Por qué es revolucionario MCP?</h4>
+                        <p>MCP estandariza cómo las aplicaciones de IA acceden a contexto externo. En lugar de que cada herramienta
+                        implemente sus propias integraciones, MCP proporciona un protocolo universal que cualquier servicio puede
+                        implementar.</p>
+                    </div>
+                </div>
+
+                <h2>¿Qué es Model Context Protocol?</h2>
+
+                <p>
+                    MCP es un protocolo cliente-servidor que permite a Claude Code:
+                </p>
+
+                <ul>
+                    <li><strong>Acceder a datos externos:</strong> Bases de datos, APIs, servicios en la nube</li>
+                    <li><strong>Ejecutar acciones:</strong> Operaciones en sistemas externos (crear tickets, enviar emails, etc.)</li>
+                    <li><strong>Leer recursos:</strong> Archivos, documentos, configuraciones de sistemas remotos</li>
+                    <li><strong>Mantener contexto:</strong> Información persistente entre sesiones</li>
+                    <li><strong>Extender capacidades:</strong> Funcionalidad personalizada sin modificar Claude Code</li>
+                </ul>
+
+                <h3>Componentes de MCP</h3>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🖥️</div>
+                        <h3>Cliente MCP</h3>
+                        <p>Claude Code actúa como cliente MCP, conectándose a servidores y consumiendo sus recursos.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Servidor MCP</h3>
+                        <p>Procesos independientes que exponen recursos, herramientas y prompts a través del protocolo.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🔌</div>
+                        <h3>Transporte</h3>
+                        <p>Capa de comunicación (stdio, HTTP, WebSocket) que conecta cliente y servidor.</p>
+                    </div>
+                </div>
+
+                <h2>Arquitectura del MCP</h2>
+
+                <p>
+                    Entender la arquitectura de MCP te ayudará a aprovechar todo su potencial:
+                </p>
+
+                <div class="code-block">
+                    <pre><code class="language-plaintext">┌─────────────────────────────────────────┐
+│         Claude Code (Cliente MCP)        │
+│                                          │
+│  ┌────────────────────────────────────┐ │
+│  │   Context Manager                  │ │
+│  │   - Recursos                       │ │
+│  │   - Herramientas                   │ │
+│  │   - Prompts                        │ │
+│  └────────────────────────────────────┘ │
+└─────────────────┬───────────────────────┘
+                  │ MCP Protocol
+                  │ (JSON-RPC)
+        ┌─────────┴─────────┐
+        │                   │
+┌───────▼─────┐    ┌────────▼─────┐
+│ MCP Server  │    │ MCP Server   │
+│ (Database)  │    │ (File Sys)   │
+│             │    │              │
+│ Resources:  │    │ Resources:   │
+│ - Tables    │    │ - Files      │
+│ - Queries   │    │ - Dirs       │
+│             │    │              │
+│ Tools:      │    │ Tools:       │
+│ - query()   │    │ - read()     │
+│ - update()  │    │ - write()    │
+└─────────────┘    └──────────────┘</code></pre>
+                </div>
+
+                <h3>Conceptos Clave</h3>
+
+                <h4>1. Recursos (Resources)</h4>
+                <p>
+                    Unidades de datos que un servidor MCP puede proporcionar. Ejemplos:
+                </p>
+                <ul>
+                    <li>Filas de una base de datos</li>
+                    <li>Archivos de un sistema de archivos</li>
+                    <li>Documentos de una API</li>
+                    <li>Configuraciones de un servicio</li>
+                </ul>
+
+                <h4>2. Herramientas (Tools)</h4>
+                <p>
+                    Funciones que Claude puede invocar a través del servidor MCP:
+                </p>
+                <ul>
+                    <li>Ejecutar queries SQL</li>
+                    <li>Crear tickets en Jira</li>
+                    <li>Enviar webhooks</li>
+                    <li>Modificar archivos remotos</li>
+                </ul>
+
+                <h4>3. Prompts</h4>
+                <p>
+                    Templates de prompts predefinidos que el servidor puede ofrecer:
+                </p>
+                <ul>
+                    <li>Plantillas para análisis de datos</li>
+                    <li>Prompts específicos del dominio</li>
+                    <li>Workflows predefinidos</li>
+                </ul>
+
+                <h2>Servidores MCP Disponibles</h2>
+
+                <p>
+                    La comunidad y Anthropic han desarrollado numerosos servidores MCP listos para usar:
+                </p>
+
+                <h3>Servidores Oficiales de Anthropic</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Servidor</th>
+                            <th>Descripción</th>
+                            <th>Instalación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>@modelcontextprotocol/server-filesystem</strong></td>
+                            <td>Acceso a sistema de archivos local</td>
+                            <td><code>npm install -g @modelcontextprotocol/server-filesystem</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>@modelcontextprotocol/server-postgres</strong></td>
+                            <td>Integración con PostgreSQL</td>
+                            <td><code>npm install -g @modelcontextprotocol/server-postgres</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>@modelcontextprotocol/server-github</strong></td>
+                            <td>Integración con GitHub API</td>
+                            <td><code>npm install -g @modelcontextprotocol/server-github</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>@modelcontextprotocol/server-slack</strong></td>
+                            <td>Integración con Slack</td>
+                            <td><code>npm install -g @modelcontextprotocol/server-slack</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Servidores de la Comunidad</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Servidor</th>
+                            <th>Descripción</th>
+                            <th>Casos de Uso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>mcp-server-sqlite</strong></td>
+                            <td>Acceso a bases de datos SQLite</td>
+                            <td>Proyectos locales, desarrollo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mcp-server-notion</strong></td>
+                            <td>Integración con Notion</td>
+                            <td>Documentación, wikis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mcp-server-google-drive</strong></td>
+                            <td>Acceso a Google Drive</td>
+                            <td>Archivos en la nube</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mcp-server-jira</strong></td>
+                            <td>Gestión de tickets Jira</td>
+                            <td>Project management</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert tip">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Directorio de Servidores MCP</h4>
+                        <p>Puedes explorar más servidores en el directorio oficial: <a href="https://github.com/modelcontextprotocol/servers" target="_blank">github.com/modelcontextprotocol/servers</a></p>
+                    </div>
+                </div>
+
+                <h2>Configuración en macOS</h2>
+
+                <p>
+                    Configurar servidores MCP en macOS es sencillo. Aquí te mostramos el proceso completo:
+                </p>
+
+                <h3>1. Instalar un Servidor MCP</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Ejemplo: Instalar servidor de filesystem
+npm install -g @modelcontextprotocol/server-filesystem
+
+# Verificar instalación
+which mcp-server-filesystem</code></pre>
+                </div>
+
+                <h3>2. Configurar Claude Code</h3>
+
+                <p>
+                    Edita el archivo de configuración de Claude Code en <code>~/.config/claude/mcp.json</code>:
+                </p>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Crear archivo de configuración MCP si no existe
+mkdir -p ~/.config/claude
+nano ~/.config/claude/mcp.json</code></pre>
+                </div>
+
+                <h3>3. Configuración de Servidores</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-json">{
+  "mcpServers": {
+    "filesystem": {
+      "command": "mcp-server-filesystem",
+      "args": ["/Users/tu-usuario/proyectos"],
+      "env": {}
+    },
+    "postgres": {
+      "command": "mcp-server-postgres",
+      "args": [],
+      "env": {
+        "POSTGRES_URL": "postgresql://user:pass@localhost:5432/mydb"
+      }
+    },
+    "github": {
+      "command": "mcp-server-github",
+      "args": [],
+      "env": {
+        "GITHUB_TOKEN": "ghp_tu_token_aqui"
+      }
+    }
+  }
+}</code></pre>
+                </div>
+
+                <div class="alert warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                        <h4>Seguridad en Configuración</h4>
+                        <p>Nunca incluyas credenciales directamente en el archivo de configuración. Usa variables de entorno
+                        referenciadas desde <code>~/.zshrc</code> o un archivo <code>.env</code> seguro.</p>
+                    </div>
+                </div>
+
+                <h3>4. Uso de Variables de Entorno (Recomendado)</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-zsh"># Agregar a ~/.zshrc
+export GITHUB_TOKEN="ghp_tu_token_aqui"
+export POSTGRES_URL="postgresql://user:pass@localhost:5432/mydb"
+export SLACK_TOKEN="xoxb-tu-token-slack"
+
+# Recargar configuración
+source ~/.zshrc</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-json">{
+  "mcpServers": {
+    "github": {
+      "command": "mcp-server-github",
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
+}</code></pre>
+                </div>
+
+                <h2>Usar Servidores MCP</h2>
+
+                <p>
+                    Una vez configurados, puedes usar los servidores MCP de forma transparente en tus conversaciones:
+                </p>
+
+                <h3>Ejemplo 1: Filesystem</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Claude Code automáticamente detecta el servidor filesystem
+claude
+
+# En la conversación:
+# "Lista todos los archivos TypeScript en mi proyecto"
+# Claude usará el servidor MCP para acceder al filesystem</code></pre>
+                </div>
+
+                <h3>Ejemplo 2: Base de Datos PostgreSQL</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash">claude
+
+# En la conversación:
+# "Muéstrame el esquema de la tabla users"
+# "Genera una query para obtener usuarios activos del último mes"
+# Claude ejecutará queries a través del servidor MCP</code></pre>
+                </div>
+
+                <h3>Ejemplo 3: GitHub</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash">claude
+
+# En la conversación:
+# "Crea un issue en mi repositorio principal sobre el bug de autenticación"
+# "Lista los últimos 5 PRs merged"
+# Claude interactuará con GitHub a través del servidor MCP</code></pre>
+                </div>
+
+                <h2>Crear Servidor MCP Personalizado</h2>
+
+                <p>
+                    Crear tu propio servidor MCP te permite integrar cualquier servicio o fuente de datos con Claude Code.
+                </p>
+
+                <h3>Ejemplo: Servidor MCP Simple en TypeScript</h3>
+
+                <h4>1. Configurar el Proyecto</h4>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Crear directorio del proyecto
+mkdir mi-servidor-mcp
+cd mi-servidor-mcp
+
+# Inicializar proyecto Node.js
+npm init -y
+
+# Instalar dependencias
+npm install @modelcontextprotocol/sdk zod
+
+# Instalar TypeScript
+npm install -D typescript @types/node
+
+# Crear tsconfig.json
+npx tsc --init</code></pre>
+                </div>
+
+                <h4>2. Implementar el Servidor</h4>
+
+                <div class="code-block">
+                    <pre><code class="language-typescript">// src/index.ts
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import {
+  CallToolRequestSchema,
+  ListToolsRequestSchema,
+} from '@modelcontextprotocol/sdk/types.js';
+import { z } from 'zod';
+
+// Definir esquema de herramienta
+const GetWeatherSchema = z.object({
+  city: z.string(),
+});
+
+class WeatherMCPServer {
+  private server: Server;
+
+  constructor() {
+    this.server = new Server(
+      {
+        name: 'weather-server',
+        version: '1.0.0',
+      },
+      {
+        capabilities: {
+          tools: {},
+        },
+      }
+    );
+
+    this.setupToolHandlers();
+
+    // Manejo de errores
+    this.server.onerror = (error) => console.error('[MCP Error]', error);
+    process.on('SIGINT', async () => {
+      await this.server.close();
+      process.exit(0);
+    });
+  }
+
+  private setupToolHandlers() {
+    // Listar herramientas disponibles
+    this.server.setRequestHandler(ListToolsRequestSchema, async () => ({
+      tools: [
+        {
+          name: 'get_weather',
+          description: 'Obtiene el clima actual de una ciudad',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              city: {
+                type: 'string',
+                description: 'Nombre de la ciudad',
+              },
+            },
+            required: ['city'],
+          },
+        },
+      ],
+    }));
+
+    // Manejar llamadas a herramientas
+    this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
+      if (request.params.name === 'get_weather') {
+        const args = GetWeatherSchema.parse(request.params.arguments);
+
+        // Aquí harías una llamada real a una API de clima
+        // Por ahora, retornamos datos de ejemplo
+        const weatherData = {
+          city: args.city,
+          temperature: 22,
+          condition: 'Soleado',
+          humidity: 65,
+        };
+
+        return {
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify(weatherData, null, 2),
+            },
+          ],
+        };
+      }
+
+      throw new Error(`Herramienta desconocida: ${request.params.name}`);
+    });
+  }
+
+  async run() {
+    const transport = new StdioServerTransport();
+    await this.server.connect(transport);
+    console.error('Weather MCP Server iniciado en stdio');
+  }
+}
+
+// Iniciar servidor
+const server = new WeatherMCPServer();
+server.run().catch(console.error);</code></pre>
+                </div>
+
+                <h4>3. Configurar Build</h4>
+
+                <div class="code-block">
+                    <pre><code class="language-json">// package.json
+{
+  "name": "weather-mcp-server",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "weather-mcp-server": "./build/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  }
+}</code></pre>
+                </div>
+
+                <h4>4. Compilar e Instalar</h4>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Compilar TypeScript
+npm run build
+
+# Instalar globalmente (macOS)
+npm link
+
+# Verificar instalación
+which weather-mcp-server</code></pre>
+                </div>
+
+                <h4>5. Configurar en Claude Code</h4>
+
+                <div class="code-block">
+                    <pre><code class="language-json">// ~/.config/claude/mcp.json
+{
+  "mcpServers": {
+    "weather": {
+      "command": "weather-mcp-server",
+      "args": [],
+      "env": {}
+    }
+  }
+}</code></pre>
+                </div>
+
+                <h4>6. Usar el Servidor</h4>
+
+                <div class="code-block">
+                    <pre><code class="language-bash">claude
+
+# En la conversación:
+# "¿Cuál es el clima en Madrid?"
+# Claude usará automáticamente tu servidor MCP personalizado</code></pre>
+                </div>
+
+                <h2>Casos de Uso de MCP</h2>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🗄️</div>
+                        <h3>Integración con Bases de Datos</h3>
+                        <p>Ejecuta queries, analiza esquemas, genera migraciones y optimiza consultas directamente desde Claude Code.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">📁</div>
+                        <h3>Gestión de Archivos</h3>
+                        <p>Accede a sistemas de archivos locales o remotos, organiza proyectos y gestiona documentación.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🔌</div>
+                        <h3>APIs Externas</h3>
+                        <p>Integra servicios externos: GitHub, Slack, Jira, Notion, Google Drive, y más.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Análisis de Datos</h3>
+                        <p>Consulta datos en tiempo real, genera reportes y crea visualizaciones basadas en información externa.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Automatización</h3>
+                        <p>Crea workflows que integran múltiples servicios para automatizar tareas complejas.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🏢</div>
+                        <h3>Sistemas Empresariales</h3>
+                        <p>Conecta con CRMs, ERPs, sistemas internos y herramientas empresariales propietarias.</p>
+                    </div>
+                </div>
+
+                <h2>Mejores Prácticas para MCP</h2>
+
+                <div class="alert success">
+                    <div class="alert-icon">✅</div>
+                    <div class="alert-content">
+                        <h4>Checklist de Seguridad y Rendimiento</h4>
+                        <ul>
+                            <li>✓ Nunca incluir credenciales en archivos de configuración</li>
+                            <li>✓ Usar variables de entorno para datos sensibles</li>
+                            <li>✓ Implementar manejo de errores robusto en servidores personalizados</li>
+                            <li>✓ Validar input con esquemas (Zod, JSON Schema)</li>
+                            <li>✓ Limitar permisos de servidores al mínimo necesario</li>
+                            <li>✓ Implementar rate limiting en servidores que acceden APIs externas</li>
+                            <li>✓ Documentar herramientas y recursos claramente</li>
+                            <li>✓ Usar logging para debugging y monitoreo</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Ejemplo de Configuración Segura</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># 1. Crear archivo .env (fuera del repositorio)
+cat > ~/.config/claude/.env << 'EOF'
+GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+POSTGRES_URL=postgresql://user:pass@localhost:5432/db
+SLACK_TOKEN=xoxb-xxxxxxxxxxxxx
+EOF
+
+# 2. Proteger archivo
+chmod 600 ~/.config/claude/.env
+
+# 3. Cargar variables en ~/.zshrc
+echo 'source ~/.config/claude/.env' >> ~/.zshrc
+source ~/.zshrc</code></pre>
+                </div>
+
+                <h2>Debugging de Servidores MCP</h2>
+
+                <h3>Ver Logs de Servidores</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Habilitar modo debug en Claude Code
+claude --debug
+
+# Ver logs de servidores MCP
+tail -f ~/.config/claude/logs/mcp-*.log
+
+# Probar servidor manualmente
+echo '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | weather-mcp-server</code></pre>
+                </div>
+
+                <h3>Problemas Comunes</h3>
+
+                <h4>Problema: "MCP Server not responding"</h4>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar que el servidor está instalado
+which mcp-server-github
+
+# Probar ejecución manual
+mcp-server-github --version
+
+# Verificar permisos
+chmod +x $(which mcp-server-github)</code></pre>
+                </div>
+
+                <h4>Problema: "Authentication failed"</h4>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar variables de entorno
+echo $GITHUB_TOKEN
+
+# Verificar que el token tiene permisos correctos
+# En GitHub: Settings → Developer settings → Personal access tokens</code></pre>
+                </div>
+
+                <div class="alert tip">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Consejo Pro</h4>
+                        <p>Crea un script de setup que configure automáticamente todos tus servidores MCP. Esto facilita
+                        la configuración en nuevas máquinas y asegura consistencia en el equipo.</p>
+                    </div>
+                </div>
+
+                <h2>Recursos Adicionales</h2>
+
+                <ul>
+                    <li><a href="https://modelcontextprotocol.io" target="_blank">Sitio oficial de MCP</a></li>
+                    <li><a href="https://github.com/modelcontextprotocol" target="_blank">Repositorio GitHub de MCP</a></li>
+                    <li><a href="https://github.com/modelcontextprotocol/servers" target="_blank">Directorio de servidores MCP</a></li>
+                    <li><a href="https://spec.modelcontextprotocol.io" target="_blank">Especificación del protocolo</a></li>
+                </ul>
+
+                <nav class="navigation">
+                    <a href="04-contexto.html" class="nav-btn">
+                        ← Anterior: Gestión de Contexto
+                    </a>
+                    <a href="06-mejores-practicas.html" class="nav-btn">
+                        Siguiente: Mejores Prácticas →
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 Claude Code Documentation. Creado con Claude Code.</p>
+            <div class="footer-links">
+                <a href="https://www.anthropic.com" target="_blank">Anthropic</a>
+                <a href="https://docs.anthropic.com" target="_blank">Documentación Oficial</a>
+                <a href="https://github.com/anthropics/claude" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/code-copy.js"></script>
+</body>
+</html>

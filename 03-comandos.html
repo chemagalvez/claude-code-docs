@@ -38,7 +38,7 @@
                 <p>Claude Code sigue una sintaxis consistente para todos los comandos:</p>
 
                 <div class="code-block">
-                    <pre><code class="language-bash">claude-code [opciones] [comando] [argumentos]</code></pre>
+                    <pre><code class="language-bash">claude [opciones] [comando] [argumentos]</code></pre>
                 </div>
 
                 <h2>Comandos Esenciales</h2>
@@ -46,61 +46,61 @@
                 <h3>1. Modo Interactivo</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Iniciar sesión interactiva
-claude-code
+claude
 
 # Iniciar con un archivo de contexto
-claude-code -f src/app.js
+claude -f src/app.js
 
 # Iniciar con múltiples archivos
-claude-code -f src/*.js</code></pre>
+claude -f src/*.js</code></pre>
                 </div>
 
                 <h3>2. Consultas Directas</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Pregunta simple
-claude-code "¿Cómo implemento un singleton en TypeScript?"
+claude "¿Cómo implemento un singleton en TypeScript?"
 
 # Analizar archivo
-claude-code "Explica este código" utils.ts
+claude "Explica este código" utils.ts
 
 # Generar código
-claude-code "Crea una función que valide emails" > validators.js</code></pre>
+claude "Crea una función que valide emails" > validators.js</code></pre>
                 </div>
 
                 <h3>3. Generación de Código</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Generar con especificaciones
-claude-code generate "API REST con Express, incluye rutas CRUD para usuarios"
+claude generate "API REST con Express, incluye rutas CRUD para usuarios"
 
 # Generar y guardar
-claude-code generate "Componente React de formulario de login" > LoginForm.tsx
+claude generate "Componente React de formulario de login" > LoginForm.tsx
 
 # Generar tests
-claude-code test src/calculator.js</code></pre>
+claude test src/calculator.js</code></pre>
                 </div>
 
                 <h3>4. Revisión de Código</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Revisar archivo
-claude-code review src/index.js
+claude review src/index.js
 
 # Revisar con focus específico
-claude-code review --focus security auth.js
+claude review --focus security auth.js
 
 # Revisar cambios de git
-git diff | claude-code review</code></pre>
+git diff | claude review</code></pre>
                 </div>
 
                 <h3>5. Refactorización</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Refactorizar archivo
-claude-code refactor legacy-code.js
+claude refactor legacy-code.js
 
 # Refactorizar aplicando patrón
-claude-code refactor --pattern "factory" ProductManager.js
+claude refactor --pattern "factory" ProductManager.js
 
 # Refactorizar a TypeScript
-claude-code refactor --to typescript app.js</code></pre>
+claude refactor --to typescript app.js</code></pre>
                 </div>
 
                 <h2>Opciones Globales</h2>
@@ -160,47 +160,47 @@ claude-code refactor --to typescript app.js</code></pre>
                 <h3>Paso 1: Planificación</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Diseñar arquitectura
-claude-code "Diseña la arquitectura para un sistema de autenticación JWT \
+claude "Diseña la arquitectura para un sistema de autenticación JWT \
 incluyendo registro, login, refresh tokens y middleware"</code></pre>
                 </div>
 
                 <h3>Paso 2: Implementación</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Generar estructura base
-claude-code generate "Implementa el sistema de autenticación diseñado"
+claude generate "Implementa el sistema de autenticación diseñado"
 
 # Generar archivos específicos
-claude-code "Crea el modelo de Usuario con Mongoose" > models/User.js
-claude-code "Crea el controlador de autenticación" > controllers/auth.js
-claude-code "Crea middleware de verificación JWT" > middleware/auth.js</code></pre>
+claude "Crea el modelo de Usuario con Mongoose" > models/User.js
+claude "Crea el controlador de autenticación" > controllers/auth.js
+claude "Crea middleware de verificación JWT" > middleware/auth.js</code></pre>
                 </div>
 
                 <h3>Paso 3: Testing</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Generar tests
-claude-code test controllers/auth.js > tests/auth.test.js
+claude test controllers/auth.js > tests/auth.test.js
 
 # Revisar cobertura
-claude-code "Analiza la cobertura de tests y sugiere tests adicionales" \
+claude "Analiza la cobertura de tests y sugiere tests adicionales" \
 tests/auth.test.js</code></pre>
                 </div>
 
                 <h3>Paso 4: Documentación</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Generar documentación
-claude-code doc controllers/auth.js
+claude doc controllers/auth.js
 
 # Crear README
-claude-code "Genera un README para el módulo de autenticación" > auth/README.md</code></pre>
+claude "Genera un README para el módulo de autenticación" > auth/README.md</code></pre>
                 </div>
 
                 <h3>Paso 5: Revisión</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Revisar todo el código
-claude-code review src/auth/**/*.js
+claude review src/auth/**/*.js
 
 # Verificar seguridad
-claude-code review --focus security src/auth/**/*.js</code></pre>
+claude review --focus security src/auth/**/*.js</code></pre>
                 </div>
 
                 <h2>Atajos de Productividad en macOS</h2>
@@ -208,21 +208,21 @@ claude-code review --focus security src/auth/**/*.js</code></pre>
                 <h3>Aliases Útiles</h3>
                 <div class="code-block">
                     <pre><code class="language-zsh"># Agregar a ~/.zshrc
-alias cc="claude-code"
-alias ccg="claude-code generate"
-alias ccr="claude-code review"
-alias cct="claude-code test"
-alias ccd="claude-code doc"
-alias ccf="claude-code refactor"
+alias cc="claude"
+alias ccg="claude generate"
+alias ccr="claude review"
+alias cct="claude test"
+alias ccd="claude doc"
+alias ccf="claude refactor"
 
 # Función helper para revisar git diff
 function ccgd() {
-    git diff | claude-code review
+    git diff | claude review
 }
 
 # Función para generar y abrir en editor
 function ccge() {
-    claude-code generate "$@" | tee output.tmp && code output.tmp
+    claude generate "$@" | tee output.tmp && code output.tmp
 }</code></pre>
                 </div>
 
@@ -230,13 +230,13 @@ function ccge() {
 
                 <div class="code-block">
                     <pre><code class="language-bash"># Revisar cambios antes de commit
-git diff | claude-code "Resume estos cambios en un mensaje de commit"
+git diff | claude "Resume estos cambios en un mensaje de commit"
 
 # Generar mensaje de commit
-git diff --cached | claude-code "Genera un mensaje de commit convencional"
+git diff --cached | claude "Genera un mensaje de commit convencional"
 
 # Analizar conflictos de merge
-git diff --name-only --diff-filter=U | xargs claude-code \
+git diff --name-only --diff-filter=U | xargs claude \
 "Ayúdame a resolver estos conflictos de merge"</code></pre>
                 </div>
 
@@ -245,30 +245,30 @@ git diff --name-only --diff-filter=U | xargs claude-code \
                 <h3>Debugging</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Analizar stack trace
-claude-code "Analiza este error y sugiere soluciones" error.log
+claude "Analiza este error y sugiere soluciones" error.log
 
 # Encontrar bug
-claude-code "Este código no funciona correctamente. ¿Cuál es el problema?" \
+claude "Este código no funciona correctamente. ¿Cuál es el problema?" \
 buggy-code.js</code></pre>
                 </div>
 
                 <h3>Optimización</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># Optimizar rendimiento
-claude-code "Optimiza este código para mejor rendimiento" slow-function.js
+claude "Optimiza este código para mejor rendimiento" slow-function.js
 
 # Reducir complejidad
-claude-code "Simplifica esta función manteniendo la funcionalidad" \
+claude "Simplifica esta función manteniendo la funcionalidad" \
 complex-logic.js</code></pre>
                 </div>
 
                 <h3>Conversión entre Lenguajes</h3>
                 <div class="code-block">
                     <pre><code class="language-bash"># JavaScript a TypeScript
-claude-code "Convierte esto a TypeScript con tipos apropiados" app.js > app.ts
+claude "Convierte esto a TypeScript con tipos apropiados" app.js > app.ts
 
 # Python a JavaScript
-claude-code "Convierte este código Python a JavaScript moderno" script.py > script.js</code></pre>
+claude "Convierte este código Python a JavaScript moderno" script.py > script.js</code></pre>
                 </div>
 
                 <div class="alert success">

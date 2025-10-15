@@ -77,10 +77,10 @@ source ~/.zshrc</code></pre>
 brew update
 
 # Instalar Claude Code
-brew install anthropic/tap/claude-code
+brew install anthropic/tap/claude
 
 # Verificar la instalación
-claude-code --version</code></pre>
+claude --version</code></pre>
                 </div>
 
                 <h2>Método 2: Instalación con npm</h2>
@@ -101,10 +101,10 @@ brew install node</code></pre>
 
                 <div class="code-block">
                     <pre><code class="language-bash"># Instalar Claude Code globalmente
-npm install -g @anthropic-ai/claude-code
+npm install -g @anthropic-ai/claude
 
 # Verificar instalación
-claude-code --version</code></pre>
+claude --version</code></pre>
                 </div>
 
                 <h2>Método 3: Instalación desde Binarios</h2>
@@ -113,22 +113,22 @@ claude-code --version</code></pre>
 
                 <div class="code-block">
                     <pre><code class="language-bash"># Descargar el binario para macOS
-curl -L https://github.com/anthropics/claude-code/releases/latest/download/claude-code-macos-arm64.tar.gz -o claude-code.tar.gz
+curl -L https://github.com/anthropics/claude/releases/latest/download/claude-macos-arm64.tar.gz -o claude.tar.gz
 
 # Para Intel Macs, usar:
-# curl -L https://github.com/anthropics/claude-code/releases/latest/download/claude-code-macos-x64.tar.gz -o claude-code.tar.gz
+# curl -L https://github.com/anthropics/claude/releases/latest/download/claude-macos-x64.tar.gz -o claude.tar.gz
 
 # Extraer
-tar -xzf claude-code.tar.gz
+tar -xzf claude.tar.gz
 
 # Mover a directorio en el PATH
-sudo mv claude-code /usr/local/bin/
+sudo mv claude /usr/local/bin/
 
 # Hacer ejecutable
-sudo chmod +x /usr/local/bin/claude-code
+sudo chmod +x /usr/local/bin/claude
 
 # Verificar instalación
-claude-code --version</code></pre>
+claude --version</code></pre>
                 </div>
 
                 <h2>Configuración Inicial</h2>
@@ -176,15 +176,15 @@ source ~/.zshrc</code></pre>
 
                 <div class="code-block">
                     <pre><code class="language-bash"># Primera ejecución - configuración interactiva
-claude-code init
+claude init
 
 # Esto creará el directorio de configuración en:
-# ~/.config/claude-code/</code></pre>
+# ~/.config/claude/</code></pre>
                 </div>
 
                 <h3>4. Archivo de Configuración</h3>
 
-                <p>Claude Code usa un archivo de configuración en <code>~/.config/claude-code/config.json</code>:</p>
+                <p>Claude Code usa un archivo de configuración en <code>~/.config/claude/config.json</code>:</p>
 
                 <div class="code-block">
                     <pre><code class="language-json">{
@@ -211,16 +211,16 @@ claude-code init
 
                 <div class="code-block">
                     <pre><code class="language-bash"># Ver versión
-claude-code --version
+claude --version
 
 # Ver configuración actual
-claude-code config --show
+claude config --show
 
 # Prueba simple
-claude-code "Hola, ¿estás funcionando correctamente?"
+claude "Hola, ¿estás funcionando correctamente?"
 
 # Ver ayuda
-claude-code --help</code></pre>
+claude --help</code></pre>
                 </div>
 
                 <h2>Integración con Editores</h2>
@@ -229,21 +229,21 @@ claude-code --help</code></pre>
 
                 <div class="code-block">
                     <pre><code class="language-bash"># Configurar VS Code como editor predeterminado
-claude-code config set editor "code"
+claude config set editor "code"
 
 # Abrir archivo con Claude Code desde VS Code
 # En VS Code, abre la paleta de comandos (Cmd+Shift+P) y busca
 # "Terminal: Create New Terminal"
 
 # Luego puedes usar:
-claude-code "Explica este archivo" archivo.js</code></pre>
+claude "Explica este archivo" archivo.js</code></pre>
                 </div>
 
                 <h3>Cursor Editor</h3>
 
                 <div class="code-block">
                     <pre><code class="language-bash"># Configurar Cursor como editor
-claude-code config set editor "cursor"</code></pre>
+claude config set editor "cursor"</code></pre>
                 </div>
 
                 <h2>Configuración Avanzada</h2>
@@ -254,10 +254,10 @@ claude-code config set editor "cursor"</code></pre>
 
                 <div class="code-block">
                     <pre><code class="language-zsh"># Agregar a ~/.zshrc
-alias cc="claude-code"
-alias ccr="claude-code review"
-alias cct="claude-code test"
-alias ccd="claude-code doc"
+alias cc="claude"
+alias ccr="claude review"
+alias cct="claude test"
+alias ccd="claude doc"
 
 # Recargar
 source ~/.zshrc
@@ -280,7 +280,7 @@ export HTTP_PROXY="http://proxy.company.com:8080"</code></pre>
 
                 <div class="code-block">
                     <pre><code class="language-bash"># Verificar que el binario está en el PATH
-which claude-code
+which claude
 
 # Agregar al PATH manualmente si es necesario
 echo 'export PATH="$PATH:/usr/local/bin"' >> ~/.zshrc
@@ -291,10 +291,10 @@ source ~/.zshrc</code></pre>
 
                 <div class="code-block">
                     <pre><code class="language-bash"># Dar permisos de ejecución
-chmod +x /usr/local/bin/claude-code
+chmod +x /usr/local/bin/claude
 
 # Si es un problema de permisos en macOS:
-xattr -d com.apple.quarantine /usr/local/bin/claude-code</code></pre>
+xattr -d com.apple.quarantine /usr/local/bin/claude</code></pre>
                 </div>
 
                 <h3>Problema: "API key not configured"</h3>
@@ -304,7 +304,7 @@ xattr -d com.apple.quarantine /usr/local/bin/claude-code</code></pre>
 echo $ANTHROPIC_API_KEY
 
 # Configurar directamente en el config
-claude-code config set apiKey "sk-ant-tu-key-aqui"</code></pre>
+claude config set apiKey "sk-ant-tu-key-aqui"</code></pre>
                 </div>
 
                 <div class="alert success">
@@ -333,7 +333,7 @@ claude-code config set apiKey "sk-ant-tu-key-aqui"</code></pre>
             <div class="footer-links">
                 <a href="https://www.anthropic.com" target="_blank">Anthropic</a>
                 <a href="https://docs.anthropic.com" target="_blank">Documentación Oficial</a>
-                <a href="https://github.com/anthropics/claude-code" target="_blank">GitHub</a>
+                <a href="https://github.com/anthropics/claude" target="_blank">GitHub</a>
             </div>
         </div>
     </footer>

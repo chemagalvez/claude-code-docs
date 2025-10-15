@@ -55,20 +55,26 @@
   --transition-slow: 500ms cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-/* Modo oscuro */
+/* Modo oscuro - Mejorado con mejor contraste */
 [data-theme="dark"] {
-  --bg-primary: #191918;
-  --bg-secondary: #252523;
-  --bg-tertiary: #3A3A37;
-  --bg-code: #0D0D0C;
-  --bg-card: #252523;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --bg-code: #0f0f0f;
+  --bg-card: #242424;
 
-  --text-primary: #F7F5F2;
-  --text-secondary: #C4C1BA;
-  --text-tertiary: #8C8580;
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+  --text-tertiary: #a0a0a0;
 
-  --border-color: #3A3A37;
-  --primary-color: #E69578;
+  --border-color: #404040;
+  --primary-color: #ff9966;
+  --primary-dark: #ff7733;
+
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 2px 8px 0 rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 4px 12px 0 rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 8px 24px 0 rgba(0, 0, 0, 0.6);
 }
 
 /* Reset y estilos base */
@@ -462,6 +468,31 @@ p code, li code {
   background: #FFF3E0;
   border-color: var(--primary-color);
   color: #5D4037;
+}
+
+/* Alertas en modo oscuro - Mejor contraste */
+[data-theme="dark"] .alert.info {
+  background: #1a2942;
+  border-color: #5b7bb4;
+  color: #b8d4ff;
+}
+
+[data-theme="dark"] .alert.warning {
+  background: #3d2b1a;
+  border-color: #d4934d;
+  color: #ffc896;
+}
+
+[data-theme="dark"] .alert.success {
+  background: #1a3d2b;
+  border-color: #4d9d6b;
+  color: #96ffb8;
+}
+
+[data-theme="dark"] .alert.tip {
+  background: #3d2518;
+  border-color: #ff9966;
+  color: #ffc896;
 }
 
 /* Botones de navegación */
