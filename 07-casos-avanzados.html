@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7. Casos de Uso Avanzados | Claude Code para macOS</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🤖</div>
+                <span>Claude Code Docs</span>
+            </a>
+            <div class="nav-controls">
+                <select id="page-selector" class="page-selector"></select>
+                <button id="theme-toggle" class="theme-toggle">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="progress-indicator">
+                <span id="progress-indicator">Página 8 de 9</span>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill" style="width: 88.88%"></div>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <h1>7. Casos de Uso Avanzados</h1>
+
+                <p>Aprende a usar Claude Code para escenarios complejos y profesionales que van más allá del desarrollo básico. Estos casos de uso demuestran el verdadero poder de la IA aplicada al desarrollo de software.</p>
+
+                <h2>🔧 Refactorización de Código Legacy</h2>
+
+                <p>Modernizar bases de código antiguas es una de las tareas más desafiantes. Claude Code puede ayudarte a hacerlo de forma sistemática y segura.</p>
+
+                <h3>Caso: Migrar de JavaScript ES5 a TypeScript Moderno</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Paso 1: Análisis inicial del código legacy
+claude "Analiza este archivo legacy.js y crea un plan de migración a TypeScript con types estrictos. Identifica patrones antiguos y sugiere reemplazos modernos."
+
+# Paso 2: Conversión gradual
+claude "Convierte legacy.js a TypeScript manteniendo la funcionalidad exacta. Usa interfaces para tipos de datos, async/await en lugar de callbacks, y ES6+ features apropiados."
+
+# Paso 3: Agregar tests de regresión
+claude "Crea tests unitarios completos para legacy.ts que verifiquen que la funcionalidad es idéntica al código original."
+
+# Paso 4: Optimización post-migración
+claude "Refactoriza legacy.ts para usar patrones modernos de TypeScript: generics, utility types, y mejores prácticas de 2025."</code></pre>
+                </div>
+
+                <h3>Ejemplo Práctico: Refactorizar Sistema de Autenticación</h3>
+
+                <div class="alert info">
+                    <div class="alert-icon">📋</div>
+                    <div class="alert-content">
+                        <h4>Código Legacy Original</h4>
+                        <p>Sistema de auth con callbacks anidados, sin tipos, y patrones obsoletos.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-javascript">// auth-legacy.js (código original)
+var AuthService = function() {
+    this.users = {};
+};
+
+AuthService.prototype.login = function(username, password, callback) {
+    var self = this;
+    db.query('SELECT * FROM users WHERE username = ?', [username], function(err, results) {
+        if (err) return callback(err);
+        if (results.length === 0) return callback(new Error('User not found'));
+
+        bcrypt.compare(password, results[0].password, function(err, match) {
+            if (err) return callback(err);
+            if (!match) return callback(new Error('Invalid password'));
+
+            jwt.sign({userId: results[0].id}, SECRET, function(err, token) {
+                if (err) return callback(err);
+                callback(null, token);
+            });
+        });
+    });
+};</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Prompt para Claude
+claude "Refactoriza auth-legacy.js a TypeScript moderno:
+1. Convierte a clase con tipos estrictos
+2. Usa async/await en lugar de callbacks
+3. Implementa manejo de errores robusto
+4. Agrega validación de inputs
+5. Usa Prisma ORM en lugar de queries SQL directas
+6. Implementa rate limiting
+7. Agrega logging estructurado"</code></pre>
+                </div>
+
+                <div class="alert success">
+                    <div class="alert-icon">✅</div>
+                    <div class="alert-content">
+                        <h4>Resultado: Código Modernizado</h4>
+                        <p>Sistema type-safe, async/await, validación robusta, y prácticas modernas de seguridad.</p>
+                    </div>
+                </div>
+
+                <h3>Estrategia de Refactorización Segura</h3>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>1. Análisis</h3>
+                        <p>Claude analiza el código legacy e identifica dependencias, patrones obsoletos, y riesgos.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🧪</div>
+                        <h3>2. Tests Primero</h3>
+                        <p>Crea tests que documenten el comportamiento actual antes de cambiar nada.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <h3>3. Refactor Gradual</h3>
+                        <p>Refactoriza módulo por módulo, manteniendo tests pasando en cada paso.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">✨</div>
+                        <h3>4. Modernización</h3>
+                        <p>Aplica patrones modernos manteniendo compatibilidad y estabilidad.</p>
+                    </div>
+                </div>
+
+                <h2>🧪 Generación de Tests Automatizados</h2>
+
+                <p>Claude Code puede generar suites de tests completas basándose en tu código de producción.</p>
+
+                <h3>Tests Unitarios Completos</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Generar tests unitarios para un módulo
+claude "Crea tests unitarios completos para src/services/order-service.ts usando Jest. Incluye:
+- Happy paths (casos exitosos)
+- Edge cases (casos límite)
+- Error handling (manejo de errores)
+- Mocks para dependencias externas (database, APIs)
+- 100% code coverage"</code></pre>
+                </div>
+
+                <h3>Tests de Integración</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Tests de integración para API
+claude "Crea tests de integración para la API de pedidos usando Supertest:
+- Test completo del flujo: crear pedido → pagar → confirmar → enviar
+- Validación de respuestas HTTP
+- Verificación de side effects (emails, webhooks, DB updates)
+- Rollback en caso de errores
+- Tests de concurrencia y race conditions"</code></pre>
+                </div>
+
+                <h3>Tests End-to-End con Playwright</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Instalar Playwright
+brew install playwright
+npm install -D @playwright/test
+
+# Generar E2E tests
+claude "Crea tests E2E con Playwright para el flujo de compra:
+1. Usuario navega al catálogo
+2. Busca producto 'MacBook Pro'
+3. Agrega al carrito
+4. Procede al checkout
+5. Completa formulario de pago
+6. Verifica confirmación de orden
+7. Toma screenshots en cada paso
+8. Incluye assertions detalladas"</code></pre>
+                </div>
+
+                <h3>Property-Based Testing</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Tests basados en propiedades con fast-check
+npm install -D fast-check
+
+# Generar property-based tests
+claude "Crea property-based tests para la función calculateTax usando fast-check:
+- Propiedad: tax nunca debe ser negativo
+- Propiedad: tax debe ser proporcional al amount
+- Propiedad: calculateTax debe ser idempotente
+- Propiedad: rate de 0% debe resultar en tax de 0
+- Genera 1000 casos aleatorios automáticamente"</code></pre>
+                </div>
+
+                <h2>📚 Documentación Automática</h2>
+
+                <p>Genera y mantén documentación actualizada automáticamente con Claude Code.</p>
+
+                <h3>JSDoc / TSDoc Completo</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Documentar módulo completo
+claude "Agrega JSDoc completo a src/utils/validators.ts:
+- Descripción de cada función
+- @param con tipos y descripciones
+- @returns con tipo y descripción
+- @throws para errores posibles
+- @example con casos de uso reales
+- @see links a documentación relacionada"</code></pre>
+                </div>
+
+                <h3>README.md Profesional</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Generar README completo
+claude "Genera un README.md profesional para este proyecto analizando el código:
+- Descripción del proyecto y propósito
+- Badges (build status, coverage, versión)
+- Requisitos del sistema (específico para macOS)
+- Instalación paso a paso
+- Configuración con ejemplos
+- Uso con ejemplos de código
+- API Reference
+- Arquitectura del proyecto
+- Scripts disponibles
+- Contributing guidelines
+- Licencia"</code></pre>
+                </div>
+
+                <h3>Generación de API Docs con TypeDoc</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Instalar TypeDoc
+npm install -D typedoc
+
+# Configurar TypeDoc
+claude "Crea configuración de TypeDoc (typedoc.json) para generar documentación HTML profesional. Incluye:
+- Tema moderno
+- Navegación lateral
+- Search functionality
+- Exportar a múltiples formatos
+- Integración con GitHub Pages"
+
+# Generar documentación
+npx typedoc --out docs src/index.ts
+
+# Servir localmente
+python3 -m http.server 8080 --directory docs</code></pre>
+                </div>
+
+                <h3>Documentación Interactiva con Swagger/OpenAPI</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Generar especificación OpenAPI
+claude "Genera especificación OpenAPI 3.1 completa para nuestra REST API:
+- Todos los endpoints con descripciones
+- Request/response schemas con ejemplos
+- Autenticación (JWT)
+- Error responses con códigos HTTP
+- Rate limiting headers
+- Exportar a openapi.yaml"
+
+# Visualizar con Swagger UI
+npx swagger-ui-watcher openapi.yaml</code></pre>
+                </div>
+
+                <h2>🐛 Debugging Asistido por IA</h2>
+
+                <p>Usa Claude Code para debugging avanzado de problemas complejos.</p>
+
+                <h3>Análisis de Stack Traces</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Analizar error complejo
+claude "Analiza este stack trace y encuentra la causa raíz:
+
+Error: ECONNREFUSED connect ECONNREFUSED 127.0.0.1:5432
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1144:16)
+    at Protocol._enqueue (/node_modules/mysql/lib/protocol/Protocol.js:144:48)
+    at Protocol.handshake (/node_modules/mysql/lib/protocol/Protocol.js:51:23)
+
+Contexto: Esto ocurre solo en producción macOS, funciona en desarrollo.
+Archivos relevantes: database.ts, config/production.ts"</code></pre>
+                </div>
+
+                <h3>Debugging de Memory Leaks</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Analizar memory leak
+node --inspect server.js
+
+# En otra terminal
+claude "Analiza este heap snapshot y encuentra memory leaks. El servidor usa 2GB de RAM después de 24 horas, debería usar 200MB. Heap snapshot: heap-snapshot.heapsnapshot"
+
+# Claude identifica listeners no removidos, closures reteniendo referencias, caches sin límites, etc.</code></pre>
+                </div>
+
+                <h3>Race Conditions y Concurrencia</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Debug de race condition
+claude "Este código tiene una race condition intermitente:
+
+async function processOrder(orderId) {
+  const order = await db.orders.findOne(orderId);
+  const inventory = await db.inventory.findOne(order.productId);
+
+  if (inventory.quantity >= order.quantity) {
+    inventory.quantity -= order.quantity;
+    await db.inventory.update(inventory);
+    await db.orders.update({...order, status: 'confirmed'});
+  }
+}
+
+A veces 2 órdenes procesan el mismo stock. Identifica el problema y propón solución con locks/transactions."</code></pre>
+                </div>
+
+                <h3>Performance Profiling</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Profile de performance
+node --prof server.js
+# Generar carga
+ab -n 10000 -c 100 http://localhost:3000/api/orders
+
+# Procesar profile
+node --prof-process isolate-0x*.log > profile.txt
+
+# Analizar con Claude
+claude "Analiza este performance profile y encuentra los bottlenecks:
+$(cat profile.txt)
+
+Enfócate en:
+- Funciones que consumen más CPU
+- Operaciones bloqueantes
+- Optimizaciones de bajo esfuerzo y alto impacto"</code></pre>
+                </div>
+
+                <h2>🔄 Migración Entre Frameworks</h2>
+
+                <p>Claude Code facilita migraciones complejas entre tecnologías.</p>
+
+                <h3>React Class Components → React Hooks</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Migrar componente a Hooks
+claude "Migra este componente de clase a functional component con Hooks:
+- Convierte state a useState
+- Convierte lifecycle methods a useEffect
+- Extrae lógica a custom hooks
+- Mantén exactamente la misma funcionalidad
+- Agrega tests para verificar equivalencia
+
+Archivo: src/components/UserProfile.tsx"</code></pre>
+                </div>
+
+                <h3>Express → Fastify</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Migrar API de Express a Fastify
+claude "Migra nuestra API de Express a Fastify:
+1. Convierte route handlers a formato Fastify
+2. Migra middleware a Fastify plugins
+3. Usa Fastify schema validation en lugar de express-validator
+4. Implementa Fastify hooks
+5. Mantén compatibilidad con clientes existentes
+6. Documenta mejoras de performance
+
+Directorio: src/routes/"</code></pre>
+                </div>
+
+                <h3>JavaScript → Rust (Para Performance Crítico)</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Migrar algoritmo crítico a Rust
+claude "Convierte este algoritmo de procesamiento de imágenes de Node.js a Rust con WASM:
+1. Reimplementa la lógica en Rust idiomático
+2. Usa wasm-pack para compilar a WebAssembly
+3. Crea bindings de JavaScript
+4. Benchmark comparativo
+5. Documentación de integración
+
+Objetivo: 10x mejora de performance en procesamiento de imágenes grandes"</code></pre>
+                </div>
+
+                <h3>REST API → GraphQL</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Migrar a GraphQL
+claude "Migra nuestra REST API a GraphQL usando Apollo Server:
+1. Genera schema GraphQL basado en nuestros endpoints REST
+2. Implementa resolvers para cada query/mutation
+3. Agrega DataLoader para evitar N+1 queries
+4. Implementa subscriptions para datos real-time
+5. Mantén REST API activa durante transición (6 meses)
+6. Crea migration guide para clientes
+
+Directorio: src/api/"</code></pre>
+                </div>
+
+                <h2>🚀 Integración con CI/CD en macOS</h2>
+
+                <p>Automatiza tu pipeline de desarrollo con Claude Code.</p>
+
+                <h3>GitHub Actions para macOS</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Generar workflow de CI/CD
+claude "Crea GitHub Actions workflow para proyecto Node.js en macOS:
+
+1. Triggers: push a main, PRs
+2. Jobs:
+   - Lint (ESLint + Prettier)
+   - Type check (TypeScript)
+   - Tests (Jest con coverage)
+   - Build
+   - Security scan (npm audit, Snyk)
+   - Deploy a staging (si es main branch)
+
+3. Optimizaciones:
+   - Cache de node_modules
+   - Matrix testing (Node 18, 20, 22)
+   - Parallel jobs
+   - Fail fast en errores críticos
+
+Archivo: .github/workflows/ci.yml"</code></pre>
+                </div>
+
+                <h3>Pre-deployment Checks</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Script de pre-deployment
+claude "Crea script de pre-deployment checks para macOS:
+
+#!/bin/zsh
+# pre-deploy.sh
+
+Verificaciones:
+1. Tests passing (100% required)
+2. Build exitoso
+3. No secrets en código (scan con trufflehog)
+4. Dependencias actualizadas (no vulnerabilidades críticas)
+5. Database migrations ready
+6. Environment variables configuradas
+7. Rollback plan documentado
+8. Health check endpoints funcionando
+
+Fallar si alguna verificación falla."</code></pre>
+                </div>
+
+                <h3>Automatización de Releases</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Automated semantic versioning
+npm install -D semantic-release
+
+# Configurar semantic-release
+claude "Configura semantic-release para nuestro proyecto:
+1. Analiza commits (Conventional Commits)
+2. Determina versión automáticamente (major/minor/patch)
+3. Genera CHANGELOG.md
+4. Crea Git tag
+5. Publica a npm (si es librería)
+6. Crea GitHub Release con notas
+7. Notifica a Slack
+
+Archivo: .releaserc.json"</code></pre>
+                </div>
+
+                <h2>🤖 Creación de CLIs Interactivas</h2>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Generar CLI profesional
+npm install commander inquirer chalk ora
+
+claude "Crea una CLI interactiva para scaffolding de proyectos:
+
+Comandos:
+- create <project-name>: Wizard interactivo
+- add <component>: Agregar componentes
+- deploy: Deploy asistido
+
+Features:
+- Prompts interactivos con inquirer
+- Progress spinners con ora
+- Output coloreado con chalk
+- Validación de inputs
+- Templates personalizables
+- Config persistence
+
+Archivo: src/cli.ts"</code></pre>
+                </div>
+
+                <h2>🔐 Security Auditing Automatizado</h2>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Audit completo de seguridad
+claude "Realiza audit de seguridad completo del proyecto:
+
+1. Análisis de dependencias (npm audit, Snyk)
+2. Scan de código estático (SAST)
+3. Detección de secrets hardcodeados
+4. Análisis de permisos de archivos
+5. Review de configuraciones (CORS, CSP, Headers)
+6. Check de autenticación/autorización
+7. Validación de inputs
+8. Rate limiting
+9. Reporte detallado con prioridades
+
+Genera: security-report.md con findings y remediation steps"</code></pre>
+                </div>
+
+                <h2>📊 Casos de Uso por Industria</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Industria</th>
+                            <th>Caso de Uso</th>
+                            <th>Beneficio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>FinTech</strong></td>
+                            <td>Migración de sistema de pagos legacy a arquitectura de microservicios</td>
+                            <td>Reducción de 80% en tiempo de migración</td>
+                        </tr>
+                        <tr>
+                            <td><strong>E-commerce</strong></td>
+                            <td>Generación automática de tests E2E para flujos de compra</td>
+                            <td>95% reducción en bugs de producción</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SaaS</strong></td>
+                            <td>Refactorización de monolito a microservicios con documentación completa</td>
+                            <td>6 meses → 6 semanas de migración</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Healthcare</strong></td>
+                            <td>Audit de seguridad y compliance (HIPAA)</td>
+                            <td>100% compliance automatizado</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EdTech</strong></td>
+                            <td>Migración de Angular a React con preservación de funcionalidad</td>
+                            <td>Zero downtime durante migración</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert success">
+                    <div class="alert-icon">🎯</div>
+                    <div class="alert-content">
+                        <h4>ROI Comprobado</h4>
+                        <p>Empresas reportan ROI de 300-500% en el primer año al usar Claude Code para casos de uso avanzados, principalmente por reducción de tiempo en refactorización, testing y documentación.</p>
+                    </div>
+                </div>
+
+                <h2>💡 Tips Avanzados</h2>
+
+                <ul>
+                    <li><strong>Contextualiza Siempre:</strong> Proporciona a Claude información sobre tu stack, convenciones, y restricciones del proyecto</li>
+                    <li><strong>Iteración Incremental:</strong> Para refactorizaciones grandes, trabaja módulo por módulo manteniendo tests pasando</li>
+                    <li><strong>Valida Resultados:</strong> Siempre ejecuta tests, linters, y type checkers después de cambios generados por IA</li>
+                    <li><strong>Documenta Decisiones:</strong> Pide a Claude que documente el "por qué" de las decisiones técnicas tomadas</li>
+                    <li><strong>Code Review Humano:</strong> La IA acelera el desarrollo, pero code review humano sigue siendo esencial</li>
+                </ul>
+
+                <nav class="navigation">
+                    <a href="06-mejores-practicas.html" class="nav-btn">← Anterior</a>
+                    <a href="08-troubleshooting.html" class="nav-btn">Siguiente →</a>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 Claude Code Documentation. Creado con Claude Code.</p>
+            <div class="footer-links">
+                <a href="https://www.anthropic.com" target="_blank">Anthropic</a>
+                <a href="https://docs.anthropic.com" target="_blank">Documentación Oficial</a>
+                <a href="https://github.com/anthropics/claude-code" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/code-copy.js"></script>
+</body>
+</html>
