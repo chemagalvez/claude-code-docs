@@ -89,6 +89,354 @@
                     </div>
                 </div>
 
+                <h2>Protocolos de Transporte en MCP</h2>
+
+                <p>
+                    MCP soporta múltiples protocolos de transporte, cada uno optimizado para diferentes casos de uso.
+                    Es importante entender las diferencias y las evoluciones recientes del protocolo.
+                </p>
+
+                <h3>Transportes Disponibles</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Transporte</th>
+                            <th>Estado</th>
+                            <th>Mejor Para</th>
+                            <th>Limitaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>stdio</strong></td>
+                            <td>✅ Activo</td>
+                            <td>Servidores locales, desarrollo</td>
+                            <td>Solo procesos locales</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HTTP (Streamable)</strong></td>
+                            <td>✅ Recomendado</td>
+                            <td>Servicios remotos, producción</td>
+                            <td>Requiere servidor web</td>
+                        </tr>
+                        <tr>
+                            <td><strong>WebSocket</strong></td>
+                            <td>✅ Activo</td>
+                            <td>Comunicación bidireccional en tiempo real</td>
+                            <td>Más complejo de configurar</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SSE (Server-Sent Events)</strong></td>
+                            <td>⚠️ Deprecado</td>
+                            <td>N/A (usar HTTP Streamable)</td>
+                            <td>Unidireccional, limitaciones de navegador</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>1. stdio - Standard Input/Output</h3>
+
+                <p>
+                    El transporte más simple y común para servidores MCP locales. Usa stdin/stdout para comunicación.
+                </p>
+
+                <div class="code-block">
+                    <pre><code class="language-typescript">// Servidor MCP con stdio
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+
+const transport = new StdioServerTransport();
+await server.connect(transport);
+console.error('Servidor MCP iniciado en stdio');
+// Nota: console.error se usa para logging porque stdout es para comunicación MCP</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-json">// Configuración en ~/.config/claude/mcp.json
+{
+  "mcpServers": {
+    "mi-servidor": {
+      "command": "node",
+      "args": ["./dist/server.js"],
+      "env": {}
+    }
+  }
+}</code></pre>
+                </div>
+
+                <div class="alert info">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Ventajas de stdio</h4>
+                        <ul>
+                            <li>Simple de implementar y debuggear</li>
+                            <li>No requiere configuración de red</li>
+                            <li>Perfecto para herramientas CLI y scripts locales</li>
+                            <li>Menor latencia al no usar red</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>2. HTTP Streamable (Recomendado para Producción)</h3>
+
+                <p>
+                    El protocolo HTTP con streaming reemplaza a SSE como la opción recomendada para servicios remotos.
+                    Ofrece mejor rendimiento, control y compatibilidad.
+                </p>
+
+                <div class="code-block">
+                    <pre><code class="language-typescript">// Servidor MCP con HTTP Streamable
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import express from 'express';
+
+const app = express();
+const mcpServer = new Server({
+  name: 'my-http-server',
+  version: '1.0.0',
+});
+
+app.post('/mcp', async (req, res) => {
+  // Configurar headers para streaming
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Transfer-Encoding', 'chunked');
+  res.setHeader('Cache-Control', 'no-cache');
+
+  // Procesar request MCP y streamear respuesta
+  const result = await mcpServer.handleRequest(req.body);
+
+  // Enviar chunks de respuesta
+  res.write(JSON.stringify(result.chunk1));
+  res.write(JSON.stringify(result.chunk2));
+  res.end();
+});
+
+app.listen(3000, () => {
+  console.log('MCP Server HTTP escuchando en puerto 3000');
+});</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-json">// Configuración de cliente HTTP
+{
+  "mcpServers": {
+    "remote-server": {
+      "transport": "http",
+      "url": "https://api.example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${API_TOKEN}"
+      }
+    }
+  }
+}</code></pre>
+                </div>
+
+                <h3>3. WebSocket - Comunicación Bidireccional</h3>
+
+                <p>
+                    WebSocket permite comunicación bidireccional en tiempo real. Ideal para notificaciones push y
+                    actualizaciones en vivo.
+                </p>
+
+                <div class="code-block">
+                    <pre><code class="language-typescript">// Servidor MCP con WebSocket
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { WebSocketServer } from 'ws';
+
+const wss = new WebSocketServer({ port: 8080 });
+const mcpServer = new Server({
+  name: 'websocket-mcp-server',
+  version: '1.0.0',
+});
+
+wss.on('connection', (ws) => {
+  console.log('Cliente MCP conectado via WebSocket');
+
+  ws.on('message', async (data) => {
+    const request = JSON.parse(data.toString());
+    const response = await mcpServer.handleRequest(request);
+    ws.send(JSON.stringify(response));
+  });
+
+  ws.on('close', () => {
+    console.log('Cliente MCP desconectado');
+  });
+});</code></pre>
+                </div>
+
+                <h3>4. SSE (Server-Sent Events) - ⚠️ DEPRECADO</h3>
+
+                <div class="alert warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                        <h4>SSE está siendo deprecado en MCP</h4>
+                        <p>
+                            A partir de 2024-2025, SSE está siendo reemplazado por <strong>HTTP Streamable</strong>
+                            en el protocolo MCP. Si estás usando SSE, migra a HTTP Streamable lo antes posible.
+                        </p>
+                    </div>
+                </div>
+
+                <h4>¿Por qué se depreca SSE?</h4>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <h3>Comunicación Unidireccional</h3>
+                        <p>SSE solo permite enviar datos del servidor al cliente. Para requests bidireccionales, necesitas HTTP separado.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Limitaciones del Navegador</h3>
+                        <p>Límite de 6 conexiones SSE simultáneas por dominio en navegadores. No es problema en CLI, pero limita uso web.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🔧</div>
+                        <h3>Menos Control</h3>
+                        <p>HTTP Streamable ofrece más control sobre headers, chunking, y manejo de errores.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Rendimiento</h3>
+                        <p>HTTP Streamable con HTTP/2 y HTTP/3 ofrece mejor rendimiento y multiplexing.</p>
+                    </div>
+                </div>
+
+                <h4>Migración de SSE a HTTP Streamable</h4>
+
+                <p>Si tienes un servidor MCP usando SSE, sigue estos pasos para migrar:</p>
+
+                <div class="code-block">
+                    <pre><code class="language-typescript">// ANTES: Servidor SSE (deprecado)
+import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
+
+const transport = new SSEServerTransport('/events', response);
+await server.connect(transport);
+
+// DESPUÉS: HTTP Streamable (recomendado)
+import express from 'express';
+
+const app = express();
+
+app.post('/mcp', express.json(), async (req, res) => {
+  // Configurar streaming HTTP
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Transfer-Encoding', 'chunked');
+
+  try {
+    const request = req.body;
+
+    // Procesar request MCP
+    const result = await mcpServer.handleRequest(request);
+
+    // Streamear respuesta en chunks
+    if (result.stream) {
+      for await (const chunk of result.stream) {
+        res.write(JSON.stringify(chunk) + '\n');
+      }
+    } else {
+      res.write(JSON.stringify(result));
+    }
+
+    res.end();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.listen(3000);</code></pre>
+                </div>
+
+                <h4>Comparación Técnica: SSE vs HTTP Streamable</h4>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>SSE (Deprecado)</th>
+                            <th>HTTP Streamable (Nuevo)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Dirección</strong></td>
+                            <td>Unidireccional (server → client)</td>
+                            <td>Bidireccional completo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Formato</strong></td>
+                            <td>Solo texto (text/event-stream)</td>
+                            <td>Cualquier content-type</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reconexión</strong></td>
+                            <td>Automática con EventSource API</td>
+                            <td>Manual, más control</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HTTP/2 Multiplexing</strong></td>
+                            <td>Limitado</td>
+                            <td>Soporte completo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Custom Headers</strong></td>
+                            <td>Limitado</td>
+                            <td>Control completo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Límites de Conexión</strong></td>
+                            <td>6 por dominio (navegador)</td>
+                            <td>Sin límites artificiales</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Manejo de Errores</strong></td>
+                            <td>Básico</td>
+                            <td>Robusto y granular</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Compresión</strong></td>
+                            <td>Limitada</td>
+                            <td>gzip, brotli completo</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Timeline de Deprecación SSE</h4>
+
+                <div class="alert info">
+                    <div class="alert-icon">📅</div>
+                    <div class="alert-content">
+                        <h4>Calendario de Deprecación</h4>
+                        <ul>
+                            <li><strong>Q4 2024:</strong> SSE marcado como deprecado en la documentación</li>
+                            <li><strong>Q1 2025:</strong> Warnings en SDK al usar SSE</li>
+                            <li><strong>Q2 2025:</strong> HTTP Streamable se convierte en el estándar recomendado</li>
+                            <li><strong>Q4 2025:</strong> Posible remoción de SSE de la especificación MCP</li>
+                        </ul>
+                        <p><strong>Acción recomendada:</strong> Migra a HTTP Streamable antes de Q2 2025.</p>
+                    </div>
+                </div>
+
+                <h3>Elegir el Transporte Correcto</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Regla general para elegir transporte:
+
+# 1. Servidor local, desarrollo, scripts CLI
+# → stdio (más simple)
+
+# 2. Servicio remoto, producción, escalabilidad
+# → HTTP Streamable (mejor rendimiento y control)
+
+# 3. Necesitas notificaciones push bidireccionales en tiempo real
+# → WebSocket (full-duplex)
+
+# 4. Estás usando SSE actualmente
+# → Migra a HTTP Streamable AHORA</code></pre>
+                </div>
+
                 <h2>Arquitectura del MCP</h2>
 
                 <p>
