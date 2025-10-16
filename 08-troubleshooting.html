@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8. Troubleshooting | Claude Code para macOS</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🤖</div>
+                <span>Claude Code Docs</span>
+            </a>
+            <div class="nav-controls">
+                <select id="page-selector" class="page-selector"></select>
+                <button id="theme-toggle" class="theme-toggle">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="progress-indicator">
+                <span id="progress-indicator">Página 9 de 9</span>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill" style="width: 100%"></div>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <h1>8. Troubleshooting y Solución de Problemas</h1>
+
+                <p>Guía completa para resolver los problemas más comunes al usar Claude Code en macOS. Incluye soluciones paso a paso, comandos específicos y mejores prácticas de debugging.</p>
+
+                <h2>🚨 Problemas de Instalación</h2>
+
+                <h3>Error: "command not found: claude"</h3>
+
+                <div class="alert warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                        <h4>Síntoma</h4>
+                        <p>Después de instalar Claude Code, el comando <code>claude</code> no es reconocido en la terminal.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar si Claude está instalado
+which claude
+
+# Si no devuelve nada, verificar instalación de Homebrew
+which brew
+
+# Verificar PATH
+echo $PATH
+
+# Solución 1: Reinstalar con Homebrew
+brew uninstall claude-code
+brew install anthropics/claude/claude
+
+# Solución 2: Agregar Homebrew al PATH (Apple Silicon)
+echo 'export PATH="/opt/homebrew/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+
+# Solución 3: Agregar Homebrew al PATH (Intel)
+echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+
+# Verificar nuevamente
+which claude
+claude --version</code></pre>
+                </div>
+
+                <h3>Error: "Permission denied" al instalar con npm</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># NO uses sudo con npm (mala práctica)
+# En su lugar, configura npm para instalar globalmente sin sudo
+
+# Crear directorio para paquetes globales
+mkdir ~/.npm-global
+
+# Configurar npm
+npm config set prefix '~/.npm-global'
+
+# Agregar al PATH
+echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+
+# Ahora instalar sin sudo
+npm install -g @anthropic-ai/claude-code
+
+# Verificar
+claude --version</code></pre>
+                </div>
+
+                <h3>Error: "quarantine" o "unidentified developer" en macOS</h3>
+
+                <div class="alert info">
+                    <div class="alert-icon">🍎</div>
+                    <div class="alert-content">
+                        <h4>Problema de Seguridad de macOS</h4>
+                        <p>macOS Gatekeeper bloquea aplicaciones descargadas fuera del App Store.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Remover atributo de quarantine
+xattr -d com.apple.quarantine /opt/homebrew/bin/claude
+
+# O remover todos los atributos extendidos
+xattr -cr /opt/homebrew/bin/claude
+
+# Verificar que se removió
+xattr -l /opt/homebrew/bin/claude
+# No debe devolver nada
+
+# Si persiste, permitir en System Preferences
+# System Settings → Privacy & Security → Allow apps from: App Store and identified developers</code></pre>
+                </div>
+
+                <h2>🔑 Problemas de Autenticación</h2>
+
+                <h3>Error: "Invalid API key"</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar API key actual
+echo $ANTHROPIC_API_KEY
+
+# Si está vacío o es incorrecto:
+# 1. Obtener nueva API key de https://console.anthropic.com
+# 2. Configurar correctamente
+
+# Método 1: Variable de entorno
+echo 'export ANTHROPIC_API_KEY="sk-ant-api03-TU-KEY-AQUI"' >> ~/.zshrc
+source ~/.zshrc
+
+# Método 2: Archivo de configuración
+mkdir -p ~/.config/claude
+cat > ~/.config/claude/config.json << 'EOF'
+{
+  "api_key": "sk-ant-api03-TU-KEY-AQUI",
+  "default_model": "sonnet-4.5"
+}
+EOF
+
+# Verificar que funciona
+claude --api-key "$ANTHROPIC_API_KEY" "echo test"
+
+# Si sigue fallando, verificar formato de la key
+# Debe empezar con: sk-ant-api03-</code></pre>
+                </div>
+
+                <h3>Error: "Rate limit exceeded"</h3>
+
+                <div class="alert warning">
+                    <div class="alert-icon">⏱️</div>
+                    <div class="alert-content">
+                        <h4>Has excedido el límite de requests</h4>
+                        <p>Anthropic limita el número de requests por minuto según tu plan.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Soluciones:
+
+# 1. Esperar 60 segundos antes de reintentar
+sleep 60
+claude "tu prompt aquí"
+
+# 2. Usar modelo más económico para tareas simples
+claude --model claude-3-5-haiku "tarea simple"
+
+# 3. Implementar retry con backoff exponencial
+retry_claude() {
+    local max_attempts=5
+    local timeout=1
+    local attempt=1
+
+    while [ $attempt -le $max_attempts ]; do
+        if claude "$@"; then
+            return 0
+        fi
+        echo "Intento $attempt falló. Reintentando en ${timeout}s..."
+        sleep $timeout
+        timeout=$((timeout * 2))
+        attempt=$((attempt + 1))
+    done
+
+    echo "Falló después de $max_attempts intentos"
+    return 1
+}
+
+# Uso
+retry_claude "tu prompt aquí"
+
+# 4. Verificar límites en console.anthropic.com
+# Settings → Usage → Rate Limits</code></pre>
+                </div>
+
+                <h3>Error: "Unauthorized" o 401</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Debugging completo de autenticación
+
+# 1. Verificar que la API key es válida
+curl https://api.anthropic.com/v1/messages \
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "content-type: application/json" \
+  -d '{
+    "model": "claude-3-5-sonnet-20241022",
+    "max_tokens": 1024,
+    "messages": [{"role": "user", "content": "Hello"}]
+  }'
+
+# Si devuelve 401:
+# - La key es inválida o expiró
+# - Regenera en https://console.anthropic.com/settings/keys
+
+# 2. Verificar permisos del archivo de config
+ls -la ~/.config/claude/config.json
+# Debe ser: -rw------- (600)
+
+chmod 600 ~/.config/claude/config.json
+
+# 3. Verificar que no hay espacios o caracteres ocultos
+cat ~/.config/claude/config.json | od -c
+# Buscar caracteres extraños</code></pre>
+                </div>
+
+                <h2>⚙️ Problemas de Configuración</h2>
+
+                <h3>Claude ignora archivos especificados en .claudeignore</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar formato de .claudeignore
+cat .claudeignore
+
+# Formato correcto:
+# - Una línea por patrón
+# - Sin comillas
+# - Comentarios con #
+# - Soporta wildcards (*, **, ?)
+
+# Ejemplo correcto:
+cat > .claudeignore << 'EOF'
+# Dependencies
+node_modules/
+*.lock
+
+# Build
+dist/
+build/
+
+# Env files
+.env*
+
+# Large files
+*.log
+*.csv
+EOF
+
+# Verificar que Claude lo reconoce
+claude "Lista los archivos que puedes ver en este proyecto"
+
+# Si persiste, verificar encoding
+file .claudeignore
+# Debe ser: ASCII text
+
+# Recrear con encoding correcto
+mv .claudeignore .claudeignore.bak
+cat .claudeignore.bak | iconv -f UTF-8 -t ASCII > .claudeignore</code></pre>
+                </div>
+
+                <h3>Configuración no persiste entre sesiones</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar que ~/.zshrc se carga correctamente
+echo "Testing .zshrc load" >> ~/.zshrc
+# Abrir nueva terminal
+# Si no ves el mensaje, hay un problema de carga
+
+# Verificar errores en .zshrc
+zsh -n ~/.zshrc
+# No debe devolver nada si el archivo es válido
+
+# Verificar que las variables están exportadas
+grep "export ANTHROPIC_API_KEY" ~/.zshrc
+
+# Debe contener:
+export ANTHROPIC_API_KEY="sk-ant-api03-..."
+
+# NO solo:
+ANTHROPIC_API_KEY="sk-ant-api03-..."  # Falta export!
+
+# Recargar configuración
+source ~/.zshrc
+
+# Verificar en nueva terminal
+echo $ANTHROPIC_API_KEY</code></pre>
+                </div>
+
+                <h2>💻 Problemas de Permisos en macOS</h2>
+
+                <h3>Error: "Operation not permitted"</h3>
+
+                <div class="alert warning">
+                    <div class="alert-icon">🔒</div>
+                    <div class="alert-content">
+                        <h4>System Integrity Protection (SIP)</h4>
+                        <p>macOS protege ciertos directorios del sistema. No intentes desactivar SIP.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># NO intentes modificar:
+# /System/
+# /usr/ (excepto /usr/local/)
+# /bin/
+# /sbin/
+
+# En su lugar, usa ubicaciones de usuario:
+# ~/.local/bin/
+# ~/.config/
+# ~/Library/
+
+# Crear directorio local para binarios
+mkdir -p ~/.local/bin
+
+# Agregar al PATH
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+
+# Ahora puedes instalar scripts/binarios ahí sin sudo
+ln -s /opt/homebrew/bin/claude ~/.local/bin/claude</code></pre>
+                </div>
+
+                <h3>Terminal no tiene permisos de Full Disk Access</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Si Claude no puede acceder a ciertos archivos:
+
+# 1. Abrir System Settings
+open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
+
+# 2. Agregar tu aplicación de Terminal:
+#    - Terminal.app
+#    - iTerm.app
+#    - Warp.app
+#    - etc.
+
+# 3. Reiniciar la aplicación de terminal
+
+# Verificar acceso
+ls ~/Library/Application\ Support/
+# Debe listar contenido sin errores</code></pre>
+                </div>
+
+                <h2>🐛 Problemas de Rendimiento</h2>
+
+                <h3>Claude es extremadamente lento</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Diagnóstico de rendimiento
+
+# 1. Verificar conexión a internet
+ping -c 5 api.anthropic.com
+
+# 2. Verificar latencia
+time claude "echo test"
+# Debe ser < 5 segundos para prompts simples
+
+# 3. Reducir contexto
+# Revisar .claudeignore para excluir archivos innecesarios
+
+# 4. Usar modelo más rápido para tareas simples
+claude --model claude-3-5-haiku "tarea simple"
+
+# 5. Verificar que no hay procesos consumiendo CPU
+top -o cpu -n 10
+
+# 6. Verificar espacio en disco
+df -h
+# ~ debe tener al menos 1GB libre
+
+# 7. Limpiar cache si existe
+rm -rf ~/.claude/cache/*
+
+# 8. Verificar DNS
+scutil --dns | grep 'nameserver\[0\]'
+# Considerar usar DNS público (8.8.8.8, 1.1.1.1)</code></pre>
+                </div>
+
+                <h3>Timeouts en prompts largos</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Para prompts muy largos o complejos:
+
+# 1. Dividir en prompts más pequeños
+# Malo:
+claude "Analiza todos los archivos y refactoriza todo el proyecto"
+
+# Bueno:
+claude "Analiza src/auth/ y lista problemas"
+claude "Refactoriza src/auth/login.ts basándote en los problemas encontrados"
+claude "Crea tests para src/auth/login.ts"
+
+# 2. Usar archivos para prompts muy largos
+cat > prompt.txt << 'EOF'
+Analiza este código y encuentra bugs:
+[tu código largo aquí]
+EOF
+
+claude "$(cat prompt.txt)"
+
+# 3. Aumentar timeout si es posible (depende de implementación)
+# Consultar documentación de tu versión específica</code></pre>
+                </div>
+
+                <h2>📁 Problemas de Gestión de Contexto</h2>
+
+                <h3>Error: "Context length exceeded"</h3>
+
+                <div class="alert info">
+                    <div class="alert-icon">📊</div>
+                    <div class="alert-content">
+                        <h4>Has excedido el límite de tokens</h4>
+                        <p>Cada modelo tiene un límite de contexto. Sonnet 4.5: 200K tokens (~150K palabras).</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Soluciones:
+
+# 1. Optimizar .claudeignore
+cat > .claudeignore << 'EOF'
+# Excluir dependencias
+node_modules/
+vendor/
+venv/
+
+# Excluir builds
+dist/
+build/
+*.bundle.js
+*.min.js
+
+# Excluir archivos grandes
+*.log
+*.csv
+*.json.gz
+*.sql
+*.db
+
+# Excluir assets
+*.png
+*.jpg
+*.gif
+*.svg
+*.mp4
+*.pdf
+EOF
+
+# 2. Enfocarse en archivos específicos
+claude "Analiza solo src/services/payment.ts, no todo el proyecto"
+
+# 3. Usar sesiones más cortas
+# Iniciar nueva sesión en lugar de continuar una muy larga
+
+# 4. Limpiar historial de conversación
+# (si tu implementación lo soporta)
+
+# 5. Usar modelo con mayor contexto
+claude --model claude-3-opus "prompt muy largo"
+# Opus: 200K tokens</code></pre>
+                </div>
+
+                <h3>Claude no encuentra archivos que existen</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Debugging de visibilidad de archivos
+
+# 1. Verificar que el archivo existe
+ls -la src/utils/helper.ts
+
+# 2. Verificar permisos de lectura
+ls -l src/utils/helper.ts
+# Debe tener 'r' en permisos
+
+# 3. Verificar que no está en .claudeignore
+grep "helper.ts" .claudeignore
+grep "utils/" .claudeignore
+
+# 4. Verificar path absoluto vs relativo
+pwd
+# Asegúrate de estar en el directorio correcto del proyecto
+
+# 5. Listar archivos visibles para Claude
+claude "Lista todos los archivos .ts que puedes ver"
+
+# 6. Verificar symlinks rotos
+find . -type l ! -exec test -e {} \; -print
+# Listar symlinks que no apuntan a archivos existentes</code></pre>
+                </div>
+
+                <h2>🔄 Problemas con MCP Servers</h2>
+
+                <h3>MCP Server no se conecta</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar configuración de MCP
+cat ~/.config/claude/mcp.json
+
+# Debe tener formato correcto:
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/tu-usuario/Documents"]
+    }
+  }
+}
+
+# Verificar que el servidor MCP funciona standalone
+npx -y @modelcontextprotocol/server-filesystem /Users/tu-usuario/Documents
+
+# Verificar logs de Claude
+# (ubicación depende de la implementación)
+tail -f ~/.config/claude/logs/mcp.log
+
+# Verificar permisos del directorio
+ls -ld /Users/tu-usuario/Documents
+# Debe tener permisos de lectura
+
+# Reiniciar Claude después de cambios en config
+killall claude
+claude --version</code></pre>
+                </div>
+
+                <h3>Error al instalar MCP Server personalizado</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar instalación de dependencias
+cd ~/mcp-servers/mi-servidor
+npm install
+
+# Verificar que el servidor tiene punto de entrada correcto
+cat package.json | grep "main"
+# Debe apuntar a archivo correcto, ej: "main": "dist/index.js"
+
+# Verificar que compila sin errores
+npm run build
+
+# Testear servidor standalone
+node dist/index.js
+# Debe iniciar sin errores
+
+# Verificar que Claude puede ejecutarlo
+claude "test del servidor MCP mi-servidor"
+
+# Ver logs detallados
+DEBUG=mcp:* claude "test del servidor MCP"</code></pre>
+                </div>
+
+                <h2>❓ FAQ Técnico para macOS</h2>
+
+                <h3>¿Claude Code funciona en Apple Silicon (M1/M2/M3)?</h3>
+
+                <div class="alert success">
+                    <div class="alert-icon">✅</div>
+                    <div class="alert-content">
+                        <h4>Sí, completamente compatible</h4>
+                        <p>Claude Code funciona nativamente en Apple Silicon. Asegúrate de usar Homebrew para Apple Silicon instalado en <code>/opt/homebrew</code>.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar arquitectura
+uname -m
+# arm64 = Apple Silicon
+# x86_64 = Intel
+
+# Verificar Homebrew correcto
+which brew
+# Apple Silicon: /opt/homebrew/bin/brew
+# Intel: /usr/local/bin/brew
+
+# Si tienes Rosetta Homebrew en Apple Silicon, desinstálalo
+# y reinstala nativo</code></pre>
+                </div>
+
+                <h3>¿Puedo usar Claude Code offline?</h3>
+
+                <div class="alert warning">
+                    <div class="alert-icon">🌐</div>
+                    <div class="alert-content">
+                        <h4>No, requiere conexión a internet</h4>
+                        <p>Claude Code se comunica con la API de Anthropic en la nube. No hay modo offline.</p>
+                    </div>
+                </div>
+
+                <h3>¿Cómo actualizo Claude Code a la última versión?</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Con Homebrew
+brew update
+brew upgrade anthropics/claude/claude
+
+# Con npm
+npm update -g @anthropic-ai/claude-code
+
+# Verificar versión
+claude --version
+
+# Ver changelog
+brew info anthropics/claude/claude</code></pre>
+                </div>
+
+                <h3>¿Claude Code guarda mi código en algún lado?</h3>
+
+                <div class="alert info">
+                    <div class="alert-icon">🔒</div>
+                    <div class="alert-content">
+                        <h4>Políticas de Privacidad</h4>
+                        <p>Consulta los términos de servicio de Anthropic. Generalmente, las interacciones se usan para mejorar el servicio pero puedes optar por no compartir datos en la configuración de tu cuenta.</p>
+                        <p><a href="https://www.anthropic.com/legal/privacy" target="_blank">Política de Privacidad de Anthropic</a></p>
+                    </div>
+                </div>
+
+                <h3>¿Puedo usar Claude Code con múltiples proyectos simultáneamente?</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Sí, usa diferentes terminales
+
+# Terminal 1 - Proyecto A
+cd ~/projects/proyecto-a
+claude "analiza este proyecto"
+
+# Terminal 2 - Proyecto B
+cd ~/projects/proyecto-b
+claude "analiza este proyecto"
+
+# O usa tmux/screen para múltiples sesiones
+brew install tmux
+
+# Crear sesión para cada proyecto
+tmux new -s proyecto-a
+tmux new -s proyecto-b
+
+# Alternar entre sesiones
+tmux attach -t proyecto-a
+# Ctrl+B, D para detach</code></pre>
+                </div>
+
+                <h3>¿Cómo reporto un bug o problema?</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># 1. Recolectar información de debugging
+claude --version > bug-report.txt
+sw_vers >> bug-report.txt
+echo "---" >> bug-report.txt
+echo $ANTHROPIC_API_KEY | head -c 20 >> bug-report.txt
+echo "..." >> bug-report.txt
+echo "---" >> bug-report.txt
+
+# 2. Describir el problema con pasos para reproducir
+
+# 3. Reportar en:
+# - GitHub: https://github.com/anthropics/claude-code/issues
+# - Support: support@anthropic.com
+# - Discord: discord.gg/anthropic</code></pre>
+                </div>
+
+                <h2>🛠️ Comandos de Diagnóstico Útiles</h2>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Script completo de diagnóstico
+cat > ~/diagnose-claude.sh << 'EOF'
+#!/bin/zsh
+
+echo "=== Claude Code Diagnostics ==="
+echo ""
+
+echo "1. Sistema:"
+sw_vers
+uname -m
+
+echo -e "\n2. Claude Version:"
+claude --version
+
+echo -e "\n3. Homebrew:"
+which brew
+brew --version
+
+echo -e "\n4. Node.js:"
+which node
+node --version
+
+echo -e "\n5. npm:"
+which npm
+npm --version
+
+echo -e "\n6. PATH:"
+echo $PATH
+
+echo -e "\n7. API Key (primeros 20 chars):"
+echo $ANTHROPIC_API_KEY | head -c 20
+echo "..."
+
+echo -e "\n8. Config file:"
+ls -la ~/.config/claude/
+
+echo -e "\n9. Permisos:"
+ls -la $(which claude)
+
+echo -e "\n10. Connectivity:"
+ping -c 3 api.anthropic.com
+
+echo -e "\n=== Diagnóstico completo ==="
+EOF
+
+chmod +x ~/diagnose-claude.sh
+
+# Ejecutar
+~/diagnose-claude.sh</code></pre>
+                </div>
+
+                <h2>📚 Recursos Adicionales</h2>
+
+                <ul>
+                    <li><a href="https://docs.anthropic.com/claude/docs" target="_blank">Documentación Oficial de Claude</a></li>
+                    <li><a href="https://support.anthropic.com" target="_blank">Centro de Soporte de Anthropic</a></li>
+                    <li><a href="https://status.anthropic.com" target="_blank">Status Page - Estado de servicios</a></li>
+                    <li><a href="https://github.com/anthropics/claude-code/issues" target="_blank">GitHub Issues</a></li>
+                    <li><a href="https://discord.gg/anthropic" target="_blank">Discord Community</a></li>
+                </ul>
+
+                <div class="alert success">
+                    <div class="alert-icon">🎉</div>
+                    <div class="alert-content">
+                        <h4>¡Has completado la documentación!</h4>
+                        <p>Ahora tienes conocimiento completo de Claude Code para macOS. Desde instalación básica hasta casos de uso avanzados y troubleshooting.</p>
+                        <p><strong>Siguiente paso:</strong> ¡Empieza a usar Claude Code en tus proyectos reales!</p>
+                    </div>
+                </div>
+
+                <nav class="navigation">
+                    <a href="07-casos-avanzados.html" class="nav-btn">← Anterior</a>
+                    <a href="index.html" class="nav-btn">🏠 Inicio</a>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 Claude Code Documentation. Creado con Claude Code.</p>
+            <div class="footer-links">
+                <a href="https://www.anthropic.com" target="_blank">Anthropic</a>
+                <a href="https://docs.anthropic.com" target="_blank">Documentación Oficial</a>
+                <a href="https://github.com/anthropics/claude-code" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/code-copy.js"></script>
+</body>
+</html>
