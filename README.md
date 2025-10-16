@@ -186,11 +186,10 @@ Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 
 ## 📞 Soporte
 
-Si tienes problemas con la documentación:
+Para obtener ayuda con Claude Code:
 
-- 📧 Email: tu-email@ejemplo.com
-- 🐛 Issues: [GitHub Issues](https://github.com/TU-USUARIO/claude-code-docs/issues)
-- 💬 Discusiones: [GitHub Discussions](https://github.com/TU-USUARIO/claude-code-docs/discussions)
+- 📚 [Documentación Oficial de Claude](https://docs.anthropic.com)
+- 💬 [Comunidad de Claude](https://console.anthropic.com)
 
 ## 🔗 Enlaces Útiles
 
