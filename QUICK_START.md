@@ -138,7 +138,7 @@ git push -u origin main
 # Selecciona: Source → main → / (root) → Save
 
 # 8. Espera 1-2 minutos y visita:
-# https://chemagalvez.github.io/REPO/
+# https://TU-USUARIO.github.io/REPO/
 ```
 
 ## ✨ Siguiente Nivel

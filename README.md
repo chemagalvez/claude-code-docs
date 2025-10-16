@@ -2,7 +2,7 @@
 
 Documentación interactiva y exhaustiva de Claude Code diseñada específicamente para usuarios de macOS.
 
-🔗 **[Ver Documentación en Vivo](https://chemagalvez.github.io/claude-code-docs/)**
+🔗 **[Ver Documentación en Vivo](https://TU-USUARIO.github.io/claude-code-docs/)**
 
 ## 🎯 Descripción
 
@@ -61,7 +61,7 @@ Esta documentación proporciona una guía completa de Claude Code en español, o
 
 4. **Acceder a tu sitio**
    - Espera 1-2 minutos
-   - Tu sitio estará disponible en: `https://chemagalvez.github.io/claude-code-docs/`
+   - Tu sitio estará disponible en: `https://TU-USUARIO.github.io/claude-code-docs/`
 
 ### Método 2: Usando GitHub CLI
 

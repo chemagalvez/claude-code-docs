@@ -204,7 +204,7 @@ Una vez completadas todas las páginas:
    ```
 
 3. Activar GitHub Pages en Settings → Pages
-4. Acceder en: https://chemagalvez.github.io/claude-code-docs/
+4. Acceder en: https://TU-USUARIO.github.io/claude-code-docs/
 
 ## Testing Local
 

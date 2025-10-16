@@ -135,7 +135,7 @@ Usa la plantilla HTML en INSTRUCCIONES_FINALES.md para crear cada página.
 5. Selecciona Source: "Deploy from a branch"
 6. Branch: `main`, Folder: `/ (root)`
 7. Guarda y espera 1-2 minutos
-8. Accede a: `https://chemagalvez.github.io/claude-code-docs/`
+8. Accede a: `https://TU-USUARIO.github.io/claude-code-docs/`
 
 ### Opción 2: Línea de Comandos
 ```bash
