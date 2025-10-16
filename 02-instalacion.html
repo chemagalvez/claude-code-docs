@@ -258,20 +258,30 @@ claude "Explica este archivo" archivo.js
 
                 <h3>Alias de Terminal</h3>
 
-                <p>Crea alias para comandos frecuentes:</p>
+                <p>Crea alias útiles para comandos frecuentes:</p>
 
                 <div class="code-block">
                     <pre><code class="language-zsh"># Agregar a ~/.zshrc
+# Alias corto para Claude
 alias cc="claude"
-alias ccr="claude review"
-alias cct="claude test"
-alias ccd="claude doc"
+
+# Continuar última conversación
+alias ccl="claude --continue"
+
+# Retomar conversación específica
+alias ccr="claude --resume"
+
+# Modelos específicos
+alias cc-haiku="claude --model haiku-3.5"
+alias cc-sonnet="claude --model sonnet-4.5"
 
 # Recargar
 source ~/.zshrc
 
-# Ahora puedes usar:
-cc "Genera una función factorial"</code></pre>
+# Ejemplos de uso:
+cc "Genera una función factorial"
+ccl  # Continúa la conversación anterior
+cc-haiku "Formatea este código"  # Usa Haiku (más rápido)</code></pre>
                 </div>
 
                 <h3>Configurar Proxy (si es necesario)</h3>
