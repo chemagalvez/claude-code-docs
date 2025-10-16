@@ -271,6 +271,198 @@ claude "Convierte esto a TypeScript con tipos apropiados" app.js > app.ts
 claude "Convierte este código Python a JavaScript moderno" script.py > script.js</code></pre>
                 </div>
 
+                <h2>📋 Cheat Sheet: Referencia Rápida de Comandos</h2>
+
+                <p>Esta tabla de referencia rápida contiene los comandos más utilizados en el día a día. Guarda esta página en favoritos o imprímela para tener acceso rápido.</p>
+
+                <div class="alert tip" style="margin-bottom: 1.5rem;">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Tip: Copia y Personaliza</h4>
+                        <p>Todos estos comandos son plantillas base. Reemplaza los textos entre comillas con tus necesidades específicas.</p>
+                    </div>
+                </div>
+
+                <h3>Comandos Esenciales (Úsalos Cada Día)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 40%;">Comando</th>
+                            <th style="width: 60%;">Qué hace</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>claude "tarea"</code></td>
+                            <td>Ejecuta una tarea básica con contexto del directorio</td>
+                        </tr>
+                        <tr>
+                            <td><code>claude "tarea" archivo.js</code></td>
+                            <td>Ejecuta tarea con archivo específico</td>
+                        </tr>
+                        <tr>
+                            <td><code>claude --model opus "tarea"</code></td>
+                            <td>Usa modelo específico (opus/sonnet/haiku)</td>
+                        </tr>
+                        <tr>
+                            <td><code>claude --continue</code></td>
+                            <td>Continúa la conversación anterior</td>
+                        </tr>
+                        <tr>
+                            <td><code>claude history</code></td>
+                            <td>Muestra historial de comandos recientes</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Generación de Código</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 60%;">Comando</th>
+                            <th style="width: 40%;">Caso de Uso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>claude "Crea API REST en Express"</code></td>
+                            <td>Nueva funcionalidad</td>
+                        </tr>
+                        <tr>
+                            <td><code>claude "Agrega validación a X"</code></td>
+                            <td>Extender código existente</td>
+                        </tr>
+                        <tr>
+                            <td><code>claude "Genera tests para" archivo.js</code></td>
+                            <td>Testing automatizado</td>
+                        </tr>
+                        <tr>
+                            <td><code>claude "Documenta esta función" utils.ts</code></td>
+                            <td>Documentación JSDoc</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Refactorización y Mejora</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 60%;">Comando</th>
+                            <th style="width: 40%;">Caso de Uso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>claude "Refactoriza aplicando SOLID" code.js</code></td>
+                            <td>Clean code</td>
+                        </tr>
+                        <tr>
+                            <td><code>claude "Optimiza rendimiento" slow.py</code></td>
+                            <td>Performance</td>
+                        </tr>
+                        <tr>
+                            <td><code>claude "Elimina código duplicado" src/</code></td>
+                            <td>DRY principle</td>
+                        </tr>
+                        <tr>
+                            <td><code>claude "Convierte a TypeScript" app.js</code></td>
+                            <td>Migración de tipos</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Debugging y Análisis</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 60%;">Comando</th>
+                            <th style="width: 40%;">Caso de Uso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>claude "Encuentra el bug" broken.js</code></td>
+                            <td>Debugging</td>
+                        </tr>
+                        <tr>
+                            <td><code>claude "Analiza este error" error.log</code></td>
+                            <td>Stack trace analysis</td>
+                        </tr>
+                        <tr>
+                            <td><code>claude "Explica qué hace" legacy.c</code></td>
+                            <td>Entender código legacy</td>
+                        </tr>
+                        <tr>
+                            <td><code>claude "Revisa seguridad" auth.js</code></td>
+                            <td>Security audit</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Integración con Git</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 65%;">Comando</th>
+                            <th style="width: 35%;">Caso de Uso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>git diff | claude "Resume cambios"</code></td>
+                            <td>Commit messages</td>
+                        </tr>
+                        <tr>
+                            <td><code>git log -10 | claude "Genera changelog"</code></td>
+                            <td>Release notes</td>
+                        </tr>
+                        <tr>
+                            <td><code>git diff main | claude "Review de código"</code></td>
+                            <td>Code review</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Opciones Globales Más Útiles</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 35%;">Opción</th>
+                            <th style="width: 65%;">Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>--model NOMBRE</code></td>
+                            <td>Especifica modelo (sonnet-4.5, opus, haiku)</td>
+                        </tr>
+                        <tr>
+                            <td><code>--continue</code></td>
+                            <td>Continúa conversación anterior (mantiene contexto)</td>
+                        </tr>
+                        <tr>
+                            <td><code>--output FILE</code></td>
+                            <td>Guarda resultado en archivo específico</td>
+                        </tr>
+                        <tr>
+                            <td><code>--verbose</code></td>
+                            <td>Muestra información detallada de ejecución</td>
+                        </tr>
+                        <tr>
+                            <td><code>--dry-run</code></td>
+                            <td>Muestra qué haría sin ejecutar (preview)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert info" style="margin-top: 1.5rem;">
+                    <div class="alert-icon">📥</div>
+                    <div class="alert-content">
+                        <h4>Versión Descargable</h4>
+                        <p>Puedes guardar esta página como PDF usando <kbd>Cmd + P</kbd> → "Guardar como PDF" para tener el cheat sheet siempre a mano.</p>
+                    </div>
+                </div>
+
                 <div class="alert success">
                     <div class="alert-icon">🚀</div>
                     <div class="alert-content">

@@ -166,6 +166,85 @@
                     </div>
                 </div>
 
+                <h2>🚀 Quick Start: Tu Primera Tarea en 5 Minutos</h2>
+
+                <p>¿Quieres ver Claude Code en acción inmediatamente? Sigue estos pasos para completar tu primera tarea:</p>
+
+                <div class="alert tip" style="margin-bottom: 1.5rem;">
+                    <div class="alert-icon">⚡</div>
+                    <div class="alert-content">
+                        <h4>Desde Cero hasta Código en 5 Minutos</h4>
+                        <p>Esta guía asume que no tienes nada instalado. Al final tendrás Claude Code funcionando y habrás generado tu primer código.</p>
+                    </div>
+                </div>
+
+                <h3>Paso 1: Instalar Claude Code (1 minuto)</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Instalar usando Homebrew (método recomendado)
+brew install claude
+
+# Verificar instalación
+claude --version</code></pre>
+                </div>
+
+                <h3>Paso 2: Configurar tu API Key (1 minuto)</h3>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Obtén tu API key en: https://console.anthropic.com/
+# Configúrala con este comando:
+claude config set apiKey "sk-ant-tu-key-aqui"
+
+# Verificar configuración
+claude config get apiKey</code></pre>
+                </div>
+
+                <h3>Paso 3: ¡Tu Primera Tarea! (3 minutos)</h3>
+                <p>Vamos a crear una función útil en Python para validar emails:</p>
+                <div class="code-block">
+                    <pre><code class="language-bash"># Crear un directorio para probar
+mkdir ~/claude-test && cd ~/claude-test
+
+# Pedirle a Claude que cree una función de validación de emails
+claude "Crea un archivo Python llamado validator.py con una función que valide emails usando regex. Incluye tests con ejemplos válidos e inválidos."</code></pre>
+                </div>
+
+                <h3>Resultado Esperado</h3>
+                <p>En segundos, Claude Code habrá creado <code>validator.py</code> con:</p>
+                <ul>
+                    <li>✅ Una función profesional de validación de emails con regex</li>
+                    <li>✅ Documentación y comentarios explicativos</li>
+                    <li>✅ Casos de test con ejemplos reales</li>
+                    <li>✅ Código listo para usar en producción</li>
+                </ul>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Ejecutar el archivo para ver los tests
+python3 validator.py</code></pre>
+                </div>
+
+                <div class="alert success">
+                    <div class="alert-icon">🎉</div>
+                    <div class="alert-content">
+                        <h4>¡Felicidades!</h4>
+                        <p>Acabas de usar Claude Code para generar código funcional. Ahora explora la documentación completa para descubrir todo lo que puedes hacer: refactorizar código legacy, generar tests, debugging asistido, y mucho más.</p>
+                    </div>
+                </div>
+
+                <h3>Próximos Pasos</h3>
+                <div class="feature-grid" style="margin-top: 1rem;">
+                    <div class="feature-card">
+                        <h4>📖 Aprende los Fundamentos</h4>
+                        <p>Lee la <a href="01-introduccion.html">Introducción</a> para entender cómo funciona Claude Code</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>⌨️ Domina los Comandos</h4>
+                        <p>Consulta <a href="03-comandos.html">Comandos Básicos</a> para operaciones cotidianas</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🎯 Casos de Uso Reales</h4>
+                        <p>Explora <a href="07-casos-avanzados.html">Casos Avanzados</a> para workflows profesionales</p>
+                    </div>
+                </div>
+
                 <h2>Atajos de Teclado</h2>
 
                 <table>

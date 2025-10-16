@@ -205,76 +205,11 @@ claude --history</code></pre>
                     </div>
                 </div>
 
-                <h2>Modelos de Claude Disponibles</h2>
-
-                <p>
-                    Claude Code puede utilizar diferentes modelos según tus necesidades:
-                </p>
-
-                <h3>Claude 3 Opus</h3>
-                <ul>
-                    <li><strong>Uso:</strong> Tareas complejas que requieren razonamiento profundo</li>
-                    <li><strong>Ventajas:</strong> Máxima precisión y capacidad de análisis</li>
-                    <li><strong>Costo:</strong> Mayor costo por token</li>
-                    <li><strong>Ideal para:</strong> Arquitectura de software, refactorización compleja, debugging difícil</li>
-                </ul>
-
-                <h3>Claude 3 Sonnet</h3>
-                <ul>
-                    <li><strong>Uso:</strong> Balance entre velocidad y calidad (recomendado)</li>
-                    <li><strong>Ventajas:</strong> Excelente rendimiento a precio razonable</li>
-                    <li><strong>Costo:</strong> Moderado</li>
-                    <li><strong>Ideal para:</strong> Uso diario, generación de código, tests, documentación</li>
-                </ul>
-
-                <h3>Claude 3 Haiku</h3>
-                <ul>
-                    <li><strong>Uso:</strong> Tareas rápidas y simples</li>
-                    <li><strong>Ventajas:</strong> Respuestas ultrarrápidas, bajo costo</li>
-                    <li><strong>Costo:</strong> Menor costo por token</li>
-                    <li><strong>Ideal para:</strong> Consultas simples, formateo de código, tareas repetitivas</li>
-                </ul>
-
-                <div class="code-block">
-                    <pre><code class="language-bash"># Especificar modelo en la configuración
-claude --model opus "Diseña la arquitectura de este sistema"
-
-# Usar Sonnet para uso general (por defecto)
-claude "Genera tests para este módulo"
-
-# Usar Haiku para tareas simples
-claude --model haiku "Formatea este JSON"</code></pre>
-                </div>
-
-                <h2>Requisitos del Sistema para macOS</h2>
-
-                <p>
-                    Para ejecutar Claude Code en tu Mac necesitas:
-                </p>
-
-                <h3>Requisitos Mínimos</h3>
-                <ul>
-                    <li>macOS 12.0 (Monterey) o superior</li>
-                    <li>4 GB de RAM disponible</li>
-                    <li>100 MB de espacio en disco</li>
-                    <li>Conexión a Internet estable</li>
-                    <li>Terminal (zsh o bash)</li>
-                </ul>
-
-                <h3>Requisitos Recomendados</h3>
-                <ul>
-                    <li>macOS 14.0 (Sonoma) o superior</li>
-                    <li>8 GB de RAM o más</li>
-                    <li>500 MB de espacio en disco (para cache y logs)</li>
-                    <li>Homebrew instalado</li>
-                    <li>Git configurado</li>
-                </ul>
-
-                <div class="alert warning">
-                    <div class="alert-icon">⚠️</div>
+                <div class="alert info">
+                    <div class="alert-icon">ℹ️</div>
                     <div class="alert-content">
-                        <h4>Compatibilidad con Apple Silicon</h4>
-                        <p>Claude Code está completamente optimizado para chips M1, M2 y M3. Si tienes un Mac con procesador Intel, la herramienta también funcionará perfectamente mediante Rosetta 2.</p>
+                        <h4>Información sobre Modelos de Claude</h4>
+                        <p>Claude Code soporta múltiples modelos (Sonnet 4.5, Opus, Haiku, etc.). Para información completa sobre modelos, límites de tokens y casos de uso ideales, consulta la <a href="04-contexto.html#modelos">página de Gestión de Contexto</a>.</p>
                     </div>
                 </div>
 

@@ -274,37 +274,14 @@ export HTTPS_PROXY="http://proxy.company.com:8080"
 export HTTP_PROXY="http://proxy.company.com:8080"</code></pre>
                 </div>
 
-                <h2>Solución de Problemas de Instalación</h2>
+                <h2>¿Problemas con la Instalación?</h2>
 
-                <h3>Problema: "Command not found"</h3>
-
-                <div class="code-block">
-                    <pre><code class="language-bash"># Verificar que el binario está en el PATH
-which claude
-
-# Agregar al PATH manualmente si es necesario
-echo 'export PATH="$PATH:/usr/local/bin"' >> ~/.zshrc
-source ~/.zshrc</code></pre>
-                </div>
-
-                <h3>Problema: "Permission denied"</h3>
-
-                <div class="code-block">
-                    <pre><code class="language-bash"># Dar permisos de ejecución
-chmod +x /usr/local/bin/claude
-
-# Si es un problema de permisos en macOS:
-xattr -d com.apple.quarantine /usr/local/bin/claude</code></pre>
-                </div>
-
-                <h3>Problema: "API key not configured"</h3>
-
-                <div class="code-block">
-                    <pre><code class="language-bash"># Verificar que la variable está configurada
-echo $ANTHROPIC_API_KEY
-
-# Configurar directamente en el config
-claude config set apiKey "sk-ant-tu-key-aqui"</code></pre>
+                <div class="alert info">
+                    <div class="alert-icon">🔧</div>
+                    <div class="alert-content">
+                        <h4>Solución de Problemas</h4>
+                        <p>Si encuentras problemas durante la instalación (command not found, permission denied, problemas de API key, etc.), consulta la <a href="08-troubleshooting.html#instalacion">sección de Troubleshooting de Instalación</a> donde encontrarás soluciones detalladas para todos los problemas comunes.</p>
+                    </div>
                 </div>
 
                 <div class="alert success">

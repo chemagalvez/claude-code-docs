@@ -36,7 +36,91 @@
 
                 <p>Guía completa para resolver los problemas más comunes al usar Claude Code en macOS. Incluye soluciones paso a paso, comandos específicos y mejores prácticas de debugging.</p>
 
-                <h2>🚨 Problemas de Instalación</h2>
+                <h2>🔍 Árbol de Decisión: Encuentra Tu Problema Rápido</h2>
+
+                <p>Usa esta guía visual para identificar rápidamente qué sección consultar según tu problema:</p>
+
+                <div class="alert tip" style="margin-bottom: 1.5rem;">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Diagnóstico Rápido</h4>
+                        <p>Responde estas preguntas para encontrar la solución correcta. Cada pregunta te llevará a la sección relevante más abajo.</p>
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-secondary); padding: 2rem; border-radius: 8px; margin: 2rem 0;">
+                    <h3 style="margin-top: 0;">🎯 ¿Qué tipo de problema tienes?</h3>
+
+                    <div style="margin: 1.5rem 0; padding-left: 1rem; border-left: 4px solid var(--primary-color);">
+                        <h4>❓ El comando <code>claude</code> no funciona</h4>
+                        <p style="margin: 0.5rem 0;"><strong>→</strong> Ve a: <a href="#instalacion">Problemas de Instalación</a></p>
+                        <ul style="margin: 0.5rem 0;">
+                            <li>"command not found" → <a href="#command-not-found">Solución aquí</a></li>
+                            <li>"permission denied" → <a href="#permission-denied">Solución aquí</a></li>
+                            <li>Problemas con Homebrew → <a href="#homebrew-issues">Solución aquí</a></li>
+                        </ul>
+                    </div>
+
+                    <div style="margin: 1.5rem 0; padding-left: 1rem; border-left: 4px solid var(--secondary-color);">
+                        <h4>🔑 Problemas con API Key o Autenticación</h4>
+                        <p style="margin: 0.5rem 0;"><strong>→</strong> Ve a: <a href="#autenticacion">Problemas de Autenticación</a></p>
+                        <ul style="margin: 0.5rem 0;">
+                            <li>"API key not configured" → <a href="#api-key-not-configured">Solución aquí</a></li>
+                            <li>"Invalid API key" → <a href="#invalid-api-key">Solución aquí</a></li>
+                            <li>"Rate limit exceeded" → <a href="#rate-limit">Solución aquí</a></li>
+                        </ul>
+                    </div>
+
+                    <div style="margin: 1.5rem 0; padding-left: 1rem; border-left: 4px solid var(--accent-color);">
+                        <h4>⚙️ Claude funciona pero los resultados son incorrectos</h4>
+                        <p style="margin: 0.5rem 0;"><strong>→</strong> Ve a: <a href="#contexto">Problemas de Contexto</a></p>
+                        <ul style="margin: 0.5rem 0;">
+                            <li>No ve mis archivos → <a href="#archivos-no-detectados">Solución aquí</a></li>
+                            <li>"Context too large" → <a href="#context-too-large">Solución aquí</a></li>
+                            <li>Resultados inconsistentes → <a href="#resultados-inconsistentes">Solución aquí</a></li>
+                        </ul>
+                    </div>
+
+                    <div style="margin: 1.5rem 0; padding-left: 1rem; border-left: 4px solid #9b59b6;">
+                        <h4>🔌 Problemas con MCP Servers</h4>
+                        <p style="margin: 0.5rem 0;"><strong>→</strong> Ve a: <a href="#mcp-problems">Problemas de MCP</a></p>
+                        <ul style="margin: 0.5rem 0;">
+                            <li>Server no se conecta → <a href="#mcp-connection">Solución aquí</a></li>
+                            <li>Transport error → <a href="#mcp-transport">Solución aquí</a></li>
+                            <li>Tools no aparecen → <a href="#mcp-tools">Solución aquí</a></li>
+                        </ul>
+                    </div>
+
+                    <div style="margin: 1.5rem 0; padding-left: 1rem; border-left: 4px solid #e67e22;">
+                        <h4>🐌 Rendimiento Lento o Problemas de Red</h4>
+                        <p style="margin: 0.5rem 0;"><strong>→</strong> Ve a: <a href="#rendimiento">Problemas de Rendimiento</a></p>
+                        <ul style="margin: 0.5rem 0;">
+                            <li>Respuestas muy lentas → <a href="#slow-responses">Solución aquí</a></li>
+                            <li>Timeout errors → <a href="#timeout">Solución aquí</a></li>
+                            <li>Problemas de proxy → <a href="#proxy-issues">Solución aquí</a></li>
+                        </ul>
+                    </div>
+
+                    <div style="margin: 1.5rem 0; padding-left: 1rem; border-left: 4px solid #16a085;">
+                        <h4>🔒 Problemas Específicos de macOS</h4>
+                        <p style="margin: 0.5rem 0;"><strong>→</strong> Ve a: <a href="#macos-specific">Problemas de macOS</a></p>
+                        <ul style="margin: 0.5rem 0;">
+                            <li>Gatekeeper bloquea Claude → <a href="#gatekeeper">Solución aquí</a></li>
+                            <li>System Integrity Protection → <a href="#sip">Solución aquí</a></li>
+                            <li>Problemas con Rosetta 2 → <a href="#rosetta">Solución aquí</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="alert info">
+                    <div class="alert-icon">🔧</div>
+                    <div class="alert-content">
+                        <h4>Herramienta de Diagnóstico Automático</h4>
+                        <p>Si no estás seguro del problema, ejecuta nuestro script de diagnóstico automático en la <a href="#diagnostico-automatizado">sección de Diagnóstico</a> al final de esta página.</p>
+                    </div>
+                </div>
+
+                <h2 id="instalacion">🚨 Problemas de Instalación</h2>
 
                 <h3>Error: "command not found: claude"</h3>
 
@@ -567,7 +651,98 @@ claude "test del servidor MCP mi-servidor"
 DEBUG=mcp:* claude "test del servidor MCP"</code></pre>
                 </div>
 
-                <h2>❓ FAQ Técnico para macOS</h2>
+                <h2 id="mcp-problems">🔌 Problemas Comunes con MCP Servers</h2>
+
+                <p>Model Context Protocol permite extender Claude Code con herramientas personalizadas. Esta sección cubre problemas específicos de MCP consolidados desde la <a href="05-mcp.html">página de MCP</a>.</p>
+
+                <div class="alert info" style="margin-bottom: 1.5rem;">
+                    <div class="alert-icon">📚</div>
+                    <div class="alert-content">
+                        <h4>Referencia</h4>
+                        <p>Para información sobre qué es MCP, cómo configurarlo y ejemplos completos, consulta la <a href="05-mcp.html">página completa de MCP</a>.</p>
+                    </div>
+                </div>
+
+                <h3 id="mcp-connection">Server no conecta: "MCP Server not responding"</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># 1. Verificar que el servidor está instalado
+which mcp-server-github
+npm list -g @modelcontextprotocol/server-filesystem
+
+# 2. Probar ejecución manual
+mcp-server-github --version
+
+# 3. Ver logs de MCP
+claude --debug
+tail -f ~/.config/claude/logs/mcp-*.log
+
+# 4. Verificar permisos
+chmod +x $(which mcp-server-github)
+
+# 5. Reiniciar Claude
+killall claude && claude --version</code></pre>
+                </div>
+
+                <h3 id="mcp-transport">Errores de Transport</h3>
+
+                <div class="alert warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                        <h4>SSE Deprecado</h4>
+                        <p>Server-Sent Events (SSE) está deprecado desde Nov 2024. Migra a stdio, HTTP o WebSocket.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Probar servidor stdio
+echo '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | mcp-server-filesystem
+
+# Probar servidor HTTP
+curl http://localhost:3000/health
+
+# Verificar puerto disponible
+lsof -i :3000</code></pre>
+                </div>
+
+                <h3 id="mcp-tools">Tools no aparecen</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Verificar que server reporta tools
+echo '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | mcp-server-github
+
+# Limpiar cache
+rm -rf ~/.config/claude/cache/
+claude --version
+
+# Listar tools detectados
+claude tools list</code></pre>
+                </div>
+
+                <h3 id="mcp-auth">Problemas de Autenticación</h3>
+
+                <div class="code-block">
+                    <pre><code class="language-bash"># Configurar variables de entorno requeridas
+export GITHUB_TOKEN="ghp_tu_token"
+export DATABASE_URL="postgresql://..."
+
+# Agregar a ~/.zshrc permanentemente
+echo 'export GITHUB_TOKEN="ghp_token"' >> ~/.zshrc
+source ~/.zshrc
+
+# Verificar
+env | grep -i token</code></pre>
+                </div>
+
+                <div class="alert success">
+                    <div class="alert-icon">🔧</div>
+                    <div class="alert-content">
+                        <h4>Más Detalles de MCP</h4>
+                        <p>Para troubleshooting avanzado de MCP, debugging de servidores personalizados y ejemplos completos, consulta la sección "Debugging de Servidores MCP" en la <a href="05-mcp.html#debugging">página de MCP</a>.</p>
+                    </div>
+                </div>
+
+                <h2 id="macos-specific">❓ FAQ Técnico para macOS</h2>
 
                 <h3>¿Claude Code funciona en Apple Silicon (M1/M2/M3)?</h3>
 

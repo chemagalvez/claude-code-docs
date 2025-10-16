@@ -110,6 +110,238 @@ Resultado esperado:
 [DESCRIPCIÓN DEL OUTPUT DESEADO]"</code></pre>
                 </div>
 
+                <h2>📚 Biblioteca de Prompts: Copy-Paste Ready</h2>
+
+                <p>Esta biblioteca contiene prompts probados y optimizados para tareas comunes. Cópialos y personalízalos según tus necesidades.</p>
+
+                <div class="alert tip" style="margin-bottom: 1.5rem;">
+                    <div class="alert-icon">⚡</div>
+                    <div class="alert-content">
+                        <h4>Cómo Usar Esta Biblioteca</h4>
+                        <p>Cada prompt está diseñado para ser usado directamente. Solo reemplaza las partes en [CORCHETES] con tu información específica.</p>
+                    </div>
+                </div>
+
+                <h3>🎨 Frontend Development</h3>
+
+                <h4>Componente React con TypeScript</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Crea un componente React llamado [NOMBRE] en TypeScript que [FUNCIONALIDAD].
+Debe usar hooks (useState, useEffect si es necesario),
+incluir tipos para todas las props,
+seguir las mejores prácticas de React 18,
+y tener estilos con Tailwind CSS.
+Incluye manejo de errores y loading states."</code></pre>
+                </div>
+
+                <h4>Formulario con Validación</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Crea un formulario de [TIPO] usando React Hook Form y Zod para validación.
+Campos necesarios: [LISTA DE CAMPOS].
+Debe mostrar errores en tiempo real,
+tener loading state durante submit,
+y manejar errores de la API.
+Usa Tailwind CSS para estilos."</code></pre>
+                </div>
+
+                <h4>Estado Global con Context API</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Crea un contexto React para manejar [TIPO DE ESTADO] globalmente.
+Debe incluir:
+- Proveedor del contexto
+- Hook personalizado para consumir el estado
+- Acciones para [LISTA DE ACCIONES]
+- Tipos TypeScript completos
+- Persistencia en localStorage"</code></pre>
+                </div>
+
+                <h3>⚙️ Backend Development</h3>
+
+                <h4>API REST Endpoint</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Crea un endpoint [METHOD] /api/[RUTA] en Express/TypeScript.
+Debe:
+- Validar input con Zod
+- Conectar con base de datos usando Prisma
+- Incluir manejo de errores
+- Retornar respuesta tipada
+- Documentar con comentarios JSDoc
+- Incluir middleware de autenticación JWT"</code></pre>
+                </div>
+
+                <h4>CRUD Completo para Entidad</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Genera CRUD completo para la entidad [NOMBRE] con los siguientes campos: [LISTA DE CAMPOS].
+Incluye:
+- Modelo de Prisma
+- Controlador con GET, POST, PUT, DELETE
+- Rutas de Express
+- Validación con Zod
+- Manejo de errores
+- Tipos TypeScript
+Usa separación de capas (controller/service/repository)"</code></pre>
+                </div>
+
+                <h4>Servicio de Autenticación</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Crea un servicio de autenticación JWT en Node.js/TypeScript.
+Debe incluir:
+- Registro de usuarios con hash de password (bcrypt)
+- Login con generación de tokens JWT
+- Refresh token mechanism
+- Middleware de protección de rutas
+- Validación de email/password
+- Tipos TypeScript completos"</code></pre>
+                </div>
+
+                <h3>🧪 Testing</h3>
+
+                <h4>Tests Unitarios con Jest</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Genera tests unitarios completos para el archivo [ARCHIVO].
+Usa Jest y Testing Library.
+Debe cubrir:
+- Casos exitosos (happy path)
+- Casos de error
+- Edge cases
+- Mocks para dependencias externas
+Objetivo: 100% de code coverage"</code></pre>
+                </div>
+
+                <h4>Tests de Integración para API</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Crea tests de integración para el endpoint [ENDPOINT] usando Supertest.
+Debe probar:
+- Respuestas exitosas con datos válidos
+- Validación de input (casos inválidos)
+- Autenticación y autorización
+- Códigos de estado HTTP correctos
+- Estructura de respuesta esperada
+Incluye setup y teardown de base de datos de test"</code></pre>
+                </div>
+
+                <h3>🔧 Refactorización</h3>
+
+                <h4>Aplicar SOLID Principles</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Refactoriza el archivo [ARCHIVO] aplicando principios SOLID.
+Identifica violaciones de:
+- Single Responsibility
+- Open/Closed
+- Liskov Substitution
+- Interface Segregation
+- Dependency Inversion
+Explica cada cambio realizado y por qué mejora el código."</code></pre>
+                </div>
+
+                <h4>Optimizar Rendimiento</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Analiza y optimiza el rendimiento del archivo [ARCHIVO].
+Busca:
+- Operaciones O(n²) que puedan optimizarse
+- Cálculos repetidos que puedan cachearse
+- Operaciones síncronas que puedan ser async
+- Memory leaks potenciales
+- Oportunidades de lazy loading
+Mantén la funcionalidad existente"</code></pre>
+                </div>
+
+                <h3>📝 Documentación</h3>
+
+                <h4>Documentación de API</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Genera documentación completa para este endpoint [ARCHIVO].
+Debe incluir:
+- Descripción de funcionalidad
+- Parámetros (query, path, body)
+- Tipos de respuesta (success y error)
+- Ejemplos de request/response
+- Códigos de estado posibles
+Usa formato JSDoc y OpenAPI/Swagger"</code></pre>
+                </div>
+
+                <h4>README Técnico</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Crea un README.md profesional para este proyecto.
+Debe incluir:
+- Descripción del proyecto
+- Tecnologías usadas
+- Requisitos previos
+- Instrucciones de instalación
+- Configuración de variables de entorno
+- Comandos disponibles (dev, build, test)
+- Estructura del proyecto
+- Guía de contribución"</code></pre>
+                </div>
+
+                <h3>🐛 Debugging</h3>
+
+                <h4>Análisis de Error</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Analiza este error y sugiere soluciones:
+[PEGAR STACK TRACE O MENSAJE DE ERROR]
+
+Contexto:
+- Ocurre cuando [DESCRIPCIÓN DE CUÁNDO PASA]
+- Código relevante en [ARCHIVO]
+- Ya intenté [SOLUCIONES PROBADAS]
+
+Dame:
+1. Explicación de qué causa el error
+2. 3 posibles soluciones ordenadas por probabilidad
+3. Código corregido si aplica"</code></pre>
+                </div>
+
+                <h3>🔐 Seguridad</h3>
+
+                <h4>Audit de Seguridad</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Realiza un audit de seguridad del archivo [ARCHIVO].
+Busca:
+- SQL injection vulnerabilities
+- XSS vulnerabilities
+- CSRF vulnerabilities
+- Exposición de datos sensibles
+- Validación insuficiente de input
+- Problemas de autenticación/autorización
+Para cada problema encontrado, proporciona código corregido"</code></pre>
+                </div>
+
+                <h3>🚀 DevOps & Deployment</h3>
+
+                <h4>Docker Configuration</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Crea configuración Docker completa para este proyecto [TIPO].
+Incluye:
+- Dockerfile optimizado con multi-stage build
+- docker-compose.yml con servicios necesarios (app, database, redis)
+- .dockerignore
+- Scripts de health check
+- Variables de entorno documentadas
+Optimiza para tamaño de imagen y tiempo de build"</code></pre>
+                </div>
+
+                <h4>CI/CD Pipeline</h4>
+                <div class="code-block">
+                    <pre><code class="language-bash">claude "Crea pipeline CI/CD para [PLATAFORMA: GitHub Actions/GitLab CI].
+Debe:
+- Ejecutar linter y tests en cada PR
+- Build de la aplicación
+- Deploy a [ENTORNO] solo en rama main
+- Notificaciones en Slack/Discord
+- Cache de dependencias
+- Ejecutar security scan
+Usa las mejores prácticas de [PLATAFORMA]"</code></pre>
+                </div>
+
+                <div class="alert success" style="margin-top: 2rem;">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Tip Pro: Combina Prompts</h4>
+                        <p>Puedes combinar estos prompts con <code>--continue</code> para iterar. Por ejemplo: genera el componente, luego continúa con "Ahora genera los tests para este componente".</p>
+                    </div>
+                </div>
+
                 <h2>📁 Estructuración de Proyectos</h2>
 
                 <p>Organizar tu proyecto correctamente ayuda a Claude a entender mejor tu código y proporcionar mejores sugerencias.</p>
