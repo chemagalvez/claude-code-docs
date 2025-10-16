@@ -1,11 +1,11 @@
 /**
  * Claude Code Documentation - Code Copy Functionality
- * Maneja la funcionalidad de copiar código con un solo clic
+ * Maneja la funcionalidad de copiar cÃ³digo con un solo clic
  */
 
-// Inicializar funcionalidad de copiar código
+// Inicializar funcionalidad de copiar cÃ³digo
 function initCodeCopy() {
-  // Seleccionar todos los bloques de código
+  // Seleccionar todos los bloques de cÃ³digo
   const codeBlocks = document.querySelectorAll('pre code');
 
   codeBlocks.forEach((codeBlock) => {
@@ -19,24 +19,24 @@ function initCodeCopy() {
       wrapper.appendChild(pre);
     }
 
-    // Crear botón de copiar
+    // Crear botÃ³n de copiar
     const copyButton = document.createElement('button');
     copyButton.className = 'copy-btn';
-    copyButton.innerHTML = '=Ë Copiar';
-    copyButton.setAttribute('aria-label', 'Copiar código');
+    copyButton.innerHTML = 'ðŸ“‹ Copiar';
+    copyButton.setAttribute('aria-label', 'Copiar cÃ³digo');
 
-    // Insertar botón antes del pre
+    // Insertar botÃ³n antes del pre
     const wrapper = pre.closest('.code-block');
     wrapper.insertBefore(copyButton, pre);
 
-    // Manejar clic en el botón
+    // Manejar clic en el botÃ³n
     copyButton.addEventListener('click', async () => {
       await copyCode(codeBlock, copyButton);
     });
   });
 }
 
-// Función para copiar código al portapapeles
+// FunciÃ³n para copiar cÃ³digo al portapapeles
 async function copyCode(codeElement, button) {
   const code = codeElement.textContent;
 
@@ -46,16 +46,16 @@ async function copyCode(codeElement, button) {
       await navigator.clipboard.writeText(code);
       showCopySuccess(button);
     } else {
-      // Fallback para navegadores más antiguos o contextos no seguros
+      // Fallback para navegadores mï¿½s antiguos o contextos no seguros
       copyCodeFallback(code, button);
     }
   } catch (err) {
-    console.error('Error al copiar código:', err);
+    console.error('Error al copiar cÃ³digo:', err);
     copyCodeFallback(code, button);
   }
 }
 
-// Método fallback para copiar código
+// MÃ©todo fallback para copiar cÃ³digo
 function copyCodeFallback(code, button) {
   const textArea = document.createElement('textarea');
   textArea.value = code;
@@ -84,7 +84,7 @@ function copyCodeFallback(code, button) {
 // Mostrar feedback de copia exitosa
 function showCopySuccess(button) {
   const originalHTML = button.innerHTML;
-  button.innerHTML = ' Copiado';
+  button.innerHTML = 'âœ“ Copiado';
   button.classList.add('copied');
 
   setTimeout(() => {
@@ -96,7 +96,7 @@ function showCopySuccess(button) {
 // Mostrar feedback de error en copia
 function showCopyError(button) {
   const originalHTML = button.innerHTML;
-  button.innerHTML = 'L Error';
+  button.innerHTML = 'âŒ Error';
   button.classList.add('error');
 
   setTimeout(() => {
@@ -105,11 +105,11 @@ function showCopyError(button) {
   }, 2000);
 }
 
-// Agregar resaltado de sintaxis usando highlight.js (si está disponible)
+// Agregar resaltado de sintaxis usando highlight.js (si estÃ¡ disponible)
 function initSyntaxHighlighting() {
   if (typeof hljs !== 'undefined') {
     document.querySelectorAll('pre code').forEach((block) => {
-      // Detectar lenguaje si está especificado en la clase
+      // Detectar lenguaje si estÃ¡ especificado en la clase
       const languageClass = Array.from(block.classList)
         .find(cls => cls.startsWith('language-'));
 
@@ -124,7 +124,7 @@ function initSyntaxHighlighting() {
   }
 }
 
-// Agregar etiquetas de lenguaje a los bloques de código
+// Agregar etiquetas de lenguaje a los bloques de cÃ³digo
 function initCodeLabels() {
   document.querySelectorAll('pre code').forEach((codeBlock) => {
     const languageClass = Array.from(codeBlock.classList)
@@ -146,7 +146,7 @@ function initCodeLabels() {
   });
 }
 
-// Obtener nombre de visualización del lenguaje
+// Obtener nombre de visualizaciÃ³n del lenguaje
 function getLanguageDisplayName(lang) {
   const languageNames = {
     'bash': 'Bash',
@@ -186,7 +186,7 @@ function getLanguageDisplayName(lang) {
   return languageNames[lang.toLowerCase()] || lang.toUpperCase();
 }
 
-// Función para agregar números de línea (opcional)
+// FunciÃ³n para agregar nÃºmeros de lÃ­nea (opcional)
 function initLineNumbers() {
   const codeBlocks = document.querySelectorAll('pre code.line-numbers');
 
@@ -204,12 +204,12 @@ function initLineNumbers() {
   });
 }
 
-// Detectar y formatear comandos de macOS específicos
+// Detectar y formatear comandos de macOS especÃ­ficos
 function highlightMacOSCommands() {
   document.querySelectorAll('pre code.language-bash, pre code.language-sh, pre code.language-zsh').forEach((block) => {
     const text = block.textContent;
 
-    // Detectar comandos específicos de macOS
+    // Detectar comandos especÃ­ficos de macOS
     const macOSCommands = [
       'brew', 'mas', 'softwareupdate', 'defaults', 'launchctl',
       'diskutil', 'networksetup', 'scutil', 'tmutil', 'pkgutil',
@@ -230,7 +230,7 @@ function highlightMacOSCommands() {
       if (!wrapper.querySelector('.macos-badge-code')) {
         const badge = document.createElement('span');
         badge.className = 'macos-badge-code';
-        badge.textContent = '<N macOS';
+        badge.textContent = 'ðŸŽ macOS';
         wrapper.insertBefore(badge, pre);
       }
     }
@@ -242,7 +242,7 @@ function initCopyTooltips() {
   const copyButtons = document.querySelectorAll('.copy-btn');
 
   copyButtons.forEach(button => {
-    button.setAttribute('title', 'Copiar código al portapapeles');
+    button.setAttribute('title', 'Copiar cÃ³digo al portapapeles');
 
     // Usar API de tooltips nativa del navegador
     button.addEventListener('mouseenter', () => {
@@ -255,10 +255,10 @@ function initCopyTooltips() {
   });
 }
 
-// Configuración de códigos expandibles para bloques largos
+// Configuraciï¿½n de cÃ³digos expandibles para bloques largos
 function initExpandableCode() {
   const codeBlocks = document.querySelectorAll('pre code');
-  const maxLines = 20; // Número máximo de líneas antes de colapsar
+  const maxLines = 20; // NÃºmero mÃ¡ximo de lÃ­neas antes de colapsar
 
   codeBlocks.forEach(codeBlock => {
     const lines = codeBlock.textContent.split('\n');
@@ -271,13 +271,13 @@ function initExpandableCode() {
 
       const expandButton = document.createElement('button');
       expandButton.className = 'expand-code-btn';
-      expandButton.textContent = `¼ Mostrar todo (${lines.length} líneas)`;
+      expandButton.textContent = `â¬‡ï¸ Mostrar todo (${lines.length} lÃ­neas)`;
 
       expandButton.addEventListener('click', () => {
         pre.classList.toggle('collapsed');
         expandButton.textContent = pre.classList.contains('collapsed')
-          ? `¼ Mostrar todo (${lines.length} líneas)`
-          : `² Colapsar`;
+          ? `â¬‡ï¸ Mostrar todo (${lines.length} lÃ­neas)`
+          : `â¬†ï¸ Colapsar`;
       });
 
       wrapper.appendChild(expandButton);
@@ -285,7 +285,7 @@ function initExpandableCode() {
   });
 }
 
-// Inicializar todas las funcionalidades cuando el DOM esté listo
+// Inicializar todas las funcionalidades cuando el DOM estÃ¡ listo
 document.addEventListener('DOMContentLoaded', () => {
   initCodeCopy();
   initSyntaxHighlighting();

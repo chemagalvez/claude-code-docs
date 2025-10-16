@@ -641,17 +641,26 @@ ls -la .env
 
                 <h3>Configurar Límites de Presupuesto</h3>
 
+                <p>Optimiza costos usando el modelo adecuado para cada tarea:</p>
+
                 <div class="code-block">
-                    <pre><code class="language-bash"># Configurar modelo por defecto (más económico)
-claude config set default-model sonnet-4.5
+                    <pre><code class="language-bash"># Alias para tareas simples con Haiku (más económico)
+echo 'alias claude-simple="claude --model haiku-3.5"' >> ~/.zshrc
 
-# Alias para tareas simples con Haiku
-echo 'alias claude-simple="claude --model claude-3-5-haiku"' >> ~/.zshrc
-
-# Alias para tareas complejas con Opus
-echo 'alias claude-complex="claude --model claude-3-opus"' >> ~/.zshrc
+# Alias para tareas complejas con Sonnet 4.5
+echo 'alias claude-complex="claude --model sonnet-4.5"' >> ~/.zshrc
 
 source ~/.zshrc</code></pre>
+                </div>
+
+                <div class="alert tip">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Modelo Predeterminado</h4>
+                        <p>Para cambiar el modelo predeterminado, edita <code>~/.config/claude/settings.json</code> y agrega:</p>
+                        <pre><code class="language-json">{"defaultModel": "sonnet-4.5"}</code></pre>
+                    </div>
+                </div>
                 </div>
 
                 <div class="alert info">

@@ -179,12 +179,17 @@
                 </ul>
 
                 <div class="code-block">
-                    <pre><code class="language-bash"># Usar Sonnet 4.5 como modelo por defecto
-claude config set default-model sonnet-4.5
-
-# Ejemplo: Refactorización compleja
+                    <pre><code class="language-bash"># Usar Sonnet 4.5 para una sesión específica
 claude --model sonnet-4.5 "Refactoriza este módulo aplicando Clean Architecture, \
 SOLID principles y optimiza el rendimiento. Incluye tests." src/legacy-module.ts</code></pre>
+                </div>
+
+                <div class="alert info">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Configuración de Modelo</h4>
+                        <p>Para cambiar el modelo predeterminado, edita el archivo de configuración en <code>~/.config/claude/settings.json</code> y agrega: <code>{"defaultModel": "sonnet-4.5"}</code></p>
+                    </div>
                 </div>
 
                 <h4>🎯 Claude 3 Opus - Tareas Especializadas</h4>
@@ -208,19 +213,8 @@ SOLID principles y optimiza el rendimiento. Incluye tests." src/legacy-module.ts
                 <h3>Cálculo de Tokens</h3>
 
                 <p>
-                    Entender cómo se calculan los tokens te ayudará a estimar el costo de tus conversaciones:
+                    Entender cómo se calculan los tokens te ayudará a estimar el costo de tus conversaciones. Claude Code no tiene comandos CLI para ver estadísticas de tokens, pero puedes seguir estas reglas aproximadas:
                 </p>
-
-                <div class="code-block">
-                    <pre><code class="language-bash"># Ver estadísticas de la conversación actual
-claude --stats
-
-# Ver detalles de tokens
-claude --token-count "Analiza este archivo" archivo.js
-
-# Estimar tokens antes de enviar
-claude --dry-run "Tu prompt aquí" archivos.js</code></pre>
-                </div>
 
                 <h3>Reglas Aproximadas de Tokens</h3>
 
@@ -367,23 +361,29 @@ public/assets/
                 <h3>Comandos de Sesión</h3>
 
                 <div class="code-block">
-                    <pre><code class="language-bash"># Ver sesiones guardadas
-claude sessions list
+                    <pre><code class="language-bash"># Continuar la conversación más reciente
+claude --continue
+# o su versión corta:
+claude -c
 
-# Guardar sesión actual
-claude sessions save "nombre-de-sesion"
+# Retomar una conversación específica (muestra lista interactiva)
+claude --resume
+# o su versión corta:
+claude -r
 
-# Cargar sesión anterior
-claude sessions load "nombre-de-sesion"
+# Retomar una conversación por ID específico
+claude --resume abc123-def456-ghi789
 
-# Continuar última sesión
-claude sessions resume
+# Crear una nueva rama desde una conversación existente
+claude --resume abc123-def456-ghi789 --fork-session</code></pre>
+                </div>
 
-# Eliminar sesión
-claude sessions delete "nombre-de-sesion"
-
-# Limpiar todas las sesiones
-claude sessions clear</code></pre>
+                <div class="alert info">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Identificadores de Sesión</h4>
+                        <p>Cada conversación tiene un ID único (UUID). Cuando usas <code>--resume</code> sin argumentos, Claude Code muestra una lista interactiva de conversaciones recientes para que selecciones cuál retomar.</p>
+                    </div>
                 </div>
 
                 <h3>Estructura de Sesiones</h3>
@@ -403,14 +403,16 @@ cat ~/.config/claude/sessions/mi-sesion.json</code></pre>
                 <div class="code-block">
                     <pre><code class="language-bash"># Iniciar trabajo en una feature
 cd ~/proyecto/feature-auth
-claude
+claude "Ayúdame a implementar autenticación JWT"
 
-# Durante la conversación...
-# Guardar progreso antes de cerrar
-> /save auth-implementation
+# Al día siguiente, continuar la conversación
+claude --continue
+# o simplemente:
+claude -c
 
-# Más tarde, continuar donde lo dejaste
-claude sessions load "auth-implementation"</code></pre>
+# Si trabajas en múltiples features, retoma la correcta
+claude --resume
+# Esto muestra una lista interactiva para seleccionar</code></pre>
                 </div>
 
                 <h2>Cache de Contexto</h2>
@@ -444,39 +446,38 @@ claude sessions load "auth-implementation"</code></pre>
 
                 <h3>Configuración de Cache</h3>
 
-                <div class="code-block">
-                    <pre><code class="language-bash"># Ver configuración de cache
-claude config show cache
+                <p>Claude Code utiliza el prompt caching de Anthropic automáticamente. No requiere configuración manual. El caching se aplica automáticamente a:</p>
 
-# Habilitar cache (habilitado por defecto)
-claude config set cache.enabled true
+                <ul>
+                    <li>Archivos grandes del contexto del proyecto</li>
+                    <li>System prompts y configuración del agente</li>
+                    <li>Herramientas y definiciones MCP</li>
+                </ul>
 
-# Configurar TTL (tiempo de vida en segundos)
-claude config set cache.ttl 3600
-
-# Configurar tamaño máximo
-claude config set cache.maxSize "500MB"
-
-# Limpiar cache
-claude cache clear</code></pre>
+                <div class="alert info">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Prompt Caching Automático</h4>
+                        <p>El prompt caching de Anthropic reduce costos en un 90% para tokens en caché. Claude Code lo aplica automáticamente en conversaciones largas con contexto consistente.</p>
+                    </div>
                 </div>
 
-                <h3>Configuración en config.json</h3>
+                <h3>Configuración en settings.json</h3>
 
                 <div class="code-block">
                     <pre><code class="language-json">{
-  "cache": {
-    "enabled": true,
-    "ttl": 3600,
-    "maxSize": "500MB",
-    "strategy": "lru",
-    "compression": true,
-    "paths": {
-      "files": "~/.config/claude/cache/files",
-      "responses": "~/.config/claude/cache/responses"
-    }
-  }
+  "defaultModel": "sonnet-4.5",
+  "editor": "code",
+  "verboseMode": false
 }</code></pre>
+                </div>
+
+                <div class="alert tip">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Ubicación de Configuración</h4>
+                        <p>El archivo de configuración está en <code>~/.config/claude/settings.json</code>. Puedes editarlo manualmente para ajustar preferencias globales.</p>
+                    </div>
                 </div>
 
                 <h2>Optimización de Contexto</h2>
@@ -503,15 +504,14 @@ claude "Explica la arquitectura" src/core/*.ts README.md</code></pre>
                 <h3>Estrategia 2: Resumen de Contexto</h3>
 
                 <p>
-                    Para conversaciones largas, usa resúmenes periódicos:
+                    Para conversaciones largas, puedes pedirle a Claude que cree un resumen:
                 </p>
 
                 <div class="code-block">
-                    <pre><code class="language-bash"># Generar resumen de la conversación
-claude --summarize
-
-# Iniciar nueva sesión con el resumen
-claude sessions save-summary "proyecto-auth"</code></pre>
+                    <pre><code class="language-bash"># Dentro de una conversación, pide un resumen
+claude
+> "Resume todo lo que hemos hecho hasta ahora en este proyecto"
+> "Guarda ese resumen en docs/progress.md"</code></pre>
                 </div>
 
                 <h3>Estrategia 3: Dividir Tareas Grandes</h3>
@@ -523,17 +523,22 @@ claude sessions save-summary "proyecto-auth"</code></pre>
                 <div class="code-block">
                     <pre><code class="language-bash"># Sesión 1: Arquitectura
 claude "Diseña la arquitectura del módulo de auth"
-claude sessions save "auth-architecture"
+# (trabaja en la arquitectura, luego sal con Ctrl+D)
 
-# Sesión 2: Implementación
-claude sessions new
+# Sesión 2: Implementación (nueva conversación)
 claude "Implementa el login basándote en docs/auth-design.md"
-claude sessions save "auth-implementation"
+# (trabaja en la implementación, luego sal)
 
-# Sesión 3: Tests
-claude sessions new
-claude "Genera tests para src/auth/*.ts"
-claude sessions save "auth-tests"</code></pre>
+# Sesión 3: Tests (nueva conversación)
+claude "Genera tests para src/auth/*.ts"</code></pre>
+                </div>
+
+                <div class="alert tip">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Continuidad entre Sesiones</h4>
+                        <p>Si necesitas continuar una sesión anterior, usa <code>claude --resume</code> para seleccionar de una lista interactiva.</p>
+                    </div>
                 </div>
 
                 <h3>Estrategia 4: Usar Archivos de Contexto</h3>
@@ -569,43 +574,33 @@ EOF
 claude "Basándote en .claude/context.md, crea un nuevo controller"</code></pre>
                 </div>
 
-                <h2>Monitoreo de Uso de Contexto</h2>
+                <h2>Monitoreo de Uso y Costos</h2>
 
                 <p>
-                    Claude Code ofrece herramientas para monitorear tu uso de contexto y costos:
+                    El uso de tokens y costos se gestiona a través de tu cuenta de Anthropic, no mediante comandos CLI de Claude Code.
                 </p>
 
-                <div class="code-block">
-                    <pre><code class="language-bash"># Ver estadísticas de la sesión actual
-claude --stats
-
-# Ver historial de uso
-claude usage stats
-
-# Ver uso por día
-claude usage daily
-
-# Ver uso por proyecto
-claude usage by-project
-
-# Ver estimación de costos
-claude usage costs --month 2025-10</code></pre>
+                <div class="alert info">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Visualización de Uso</h4>
+                        <p>Para ver estadísticas detalladas de uso y costos, visita <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> donde encontrarás:</p>
+                        <ul>
+                            <li>Uso de tokens por día/mes</li>
+                            <li>Desglose por modelo</li>
+                            <li>Estimación de costos</li>
+                            <li>Uso de prompt caching</li>
+                        </ul>
+                    </div>
                 </div>
 
-                <h3>Interpretación de Estadísticas</h3>
+                <h3>Límites de Contexto por Modelo</h3>
 
                 <div class="code-block">
-                    <pre><code class="language-plaintext">Session Statistics:
-------------------
-Total tokens used: 15,420
-  - Input tokens:  12,300 (79.8%)
-  - Output tokens:  3,120 (20.2%)
-
-Files read: 8
-Cache hits: 5 (62.5%)
-Estimated cost: $0.18
-
-Context utilization: 15,420 / 200,000 (7.7%)</code></pre>
+                    <pre><code class="language-plaintext">Claude Sonnet 4.5:  200,000 tokens contexto, 8,000 tokens salida
+Claude 3.5 Sonnet:  200,000 tokens contexto, 8,000 tokens salida
+Claude 3 Opus:      200,000 tokens contexto, 4,096 tokens salida
+Claude 3.5 Haiku:   200,000 tokens contexto, 8,000 tokens salida</code></pre>
                 </div>
 
                 <h2>Mejores Prácticas de Gestión de Contexto</h2>
@@ -637,19 +632,13 @@ dist/
 .env
 EOF
 
-# 2. Iniciar sesión específica
-claude sessions new
-
-# 3. Enviar solo contexto necesario
-claude "Refactoriza el módulo de autenticación" \
+# 2. Enviar solo contexto necesario
+claude "Refactoriza el módulo de autenticación basándote en estos archivos" \
   src/auth/*.ts \
   docs/auth-design.md
 
-# 4. Guardar progreso
-claude sessions save "auth-refactor-$(date +%Y%m%d)"
-
-# 5. Verificar uso
-claude --stats</code></pre>
+# 3. Al terminar, puedes continuar más tarde con:
+claude --continue</code></pre>
                 </div>
 
                 <h2>Troubleshooting de Contexto</h2>
@@ -657,39 +646,49 @@ claude --stats</code></pre>
                 <h3>Problema: "Context window exceeded"</h3>
 
                 <div class="code-block">
-                    <pre><code class="language-bash"># Verificar tamaño del contexto
-claude --stats
-
-# Soluciones:
-# 1. Dividir en sesiones más pequeñas
-claude sessions save "parte-1"
-claude sessions new
+                    <pre><code class="language-bash"># Soluciones:
+# 1. Dividir en conversaciones más pequeñas
+# Sal de la conversación actual (Ctrl+D) y empieza una nueva
 
 # 2. Mejorar .claudeignore
 echo "carpeta-grande/" >> .claudeignore
+echo "node_modules/" >> .claudeignore
+echo "*.log" >> .claudeignore
 
-# 3. Usar el modelo más avanzado
+# 3. Usar el modelo más avanzado con mayor contexto
 claude --model sonnet-4.5 "Tu tarea aquí"</code></pre>
                 </div>
 
                 <h3>Problema: Costos Altos</h3>
 
-                <div class="code-block">
-                    <pre><code class="language-bash"># Analizar uso
-claude usage costs --detailed
+                <p>Para optimizar costos, sigue estas estrategias:</p>
 
-# Optimizar:
-# 1. Usar Claude 3.5 Haiku para tareas simples (más rápido y económico)
+                <div class="code-block">
+                    <pre><code class="language-bash"># 1. Usar Claude 3.5 Haiku para tareas simples (más económico)
 claude --model haiku-3.5 "Formatea este código"
 
-# 2. Usar Sonnet 4.5 (modelo más avanzado y eficiente)
-claude --model sonnet-4.5 "Analiza este código"
+# 2. Usar Sonnet 4.5 para tareas complejas (mejor balance)
+claude --model sonnet-4.5 "Analiza y refactoriza este módulo"
 
-# 3. Habilitar cache agresivo
-claude config set cache.ttl 7200
+# 3. Aprovechar prompt caching (automático en conversaciones largas)
+# El caching reduce costos en 90% para tokens en caché
 
-# 4. Limpiar contexto innecesario
-claude sessions clear-old --days 30</code></pre>
+# 4. Optimizar .claudeignore para reducir contexto innecesario
+cat >> .claudeignore << EOF
+node_modules/
+dist/
+build/
+*.log
+.git/
+EOF</code></pre>
+                </div>
+
+                <div class="alert info">
+                    <div class="alert-icon">💰</div>
+                    <div class="alert-content">
+                        <h4>Monitoreo de Costos</h4>
+                        <p>Revisa tu uso y costos en <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> para identificar patrones y optimizar tu uso.</p>
+                    </div>
                 </div>
 
                 <div class="alert tip">

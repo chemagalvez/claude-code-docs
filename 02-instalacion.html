@@ -213,13 +213,10 @@ claude init
                     <pre><code class="language-bash"># Ver versión
 claude --version
 
-# Ver configuración actual
-claude config --show
-
 # Prueba simple
 claude "Hola, ¿estás funcionando correctamente?"
 
-# Ver ayuda
+# Ver ayuda completa
 claude --help</code></pre>
                 </div>
 
@@ -227,23 +224,34 @@ claude --help</code></pre>
 
                 <h3>Visual Studio Code</h3>
 
+                <p>Claude Code funciona perfectamente desde la terminal integrada de VS Code:</p>
+
                 <div class="code-block">
-                    <pre><code class="language-bash"># Configurar VS Code como editor predeterminado
-claude config set editor "code"
+                    <pre><code class="language-bash"># En VS Code, abre la terminal integrada (Ctrl+` o Cmd+`)
+# Luego usa Claude normalmente:
+claude "Explica este archivo" archivo.js
 
-# Abrir archivo con Claude Code desde VS Code
-# En VS Code, abre la paleta de comandos (Cmd+Shift+P) y busca
-# "Terminal: Create New Terminal"
+# Claude Code detectará automáticamente que estás en VS Code</code></pre>
+                </div>
 
-# Luego puedes usar:
-claude "Explica este archivo" archivo.js</code></pre>
+                <div class="alert info">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Configuración de Editor</h4>
+                        <p>Puedes configurar tu editor preferido editando <code>~/.config/claude/settings.json</code>:</p>
+                        <pre><code class="language-json">{"editor": "code"}</code></pre>
+                        <p>Opciones válidas: <code>"code"</code> (VS Code), <code>"cursor"</code>, <code>"vim"</code>, <code>"nano"</code>, etc.</p>
+                    </div>
                 </div>
 
                 <h3>Cursor Editor</h3>
 
+                <p>Para usar Cursor como editor predeterminado, edita <code>~/.config/claude/settings.json</code>:</p>
+
                 <div class="code-block">
-                    <pre><code class="language-bash"># Configurar Cursor como editor
-claude config set editor "cursor"</code></pre>
+                    <pre><code class="language-json">{
+  "editor": "cursor"
+}</code></pre>
                 </div>
 
                 <h2>Configuración Avanzada</h2>

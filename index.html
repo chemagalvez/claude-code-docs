@@ -187,14 +187,20 @@ brew install claude
 claude --version</code></pre>
                 </div>
 
-                <h3>Paso 2: Configurar tu API Key (1 minuto)</h3>
+                <h3>Paso 2: Autenticarte (1 minuto)</h3>
                 <div class="code-block">
-                    <pre><code class="language-bash"># Obtén tu API key en: https://console.anthropic.com/
-# Configúrala con este comando:
-claude config set apiKey "sk-ant-tu-key-aqui"
+                    <pre><code class="language-bash"># Configurar autenticación (requiere suscripción a Claude)
+claude setup-token
 
-# Verificar configuración
-claude config get apiKey</code></pre>
+# Esto abrirá tu navegador para autenticarte con tu cuenta de Anthropic</code></pre>
+                </div>
+
+                <div class="alert info">
+                    <div class="alert-icon">💡</div>
+                    <div class="alert-content">
+                        <h4>Requisitos</h4>
+                        <p>Claude Code requiere una suscripción activa a Claude (Pro o superior). Visita <a href="https://claude.ai" target="_blank">claude.ai</a> para suscribirte.</p>
+                    </div>
                 </div>
 
                 <h3>Paso 3: ¡Tu Primera Tarea! (3 minutos)</h3>
